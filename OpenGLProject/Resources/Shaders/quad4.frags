@@ -1,0 +1,13 @@
+#version 330 core
+
+uniform sampler2D tex1;
+
+in vec3 fragNormal;
+in vec2 fragUV;
+
+out vec4 color;
+
+void main()
+{
+	color = texture(tex1, fragUV);
+}

@@ -1,0 +1,15 @@
+#version 330 core
+
+uniform sampler2D tex;
+uniform vec3 tint = vec3(1,1,1);
+
+in vec2 fragUV;
+
+out vec4 color;
+
+void main()
+{
+	float a = texture(tex, fragUV).r;
+	vec4 sampled = vec4(1,1,1, a);
+	color = vec4(tint, 1) * sampled;
+}

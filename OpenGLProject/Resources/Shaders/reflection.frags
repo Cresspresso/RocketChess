@@ -1,0 +1,22 @@
+
+#version 330 core
+
+in vec3 fragPos;
+in vec3 fragNormal;
+in vec2 fragUV;
+
+out vec4 color;
+
+uniform vec3 eye = vec3(0, 0, 10);
+uniform samplerCube skybox;
+
+void main()
+{
+	vec3 norm = normalize(fragNormal);
+	vec3 viewDir = normalize(fragPos - eye);
+	vec3 reflectDir = reflect(viewDir, norm);
+
+	color = vec4(texture(skybox, reflectDir).rgb, 1);
+}
+// TODO new shader with Texture mixed with Reflection
+// TODO new shader with Reflection Maps (grayscale image)

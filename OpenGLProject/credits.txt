@@ -1,0 +1,14 @@
+
+Project: Robotron Summative
+Author: Elijah Shadbolt
+Date: 08/06/2019
+
+Title: SFX Laser Shot (S)
+Author: bolkmar
+Source: https://freesound.org/people/bolkmar/sounds/420365/
+Licence: Creative Commons Attribution
+
+Title: Confirmation Downward
+Author: original_sound
+Source: https://freesound.org/people/original_sound/sounds/366104/
+Licence: Creative Commons Attribution

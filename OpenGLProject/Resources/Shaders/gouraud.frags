@@ -1,0 +1,14 @@
+
+#version 330 core
+
+in vec2 fragUV;
+in vec3 fragLightingColor;
+
+out vec4 color;
+
+uniform sampler2D tex0;
+
+void main()
+{
+	color = vec4(fragLightingColor, 1) * texture(tex0, fragUV);
+}

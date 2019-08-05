@@ -1,0 +1,44 @@
+
+#version 330 core
+
+layout (location = 0) in vec3 position;
+layout (location = 1) in vec3 normal;
+layout (location = 2) in vec2 uv;
+
+out vec2 fragUV;
+out vec3 fragLightingColor;
+
+uniform mat4 mvp;
+uniform mat4 model;
+uniform mat3 fixNormals;
+
+uniform vec3 ambientColor = vec3(0.05f, 0.05f, 0.05f);
+uniform vec3 lightColor = vec3(1,1,1);
+uniform vec3 lightPos = vec3(-2, 6, 3);
+uniform vec3 eye = vec3(0, 0, 10);
+uniform float lightSpecularStrength = 1.0f;
+uniform float shininess = 32.0f;
+
+void main(void)
+{
+	gl_Position = mvp * vec4(position, 1);
+	vec3 fragPos = vec3(model * vec4(position, 1));
+	vec3 fragNormal = fixNormals * normal;
+	
+	// Light Direction
+	vec3 norm = normalize(fragNormal);
+	vec3 lightDir = normalize(fragPos - lightPos);
+
+	// Diffuse Colouring
+	float diffuseStrength = max(dot(norm, -lightDir), 0.0f);
+	vec3 diffuse = diffuseStrength * lightColor;
+	
+	// Specular Highlight
+	vec3 negViewDir = normalize(eye - fragPos);
+	vec3 reflectDir = reflect(lightDir, norm);
+	float specularStrength = pow(max(dot(negViewDir, reflectDir), 0.0f), shininess);
+	vec3 specular = lightSpecularStrength * specularStrength * lightColor;
+	
+	fragLightingColor = ambientColor + diffuse + specular;
+	fragUV = uv;
+}
