@@ -37,7 +37,7 @@
 
 #include "Model.h"
 
-
+#include "ChessPiece.hpp"
 
 namespace menu_scene
 {
@@ -75,6 +75,9 @@ namespace menu_scene
 			MenuButtonEntity buttonToggleMusic;
 			static constexpr size_t N = 7;
 			std::array<MenuButtonEntity, N> loadSceneButtons;
+
+			std::array<MenuButtonEntity, 8*8> boardButtons;
+			std::array<ChessPiece, 8 * 8> boardPieces;
 
 			MenuButtonEntity& getButtonQuit() { return buttonMenu; }
 

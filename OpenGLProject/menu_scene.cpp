@@ -245,6 +245,90 @@ namespace menu_scene
 		initButtonLoadSceneWandering(entities.loadSceneButtons[4]);
 		initButtonLoadSceneArrival(entities.loadSceneButtons[5]);
 		initButtonLoadSceneLeaderFollowing(entities.loadSceneButtons[6]);
+
+		for (int y = 0; y < 8; ++y)
+		{
+			for (int x = 0; x < 8; ++x)
+			{
+				auto& button = entities.boardButtons[x + y * 8].button;
+
+				// init collider transform
+				{
+					auto& ct = button.colliderTransform;
+					ct.localScale = vec3(40, 40, 1);
+				}
+
+				// init background transform
+				{
+					auto& bgt = button.backgroundTransform;
+					bgt.localScale = vec3(2.f * vec2(button.colliderTransform.localScale), 1);
+				}
+
+				// init background
+				{
+					auto& bg = button.background;
+					bg.program = resources.programs[ProgramIndexer::Quad4].program;
+					bg.mesh = &(resources.meshes[MeshIndexer::Quad]);
+					bg.material = materialButtonBackground;// &(materials.buttonMenuBackground);
+				}
+
+				// init text renderer
+				{
+					auto& tx = button.text;
+					initTextRenderer(tx); // &(materials.buttonMenuText);
+					tx.scale = vec2(1);
+
+					vec3 const buttonHalfSize = 0.5f * button.backgroundTransform.localScale;
+					tx.position = vec2(-buttonHalfSize.x, -4);
+				}
+
+				button.transform.localPosition = glm::vec3(x * 100 - 200, y * 100 - 350, 0);
+
+				// init text renderer
+				{
+					auto& tx = button.text;
+					tx.text = std::to_string(x) + "," + std::to_string(y);
+				}
+
+				auto* scene = &this->scene;
+				// replace "load menu scene" action with "quit" action.
+				button.onClickLeft.action = [scene, x, y]
+				{
+					auto& piece = scene->entities.boardPieces[x + y * 8];
+					DEBUG_LOG(stringLink("wahoo at ", x, ", ", y, ": ", piece));
+					switch (piece) {
+					case ChessPiece::Pawn:
+					{
+						auto& other = scene->entities.boardPieces[(x)+(y + 1) * 8];
+						switch (other) {
+						case ChessPiece::None:
+							other = ChessPiece::Pawn;
+							break;
+						default:
+							return RC_ERROR;
+						}
+						piece = ChessPiece::None;
+						return RC_SUCCESS;
+					}
+					case ChessPiece::None:
+					default:
+						break;
+					}
+					return RC_SUCCESS;
+				};
+			}
+		}
+
+		auto& board = entities.boardPieces;
+		board[0 + 0 * 8] = board[7 + 0 * 8] = ChessPiece::Rook;
+		board[1 + 0 * 8] = board[6 + 0 * 8] = ChessPiece::Knight;
+		board[2 + 0 * 8] = board[5 + 0 * 8] = ChessPiece::Bishop;
+		board[3 + 0 * 8] = ChessPiece::Queen;
+		board[4 + 0 * 8] = ChessPiece::King;
+		for (int i = 0; i < 8; ++i)
+		{
+			board[i + 1 * 8] = ChessPiece::Pawn;
+		}
 	}
 
 
@@ -552,6 +636,10 @@ namespace menu_scene
 			{
 				DO_ANYALL(loadButton.update());
 			}
+			for (auto& b : e.boardButtons)
+			{
+				DO_ANYALL(b.update());
+			}
 			DO_ANYALL(e.buttonMenu.update());
 
 
@@ -721,6 +809,19 @@ namespace menu_scene
 				DO_ANYALL(loadButton.render());
 			}
 			DO_ANYALL(e.buttonMenu.render());
+
+			for (int y = 0; y < 8; y++)
+			{
+				for (int x = 0; x < 8; x++)
+				{
+					e.boardButtons[x + y * 8].button.text.text = symbol(e.boardPieces[x + y * 8]);
+				}
+			}
+
+			for (auto& button : e.boardButtons)
+			{
+				DO_ANYALL(button.render());
+			}
 		}
 		return END_ANYALL();
 	}
