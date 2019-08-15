@@ -825,6 +825,9 @@
     <ClInclude Include="ChessPiece.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="ChessAction.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="config.txt" />

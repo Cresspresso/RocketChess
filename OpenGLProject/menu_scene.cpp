@@ -290,45 +290,31 @@ namespace menu_scene
 					tx.text = std::to_string(x) + "," + std::to_string(y);
 				}
 
-				auto* scene = &this->scene;
+				auto* pscene = &this->scene;
 				// replace "load menu scene" action with "quit" action.
-				button.onClickLeft.action = [scene, x, y]
+				button.onClickLeft.action = [pscene, x, y]
 				{
-					auto& piece = scene->entities.boardPieces[x + y * 8];
-					DEBUG_LOG(stringLink("wahoo at ", x, ", ", y, ": ", piece));
-					switch (piece) {
-					case ChessPiece::Pawn:
-					{
-						auto& other = scene->entities.boardPieces[(x)+(y + 1) * 8];
-						switch (other) {
-						case ChessPiece::None:
-							other = ChessPiece::Pawn;
-							break;
-						default:
-							return RC_ERROR;
-						}
-						piece = ChessPiece::None;
-						return RC_SUCCESS;
-					}
-					case ChessPiece::None:
-					default:
-						break;
-					}
-					return RC_SUCCESS;
+					return pscene->onCellClicked(x, y);
 				};
 			}
 		}
 
-		auto& board = entities.boardPieces;
-		board[0 + 0 * 8] = board[7 + 0 * 8] = ChessPiece::Rook;
-		board[1 + 0 * 8] = board[6 + 0 * 8] = ChessPiece::Knight;
-		board[2 + 0 * 8] = board[5 + 0 * 8] = ChessPiece::Bishop;
-		board[3 + 0 * 8] = ChessPiece::Queen;
-		board[4 + 0 * 8] = ChessPiece::King;
-		for (int i = 0; i < 8; ++i)
-		{
-			board[i + 1 * 8] = ChessPiece::Pawn;
-		}
+		auto const initPlayer = [this](bool isPlayer2) {
+			int y = isPlayer2 ? 7 : 0;
+			auto& board = scene.boardPieces;
+			board[0 + y * 8] = board[7 + y * 8] = { ChessPiece::Rook, isPlayer2 };
+			board[1 + y * 8] = board[6 + y * 8] = { ChessPiece::Knight, isPlayer2 };
+			board[2 + y * 8] = board[5 + y * 8] = { ChessPiece::Bishop, isPlayer2 };
+			board[3 + y * 8] = { ChessPiece::Queen, isPlayer2 };
+			board[4 + y * 8] = { ChessPiece::King, isPlayer2 };
+			y = isPlayer2 ? 6 : 1;
+			for (int x = 0; x < 8; ++x)
+			{
+				board[x + y * 8] = { ChessPiece::Pawn, isPlayer2 };
+			}
+		};
+		initPlayer(false);
+		initPlayer(true);
 	}
 
 
@@ -580,6 +566,89 @@ namespace menu_scene
 
 
 
+	ReturnCode Scene::onCellClicked(int x, int y)
+	{
+		if (selectedCoords)
+		{
+			if (*selectedCoords == ivec2(x, y))
+			{
+				selectedCoords.reset();
+				return RC_SUCCESS;
+			}
+
+			else
+			{
+				isCurrentPlayerTwo = !isCurrentPlayerTwo;
+				DEBUG_LOG("Next player's turn");
+				return RC_SUCCESS;
+			}
+		}
+		else
+		{
+			auto& piece = boardPieces[x + y * 8];
+			bool const isPlayer2 = piece.isPlayer2;
+			int const yForward = isPlayer2 ? -1 : 1;
+			switch (piece.type) {
+			case ChessPiece::Pawn:
+			{
+				auto& other = boardPieces[(x)+(y + yForward) * 8];
+				if (other.type == ChessPiece::None)
+				{
+					other = piece;
+					piece = { ChessPiece::None };
+					return RC_SUCCESS;
+				}
+				//else if (other.isPlayer2 != piece.isPlayer2)
+				//{
+				//	// TODO gain money from capture
+				//	other = piece;
+				//	piece = { ChessPiece::None };
+				//	return RC_SUCCESS;
+				//}
+				return RC_ERROR;
+			}
+			case ChessPiece::King:
+			{
+				auto& other = boardPieces[(x)+(y + yForward) * 8];
+				if (other.type == ChessPiece::None)
+				{
+					other = piece;
+					piece = { ChessPiece::None };
+					return RC_SUCCESS;
+				}
+				else if (other.isPlayer2 != piece.isPlayer2)
+				{
+					// TODO gain money from capture
+					other = piece;
+					piece = { ChessPiece::None };
+					return RC_SUCCESS;
+				}
+			}
+			case ChessPiece::None:
+			default:
+				break;
+			}
+			return RC_ERROR;
+
+
+			/*
+			auto& piece = boardPieces[x + y * 8];
+			if (piece.type == ChessPiece::None)
+			{
+				return RC_ERROR;
+			}
+
+			bool const isPlayer2 = piece.isPlayer2;
+			if (isPlayer2)
+			{
+				return RC_ERROR;
+			}
+
+			selectedCoords = ivec2(x, y);
+			return RC_SUCCESS;*/
+		}
+	}
+
 	ReturnCode Scene::init()
 	{
 		materials.init();
@@ -814,7 +883,11 @@ namespace menu_scene
 			{
 				for (int x = 0; x < 8; x++)
 				{
-					e.boardButtons[x + y * 8].button.text.text = symbol(e.boardPieces[x + y * 8]);
+					auto& piece = boardPieces[x + y * 8];
+					e.boardButtons[x + y * 8].button.text
+						.text = (piece.type == ChessPiece::None)
+						? "-"
+						: stringLink(symbol(piece.type), " ", (piece.isPlayer2 ? "2" : "1"));
 				}
 			}
 

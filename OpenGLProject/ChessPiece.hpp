@@ -66,3 +66,9 @@ inline char const* symbol(ChessPiece value)
 	}
 	return "?";
 }
+
+struct OwnedChessPiece
+{
+	ChessPiece type = ChessPiece::None;
+	bool isPlayer2 = false;
+};
