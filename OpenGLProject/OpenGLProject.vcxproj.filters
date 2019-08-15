@@ -822,6 +822,9 @@
     <ClInclude Include="fog_material.hpp">
       <Filter>Source Files\materials</Filter>
     </ClInclude>
+    <ClInclude Include="ChessPiece.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="config.txt" />
