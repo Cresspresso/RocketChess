@@ -200,6 +200,7 @@
     <ClCompile Include="camera_orbit_entity.cpp" />
     <ClCompile Include="client.cpp" />
     <ClCompile Include="fog_material.cpp" />
+    <ClCompile Include="MissileManager.cpp" />
     <ClCompile Include="network_entity_threads.cpp" />
     <ClCompile Include="network_manager.cpp" />
     <ClCompile Include="network_message_type.cpp" />
@@ -294,6 +295,7 @@
     <ClInclude Include="compatibility.hpp" />
     <ClInclude Include="compatibility_threading.hpp" />
     <ClInclude Include="fog_material.hpp" />
+    <ClInclude Include="MissileManager.h" />
     <ClInclude Include="network_state.hpp" />
     <ClInclude Include="network_entity_threads.hpp" />
     <ClInclude Include="network_manager.hpp" />

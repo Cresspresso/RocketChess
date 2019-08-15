@@ -646,7 +646,6 @@ namespace menu_scene
 	}
 
 
-
 	ReturnCode Scene::renderWorld()
 	{
 		auto& e = entities;
@@ -665,8 +664,6 @@ namespace menu_scene
 		glDepthFunc(GL_LESS);
 		{
 			DO_ANYALL(e.skybox.render());
-
-
 
 			DO_ANYALL(e.flyby.render());
 			DO_ANYALL(e.rimLit.render());
@@ -724,7 +721,6 @@ namespace menu_scene
 		}
 		return END_ANYALL();
 	}
-
 
 
 #pragma endregion ~Scene
