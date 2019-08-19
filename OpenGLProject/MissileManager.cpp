@@ -17,9 +17,10 @@ void missileManager::purchaseMissile(int missileChoice){
 		if (money.p1Money >= 3) {
 			launchableMissile = RPG;
 			money.p1Money -= 3;
+			//move to choosing missile launch position
+			launchMissile();
 		}
 		break;
-	
 
 	//default case
 	default:
@@ -90,13 +91,11 @@ void missileManager::destroyPiece() {
 	//checks to see what the ICBM can destroy
 	case ICBM:
 		//can take anything but the King
-
 		break;
 
 	//Whoever, launches this wins
 	case VOYAGER:
 		//win the game
-
 		break;
 
 	//default case

@@ -8,7 +8,6 @@ public:
 	int launchableMissile;
 	bool missilePos;
 
-
 	//to purchase missiles if the player has enough currency
 	void purchaseMissile(int missileChoice);
 	
