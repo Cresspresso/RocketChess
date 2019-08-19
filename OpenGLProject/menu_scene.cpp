@@ -73,6 +73,11 @@ namespace menu_scene
 		initReflection(materials.reflection);
 		initRimLighting(materials.rimLighting);
 		initInfoText(materials.infoText);
+
+		for (int i = 0; i < materials.chessMaterials.size(); i++)
+		{
+			materials.chessMaterials[i].tex1 = resources.textures[static_cast<int>(TextureIndexer::BishopUS) + i];
+		}
 	}
 
 
@@ -269,7 +274,6 @@ namespace menu_scene
 					auto& bg = button.background;
 					bg.program = resources.programs[ProgramIndexer::Quad4].program;
 					bg.mesh = &(resources.meshes[MeshIndexer::Quad]);
-					materials.buttonBackground.tex1 = resources.textures[TextureIndexer::BishopUS];
 					bg.material = materialButtonBackground;// &(materials.buttonMenuBackground);
 				}
 
@@ -885,22 +889,72 @@ namespace menu_scene
 				for (int x = 0; x < 8; x++)
 				{
 					auto& piece = boardPieces[x + y * 8];
-					e.boardButtons[x + y * 8].button.text
-						.text = (piece.type == ChessPiece::None)
-						? "-"
-						: stringLink(symbol(piece.type), " ", (piece.isPlayer2 ? "2" : "1"));
+					auto& button = e.boardButtons[x + y * 8];
+					if (piece.type != ChessPiece::None)
+					{
+						button.button.text.text = stringLink(symbol(piece.type), " ", (piece.isPlayer2 ? "2" : "1"));
+						button.button.background.material = &(materials.chessMaterials[GetPieceType(x, y)]);
+						DO_ANYALL(button.render());
+					}
 				}
-			}
-
-			for (auto& button : e.boardButtons)
-			{
-				DO_ANYALL(button.render());
 			}
 		}
 		return END_ANYALL();
 	}
 
-
+	int Scene::GetPieceType(int x, int y)
+	{
+		// return int in range 0..<12
+		switch (this->boardPieces[x + y * 8].type)
+		{
+			case ChessPiece::Bishop:
+				{
+				return this->boardPieces[x + y * 8].isPlayer2
+					? 1
+					: 0;
+				}
+				
+			case ChessPiece::King:
+			{
+				return this->boardPieces[x + y * 8].isPlayer2
+					? 1
+					: 0;
+			}
+		
+			case ChessPiece::Knight:
+			{
+				return this->boardPieces[x + y * 8].isPlayer2
+					? 1
+					: 0;
+			}
+			case ChessPiece::Pawn:
+			{
+				return this->boardPieces[x + y * 8].isPlayer2
+					? 1
+					: 0;
+			}
+			case ChessPiece::Queen:
+			{
+				return this->boardPieces[x + y * 8].isPlayer2
+					? 1
+					: 0;
+			}
+			case ChessPiece::Rook:
+			{
+				return this->boardPieces[x + y * 8].isPlayer2
+					? 1
+					: 0;
+			}
+			case ChessPiece::None:
+			{
+				return (0);
+			}
+			default:
+			{	break; }
+		}
+			//button.button.background.material = &(materials.chessMaterials;
+		return x, y;
+	}
 
 #pragma endregion ~Scene
 }
