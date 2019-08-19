@@ -269,6 +269,7 @@ namespace menu_scene
 					auto& bg = button.background;
 					bg.program = resources.programs[ProgramIndexer::Quad4].program;
 					bg.mesh = &(resources.meshes[MeshIndexer::Quad]);
+					materials.buttonBackground.tex1 = resources.textures[TextureIndexer::BishopUS];
 					bg.material = materialButtonBackground;// &(materials.buttonMenuBackground);
 				}
 
