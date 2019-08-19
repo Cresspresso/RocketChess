@@ -369,44 +369,44 @@
 			case ChessPiece::Bishop:
 				{
 				return this->boardPieces[x + y * 8].isPlayer2
-					? 1
-					: 0;
+					? 0
+					: 1;
 				}
 				
 			case ChessPiece::King:
 			{
 				return this->boardPieces[x + y * 8].isPlayer2
-					? 1
-					: 0;
+					? 2
+					: 3;
 			}
 		
 			case ChessPiece::Knight:
 			{
 				return this->boardPieces[x + y * 8].isPlayer2
-					? 1
-					: 0;
+					? 4
+					: 5;
 			}
 			case ChessPiece::Pawn:
 			{
 				return this->boardPieces[x + y * 8].isPlayer2
-					? 1
-					: 0;
+					? 6
+					: 7;
 			}
 			case ChessPiece::Queen:
 			{
 				return this->boardPieces[x + y * 8].isPlayer2
-					? 1
-					: 0;
+					? 8
+					: 9;
 			}
 			case ChessPiece::Rook:
 			{
 				return this->boardPieces[x + y * 8].isPlayer2
-					? 1
-					: 0;
+					? 10
+					: 11;
 			}
 			case ChessPiece::None:
 			{
-				return (0);
+				return 0;
 			}
 			default:
 			{	return 0; }
