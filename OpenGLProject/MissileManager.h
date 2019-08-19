@@ -34,10 +34,4 @@ private:
 
 	};
 
-	void buyRPG();
-	void buyBallistic();
-	void buyICBM();
-	void buyVoyager();
-
-
 };

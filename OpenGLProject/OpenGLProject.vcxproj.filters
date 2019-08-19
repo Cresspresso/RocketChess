@@ -469,6 +469,15 @@
     <ClCompile Include="fog_material.cpp">
       <Filter>Source Files\materials</Filter>
     </ClCompile>
+    <ClCompile Include="MissileManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HistoryEventLog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Money.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cubemap_material.hpp">
@@ -821,6 +830,13 @@
     </ClInclude>
     <ClInclude Include="fog_material.hpp">
       <Filter>Source Files\materials</Filter>
+    </ClInclude>
+    <ClInclude Include="MissileManager.h" />
+    <ClInclude Include="HistoryEventLog.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Money.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

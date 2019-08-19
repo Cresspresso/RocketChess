@@ -1,3 +1,4 @@
+
 #include "MissileManager.h"
 #include "ChessPiece.hpp"
 #include "Money.h"
@@ -7,17 +8,23 @@ Money money;
 
 void missileManager::purchaseMissile(int missileChoice){
 
-	if (missileChoice == 1) {
-		buyRPG();
-	}
-	if (missileChoice == 2) {
-		buyBallistic();
-	}
-	if (missileChoice == 3) {
-		buyICBM();
-	}
-	if (missileChoice == 4) {
-		buyVoyager();
+	//switch case for each missile type
+	switch (missileChoice) {
+	//check to see whose turn it is
+	
+	//rpg missile
+	case 1:
+		if (money.p1Money >= 3) {
+			launchableMissile = RPG;
+			money.p1Money -= 3;
+		}
+		break;
+	
+
+	//default case
+	default:
+		break;
+	
 	}
 }
 
@@ -42,8 +49,11 @@ bool missileManager::checkMissileTarget(){
 	
 	
 	/*
+	TODO Waiting on grid
+
 	choose a space on the board
 	if(choice is out of range){
+		print("was not in range")
 		return false;
 	}
 	else{
@@ -52,64 +62,46 @@ bool missileManager::checkMissileTarget(){
 	}
 	*/
 
-
+	return false;
 }
 
-void missileManager::destroyPiece(){
-	/*
-		missileTarget
-			if(piece == PAWN && launchableMissile == RPG){
-				destroy piece 
-				call gainMoney from Money.cpp
-			}
-	
-	*/
-}
+void missileManager::destroyPiece() {
 
+	switch (launchableMissile) {
 
-void missileManager::buyRPG(){
-	/*
-	
-	check to see whose turn it is
-	check to see if the player has enough money
-	
-	buy missile
-	
-	*/
+		//checks to see what the RPG can destroy
+	case RPG:
 
-}
+		/*
+		RPG Can only take pawns
+		check to see what piece is in the chosen cell
+		if it can be taken, take it
+		other return as a miss
+		*/
 
-void missileManager::buyBallistic(){
-	/*
-	
-	check to see whose turn it is
-	check to see if the player has enough money
+		break;
 
-	buy missile
-	
-	*/
-}
+		//checks to see what the ballistic missile can destroy
+	case BALLISTIC:
+		//ballistic missiles can take pawns rooks and bishops
 
-void missileManager::buyICBM(){
+		break;
 
-	/*
-	
-	check to see whose turn it is
-	check to see if the player has enough money
-	
-	buy missile
-	
-	*/
+	//checks to see what the ICBM can destroy
+	case ICBM:
+		//can take anything but the King
 
-}
+		break;
 
-void missileManager::buyVoyager(){
+	//Whoever, launches this wins
+	case VOYAGER:
+		//win the game
 
-	/*
-	check to see whose turn it is
-	check to see if the player has enough money
-	
-	buy missile
-	*/
-	
+		break;
+
+	//default case
+	default:
+		break;
+
+	}
 }
