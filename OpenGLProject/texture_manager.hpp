@@ -28,6 +28,18 @@ enum class TextureIndexer : size_t
 	CapguyWalk,
 	Button,
 	White,
+	BishopUS,
+	BishopUSSR,
+	KingUS,
+	KingUSSR,
+	KnightUS,
+	KnightUSSR,
+	PawnUS,
+	PawnUSSR,
+	QueenUS,
+	QueenUSSR,
+	RookUS,
+	RookUSSR,
 	END
 };
 constexpr size_t TextureIndexerEND = static_cast<size_t>(TextureIndexer::END);
@@ -48,5 +60,17 @@ struct TextureManager : public ResourceManager<GLuint, TextureIndexerEND, Textur
 		"Capguy_Walk.png",
 		"button.png",
 		"white.png",
+		"BishopUS.png",
+		"BishopUSSR.png",
+		"KingUS.png",
+		"KingUSSR.png",
+		"KnightUS.png",
+		"KnightUSSR.png",
+		"PawnUS.png",
+		"PawnUSSR.png",
+		"QueenUS.png",
+		"QueenUSSR.png",
+		"RookUS.png",
+		"RookUSSR.png",
 	};
 };

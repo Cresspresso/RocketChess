@@ -19,6 +19,8 @@
 #pragma once
 
 #include <array>
+#include <map>
+#include <optional>
 
 #include "basic_materials_builder.hpp"
 #include "basic_scene_builder.hpp"
@@ -37,7 +39,8 @@
 
 #include "Model.h"
 
-
+#include "ChessPiece.hpp"
+#include "ChessAction.hpp"
 
 namespace menu_scene
 {
@@ -76,11 +79,18 @@ namespace menu_scene
 			static constexpr size_t N = 7;
 			std::array<MenuButtonEntity, N> loadSceneButtons;
 
+			std::array<MenuButtonEntity, 8*8> boardButtons;
+
 			MenuButtonEntity& getButtonQuit() { return buttonMenu; }
 
 		} entities;
 
+		std::array<OwnedChessPiece, 8 * 8> boardPieces;
+		std::map<ivec2, ChessAction> availableActions;
+		std::optional<ivec2> selectedCoords;
+		bool isCurrentPlayerTwo = false;
 
+		ReturnCode onCellClicked(int x, int y);
 
 		ReturnCode init();
 		void destroy() noexcept {}

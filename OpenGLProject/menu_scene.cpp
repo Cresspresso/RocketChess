@@ -245,6 +245,77 @@ namespace menu_scene
 		initButtonLoadSceneWandering(entities.loadSceneButtons[4]);
 		initButtonLoadSceneArrival(entities.loadSceneButtons[5]);
 		initButtonLoadSceneLeaderFollowing(entities.loadSceneButtons[6]);
+
+		for (int y = 0; y < 8; ++y)
+		{
+			for (int x = 0; x < 8; ++x)
+			{
+				auto& button = entities.boardButtons[x + y * 8].button;
+
+				// init collider transform
+				{
+					auto& ct = button.colliderTransform;
+					ct.localScale = vec3(40, 40, 1);
+				}
+
+				// init background transform
+				{
+					auto& bgt = button.backgroundTransform;
+					bgt.localScale = vec3(2.f * vec2(button.colliderTransform.localScale), 1);
+				}
+
+				// init background
+				{
+					auto& bg = button.background;
+					bg.program = resources.programs[ProgramIndexer::Quad4].program;
+					bg.mesh = &(resources.meshes[MeshIndexer::Quad]);
+					materials.buttonBackground.tex1 = resources.textures[TextureIndexer::BishopUS];
+					bg.material = materialButtonBackground;// &(materials.buttonMenuBackground);
+				}
+
+				// init text renderer
+				{
+					auto& tx = button.text;
+					initTextRenderer(tx); // &(materials.buttonMenuText);
+					tx.scale = vec2(1);
+
+					vec3 const buttonHalfSize = 0.5f * button.backgroundTransform.localScale;
+					tx.position = vec2(-buttonHalfSize.x, -4);
+				}
+
+				button.transform.localPosition = glm::vec3(x * 100 - 200, y * 100 - 350, 0);
+
+				// init text renderer
+				{
+					auto& tx = button.text;
+					tx.text = std::to_string(x) + "," + std::to_string(y);
+				}
+
+				auto* pscene = &this->scene;
+				// replace "load menu scene" action with "quit" action.
+				button.onClickLeft.action = [pscene, x, y]
+				{
+					return pscene->onCellClicked(x, y);
+				};
+			}
+		}
+
+		auto const initPlayer = [this](bool isPlayer2) {
+			int y = isPlayer2 ? 7 : 0;
+			auto& board = scene.boardPieces;
+			board[0 + y * 8] = board[7 + y * 8] = { ChessPiece::Rook, isPlayer2 };
+			board[1 + y * 8] = board[6 + y * 8] = { ChessPiece::Knight, isPlayer2 };
+			board[2 + y * 8] = board[5 + y * 8] = { ChessPiece::Bishop, isPlayer2 };
+			board[3 + y * 8] = { ChessPiece::Queen, isPlayer2 };
+			board[4 + y * 8] = { ChessPiece::King, isPlayer2 };
+			y = isPlayer2 ? 6 : 1;
+			for (int x = 0; x < 8; ++x)
+			{
+				board[x + y * 8] = { ChessPiece::Pawn, isPlayer2 };
+			}
+		};
+		initPlayer(false);
+		initPlayer(true);
 	}
 
 
@@ -496,6 +567,89 @@ namespace menu_scene
 
 
 
+	ReturnCode Scene::onCellClicked(int x, int y)
+	{
+		if (selectedCoords)
+		{
+			if (*selectedCoords == ivec2(x, y))
+			{
+				selectedCoords.reset();
+				return RC_SUCCESS;
+			}
+
+			else
+			{
+				isCurrentPlayerTwo = !isCurrentPlayerTwo;
+				DEBUG_LOG("Next player's turn");
+				return RC_SUCCESS;
+			}
+		}
+		else
+		{
+			auto& piece = boardPieces[x + y * 8];
+			bool const isPlayer2 = piece.isPlayer2;
+			int const yForward = isPlayer2 ? -1 : 1;
+			switch (piece.type) {
+			case ChessPiece::Pawn:
+			{
+				auto& other = boardPieces[(x)+(y + yForward) * 8];
+				if (other.type == ChessPiece::None)
+				{
+					other = piece;
+					piece = { ChessPiece::None };
+					return RC_SUCCESS;
+				}
+				//else if (other.isPlayer2 != piece.isPlayer2)
+				//{
+				//	// TODO gain money from capture
+				//	other = piece;
+				//	piece = { ChessPiece::None };
+				//	return RC_SUCCESS;
+				//}
+				return RC_ERROR;
+			}
+			case ChessPiece::King:
+			{
+				auto& other = boardPieces[(x)+(y + yForward) * 8];
+				if (other.type == ChessPiece::None)
+				{
+					other = piece;
+					piece = { ChessPiece::None };
+					return RC_SUCCESS;
+				}
+				else if (other.isPlayer2 != piece.isPlayer2)
+				{
+					// TODO gain money from capture
+					other = piece;
+					piece = { ChessPiece::None };
+					return RC_SUCCESS;
+				}
+			}
+			case ChessPiece::None:
+			default:
+				break;
+			}
+			return RC_ERROR;
+
+
+			/*
+			auto& piece = boardPieces[x + y * 8];
+			if (piece.type == ChessPiece::None)
+			{
+				return RC_ERROR;
+			}
+
+			bool const isPlayer2 = piece.isPlayer2;
+			if (isPlayer2)
+			{
+				return RC_ERROR;
+			}
+
+			selectedCoords = ivec2(x, y);
+			return RC_SUCCESS;*/
+		}
+	}
+
 	ReturnCode Scene::init()
 	{
 		materials.init();
@@ -551,6 +705,10 @@ namespace menu_scene
 			for (auto& loadButton : e.loadSceneButtons)
 			{
 				DO_ANYALL(loadButton.update());
+			}
+			for (auto& b : e.boardButtons)
+			{
+				DO_ANYALL(b.update());
 			}
 			DO_ANYALL(e.buttonMenu.update());
 
@@ -718,6 +876,23 @@ namespace menu_scene
 				DO_ANYALL(loadButton.render());
 			}
 			DO_ANYALL(e.buttonMenu.render());
+
+			for (int y = 0; y < 8; y++)
+			{
+				for (int x = 0; x < 8; x++)
+				{
+					auto& piece = boardPieces[x + y * 8];
+					e.boardButtons[x + y * 8].button.text
+						.text = (piece.type == ChessPiece::None)
+						? "-"
+						: stringLink(symbol(piece.type), " ", (piece.isPlayer2 ? "2" : "1"));
+				}
+			}
+
+			for (auto& button : e.boardButtons)
+			{
+				DO_ANYALL(button.render());
+			}
 		}
 		return END_ANYALL();
 	}

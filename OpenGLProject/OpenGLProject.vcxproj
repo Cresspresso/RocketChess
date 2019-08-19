@@ -294,6 +294,8 @@
     <ClInclude Include="button.hpp" />
     <ClInclude Include="camera.hpp" />
     <ClInclude Include="camera_orbit_entity.hpp" />
+    <ClInclude Include="ChessAction.hpp" />
+    <ClInclude Include="ChessPiece.hpp" />
     <ClInclude Include="client.hpp" />
     <ClInclude Include="compatibility.hpp" />
     <ClInclude Include="compatibility_threading.hpp" />
