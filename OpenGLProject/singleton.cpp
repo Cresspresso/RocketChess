@@ -32,44 +32,4 @@ namespace singleton
 	{
 		return instance->resources;
 	}
-
-	void postLoadSceneEvent(SceneIndexer i)
-	{
-		instance->postLoadSceneEvent(i);
-	}
-
-	bool isNetworkOpen()
-	{
-		return false;// instance->networkManager.isOpen();
-	}
-
-	ReturnCode openClient()
-	{
-		return RC_ERROR;// instance->networkManager.openClient(getUsername());
-	}
-
-	ReturnCode openHost()
-	{
-		return RC_ERROR;//instance->networkManager.openHost(getServername(), getUsername());
-	}
-
-	void closeNetwork()
-	{
-		//instance->networkManager.close();
-	}
-
-	NetworkState getNetworkState()
-	{
-		return NetworkState::None;//instance->networkManager.getState();
-	}
-
-	std::string getUsername()
-	{
-		return instance->config.username;
-	}
-
-	std::string getServername()
-	{
-		return instance->config.servername;
-	}
 }

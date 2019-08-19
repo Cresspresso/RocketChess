@@ -22,9 +22,6 @@
 #include <map>
 #include <optional>
 
-#include "basic_materials_builder.hpp"
-#include "basic_scene_builder.hpp"
-
 #include "phong_material.hpp"
 #include "quad4_material.hpp"
 #include "reflection_material.hpp"
@@ -42,69 +39,48 @@
 #include "ChessPiece.hpp"
 #include "ChessAction.hpp"
 
-namespace menu_scene
+struct Scene
 {
-	struct Scene
-	{
-		struct Materials : public BasicMaterials
-		{
-			PhongMaterial focusedObject;
-			PhongMaterial outline;
-			Quad4Material flyby;
-			RimLightingMaterial rimLighting;
-			ReflectionMaterial reflection;
-			TextMaterial infoText;
-			FogMaterial foggy;
+	// Materials
+	Quad4Material matButtonBackground;
+	TextMaterial matButtonText;
 			
-			std::array<Quad4Material, 12> chessMaterials;
+	std::array<Quad4Material, 12> chessMaterials;
 
-			void init();
-		private:
-			struct Builder;
-
-		} materials;
+	ReturnCode initMaterials();
 
 
 
-		struct Entities : public BasicSceneEntities
-		{
-			SimpleEntity focusedObject;
-			SimpleEntity outline;
-			SimpleEntity flyby;
-			SimpleEntity rimLit;
-			SimpleEntity reflective;
+	// Entities
+	Camera cameraHud;
+	MenuButtonEntity quitButton;
+	SimpleEntity visibleBoard;
 
-			//Model model;
+	std::array<MenuButtonEntity, 8*8> boardButtons;
 
-			TextRenderer infoText;
-			MenuButtonEntity buttonToggleMusic;
-			static constexpr size_t N = 7;
-			std::array<MenuButtonEntity, N> loadSceneButtons;
+	ReturnCode initEntities();
 
-			std::array<MenuButtonEntity, 8*8> boardButtons;
 
-			MenuButtonEntity& getButtonQuit() { return buttonMenu; }
 
-		} entities;
+	// Behaviour
+	std::array<OwnedChessPiece, 8 * 8> boardPieces;
+	std::map<ivec2, ChessAction> availableActions;
+	std::optional<ivec2> selectedCoords;
+	bool isCurrentPlayerTwo = false;
 
-		std::array<OwnedChessPiece, 8 * 8> boardPieces;
-		std::map<ivec2, ChessAction> availableActions;
-		std::optional<ivec2> selectedCoords;
-		bool isCurrentPlayerTwo = false;
+	ReturnCode initBehaviour();
 
-		int GetPieceType(int x, int y);
-		ReturnCode onCellClicked(int x, int y);
+	int GetPieceType(int x, int y);
+	ReturnCode onCellClicked(int x, int y);
 
-		ReturnCode init();
-		void destroy() noexcept {}
 
-		ReturnCode update();
-		ReturnCode render();
 
-	private:
-		ReturnCode renderWorld();
-		ReturnCode renderHud();
+	ReturnCode init();
+	void destroy() noexcept {}
 
-		struct Builder;
-	};
-}
+	ReturnCode update();
+	ReturnCode render();
+
+	void initTextRenderer(TextRenderer& entity);
+	void initButton(Button& button);
+};
