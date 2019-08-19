@@ -297,6 +297,9 @@ namespace menu_scene
 
 				auto* pscene = &this->scene;
 				// replace "load menu scene" action with "quit" action.
+
+				//TODO: make it so that space bar does not trigger all the pawns
+				button.onClickLeft.hotkeys.push_back(32);
 				button.onClickLeft.action = [pscene, x, y]
 				{
 					return pscene->onCellClicked(x, y);
