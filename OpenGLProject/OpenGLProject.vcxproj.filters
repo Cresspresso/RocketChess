@@ -902,9 +902,6 @@
     <Filter Include="Source Files\application">
       <UniqueIdentifier>{3b2aa0c5-f425-47de-b530-eeb6613aa36f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\scenes\menu_scene">
-      <UniqueIdentifier>{28a8b5fe-49e4-4501-ab01-fa072e95c0a5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\resource_managers">
       <UniqueIdentifier>{ad3fdd93-1b8c-4704-b4f2-cdc2f9ce281f}</UniqueIdentifier>
     </Filter>
@@ -913,9 +910,6 @@
     </Filter>
     <Filter Include="Source Files\entities\agents">
       <UniqueIdentifier>{c69552b2-efd1-4025-bebd-a2d38fc5f019}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\scenes\builders">
-      <UniqueIdentifier>{d8fb116a-afd4-4ccd-91d4-2d9936c25619}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\entities\robotron">
       <UniqueIdentifier>{21f99b02-c770-4b7d-9814-f8352bf14783}</UniqueIdentifier>
@@ -1173,9 +1167,6 @@
     <ClCompile Include="resource_warehouse.cpp">
       <Filter>Source Files\application</Filter>
     </ClCompile>
-    <ClCompile Include="toggle_music.cpp">
-      <Filter>Source Files\scenes\menu_scene</Filter>
-    </ClCompile>
     <ClCompile Include="button.cpp">
       <Filter>Source Files\entities\buttons</Filter>
     </ClCompile>
@@ -1190,12 +1181,6 @@
     </ClCompile>
     <ClCompile Include="mover.cpp">
       <Filter>Source Files\entities\agents</Filter>
-    </ClCompile>
-    <ClCompile Include="basic_materials_builder.cpp">
-      <Filter>Source Files\scenes\builders</Filter>
-    </ClCompile>
-    <ClCompile Include="basic_scene_builder.cpp">
-      <Filter>Source Files\scenes\builders</Filter>
     </ClCompile>
     <ClCompile Include="player.cpp">
       <Filter>Source Files\entities\robotron</Filter>
@@ -1221,38 +1206,14 @@
     <ClCompile Include="box_range.cpp">
       <Filter>Source Files\common</Filter>
     </ClCompile>
-    <ClCompile Include="lobby_scene.cpp">
-      <Filter>Source Files\scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="seek_scene.cpp">
-      <Filter>Source Files\scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="robotron_scene.cpp">
-      <Filter>Source Files\scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="pursue_scene.cpp">
-      <Filter>Source Files\scenes</Filter>
-    </ClCompile>
     <ClCompile Include="menu_scene.cpp">
       <Filter>Source Files\scenes</Filter>
     </ClCompile>
     <ClCompile Include="wanderer.cpp">
       <Filter>Source Files\entities\agents</Filter>
     </ClCompile>
-    <ClCompile Include="wander_scene.cpp">
-      <Filter>Source Files\scenes</Filter>
-    </ClCompile>
     <ClCompile Include="mouse_mover.cpp">
       <Filter>Source Files\entities\agents</Filter>
-    </ClCompile>
-    <ClCompile Include="arrival_scene.cpp">
-      <Filter>Source Files\scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="leader_following_scene.cpp">
-      <Filter>Source Files\scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="multiplayer_scene.cpp">
-      <Filter>Source Files\scenes</Filter>
     </ClCompile>
     <ClCompile Include="common.cpp">
       <Filter>Source Files\common</Filter>
@@ -1322,6 +1283,9 @@
     </ClCompile>
     <ClCompile Include="fog_material.cpp">
       <Filter>Source Files\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="toggle_music.cpp">
+      <Filter>Source Files\scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1457,9 +1421,6 @@
     <ClInclude Include="resource_warehouse.hpp">
       <Filter>Source Files\application</Filter>
     </ClInclude>
-    <ClInclude Include="toggle_music.hpp">
-      <Filter>Source Files\scenes\menu_scene</Filter>
-    </ClInclude>
     <ClInclude Include="unique_init_ptr.hpp">
       <Filter>Source Files\application</Filter>
     </ClInclude>
@@ -1477,12 +1438,6 @@
     </ClInclude>
     <ClInclude Include="mover.hpp">
       <Filter>Source Files\entities\agents</Filter>
-    </ClInclude>
-    <ClInclude Include="basic_materials_builder.hpp">
-      <Filter>Source Files\scenes\builders</Filter>
-    </ClInclude>
-    <ClInclude Include="basic_scene_builder.hpp">
-      <Filter>Source Files\scenes\builders</Filter>
     </ClInclude>
     <ClInclude Include="player.hpp">
       <Filter>Source Files\entities\robotron</Filter>
@@ -1523,38 +1478,14 @@
     <ClInclude Include="box_range.hpp">
       <Filter>Source Files\common</Filter>
     </ClInclude>
-    <ClInclude Include="lobby_scene.hpp">
-      <Filter>Source Files\scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="seek_scene.hpp">
-      <Filter>Source Files\scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="robotron_scene.hpp">
-      <Filter>Source Files\scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="pursue_scene.hpp">
-      <Filter>Source Files\scenes</Filter>
-    </ClInclude>
     <ClInclude Include="menu_scene.hpp">
-      <Filter>Source Files\scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="wander_scene.hpp">
       <Filter>Source Files\scenes</Filter>
     </ClInclude>
     <ClInclude Include="wanderer.hpp">
       <Filter>Source Files\entities\agents</Filter>
     </ClInclude>
-    <ClInclude Include="arrival_scene.hpp">
-      <Filter>Source Files\scenes</Filter>
-    </ClInclude>
     <ClInclude Include="mouse_mover.hpp">
       <Filter>Source Files\entities\agents</Filter>
-    </ClInclude>
-    <ClInclude Include="leader_following_scene.hpp">
-      <Filter>Source Files\scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="multiplayer_scene.hpp">
-      <Filter>Source Files\scenes</Filter>
     </ClInclude>
     <ClInclude Include="console.hpp">
       <Filter>Source Files\console</Filter>
@@ -1681,6 +1612,9 @@
     </ClInclude>
     <ClInclude Include="ChessAction.hpp">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="toggle_music.hpp">
+      <Filter>Source Files\scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

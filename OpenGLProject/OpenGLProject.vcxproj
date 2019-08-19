@@ -190,10 +190,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="address.cpp" />
-    <ClCompile Include="arrival_scene.cpp" />
     <ClCompile Include="audio.cpp" />
-    <ClCompile Include="basic_materials_builder.cpp" />
-    <ClCompile Include="basic_scene_builder.cpp" />
     <ClCompile Include="box_range.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="camera.cpp" />
@@ -222,25 +219,19 @@
     <ClCompile Include="font_manager.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="handle_exception.cpp" />
-    <ClCompile Include="leader_following_scene.cpp" />
-    <ClCompile Include="lobby_scene.cpp" />
     <ClCompile Include="old_main_network.cpp" />
     <ClCompile Include="menu_button.cpp" />
     <ClCompile Include="mesh_manager.cpp" />
     <ClCompile Include="mouse_mover.cpp" />
     <ClCompile Include="mover.cpp" />
-    <ClCompile Include="multiplayer_scene.cpp" />
     <ClCompile Include="network.cpp" />
     <ClCompile Include="old_network_entity.cpp" />
     <ClCompile Include="network_entity.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="random.cpp" />
-    <ClCompile Include="robotron_scene.cpp" />
     <ClCompile Include="seeker_enemy.cpp" />
-    <ClCompile Include="seek_scene.cpp" />
     <ClCompile Include="program_manager.cpp" />
     <ClCompile Include="pursuer.cpp" />
-    <ClCompile Include="pursue_scene.cpp" />
     <ClCompile Include="resource_warehouse.cpp" />
     <ClCompile Include="rigidbody.cpp" />
     <ClCompile Include="menu_scene.cpp" />
@@ -279,17 +270,13 @@
     <ClCompile Include="textures.cpp" />
     <ClCompile Include="time.cpp" />
     <ClCompile Include="wanderer.cpp" />
-    <ClCompile Include="wander_scene.cpp" />
     <ClCompile Include="world_math.cpp" />
     <ClCompile Include="wsa_error.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="accumulate_container.hpp" />
     <ClInclude Include="address.hpp" />
-    <ClInclude Include="arrival_scene.hpp" />
     <ClInclude Include="audio.hpp" />
-    <ClInclude Include="basic_materials_builder.hpp" />
-    <ClInclude Include="basic_scene_builder.hpp" />
     <ClInclude Include="box_range.hpp" />
     <ClInclude Include="button.hpp" />
     <ClInclude Include="camera.hpp" />
@@ -327,10 +314,8 @@
     <ClInclude Include="debug_log.hpp" />
     <ClInclude Include="drawable.hpp" />
     <ClInclude Include="game.hpp" />
-    <ClInclude Include="leader_following_scene.hpp" />
     <ClInclude Include="map_container.hpp" />
     <ClInclude Include="mouse_mover.hpp" />
-    <ClInclude Include="multiplayer_scene.hpp" />
     <ClInclude Include="network_entity.hpp" />
     <ClInclude Include="port_constants.hpp" />
     <ClInclude Include="random.hpp" />
@@ -342,7 +327,6 @@
     <ClInclude Include="handle_exception.hpp" />
     <ClInclude Include="info.hpp" />
     <ClInclude Include="lambda.hpp" />
-    <ClInclude Include="lobby_scene.hpp" />
     <ClInclude Include="menu_button.hpp" />
     <ClInclude Include="mesh_manager.hpp" />
     <ClInclude Include="message.hpp" />
@@ -352,11 +336,8 @@
     <ClInclude Include="packet.hpp" />
     <ClInclude Include="player.hpp" />
     <ClInclude Include="print_container.hpp" />
-    <ClInclude Include="robotron_scene.hpp" />
-    <ClInclude Include="seek_scene.hpp" />
     <ClInclude Include="program_manager.hpp" />
     <ClInclude Include="pursuer.hpp" />
-    <ClInclude Include="pursue_scene.hpp" />
     <ClInclude Include="resource_warehouse.hpp" />
     <ClInclude Include="resource_manager.hpp" />
     <ClInclude Include="rigidbody.hpp" />
@@ -403,7 +384,6 @@
     <ClInclude Include="textures.hpp" />
     <ClInclude Include="time.hpp" />
     <ClInclude Include="wanderer.hpp" />
-    <ClInclude Include="wander_scene.hpp" />
     <ClInclude Include="work_queue.hpp" />
     <ClInclude Include="world_math.hpp" />
     <ClInclude Include="wsa_error.hpp" />
