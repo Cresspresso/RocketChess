@@ -6,11 +6,11 @@
 enum class ChessPiece
 {
 	None,
-	Pawn,
-	King,
-	Queen,
-	Knight,
 	Bishop,
+	King,
+	Knight,
+	Pawn,
+	Queen,
 	Rook,
 };
 

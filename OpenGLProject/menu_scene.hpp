@@ -55,6 +55,8 @@ namespace menu_scene
 			ReflectionMaterial reflection;
 			TextMaterial infoText;
 			FogMaterial foggy;
+			
+			std::array<Quad4Material, 12> chessMaterials;
 
 			void init();
 		private:
@@ -90,6 +92,7 @@ namespace menu_scene
 		std::optional<ivec2> selectedCoords;
 		bool isCurrentPlayerTwo = false;
 
+		int GetPieceType(int x, int y);
 		ReturnCode onCellClicked(int x, int y);
 
 		ReturnCode init();
