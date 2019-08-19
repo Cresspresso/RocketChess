@@ -478,6 +478,9 @@
     <ClCompile Include="Money.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="menuSwap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cubemap_material.hpp">
@@ -836,6 +839,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Money.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="menuSwap.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
