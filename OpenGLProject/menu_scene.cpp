@@ -45,7 +45,7 @@
 
 		matButtonText.tint = vec3(0);
 
-		for (int i = 0; i < chessMaterials.size(); i++)
+		for (size_t i = 0; i < chessMaterials.size(); i++)
 		{
 			chessMaterials[i].tex1 = resources.textures[static_cast<int>(TextureIndexer::BishopUS) + i];
 		}
