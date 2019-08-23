@@ -227,6 +227,7 @@
 			DO_ANYALL(initMaterials());
 			DO_ANYALL(initEntities());
 			DO_ANYALL(initBehaviour());
+			try { navigation = std::make_unique<Navigation>(); } CATCH_PRINT();
 		}
 		return END_ANYALL();
 	}
@@ -237,6 +238,12 @@
 	{
 		BEGIN_ANYALL();
 		{
+			try
+			{
+				navigation->update();
+			}
+			CATCH_PRINT();
+
 			// button horizontal layout at top-left corner of hud
 			/*{
 				vec2 const hudHalfSize = cameraHud.projection.calculateHalfSize();
@@ -336,6 +343,8 @@
 					}
 				}
 			}
+
+			try { navigation->render(); } CATCH_PRINT();
 		}
 		return END_ANYALL();
 	}
