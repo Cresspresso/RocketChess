@@ -18,8 +18,6 @@
 
 #pragma once
 
-#include <functional>
-
 #include "focused_panel.hpp"
 #include "renderer.hpp"
 #include "transform.hpp"
@@ -27,6 +25,12 @@
 
 
 
+/*
+**	Can be either in the main menu or game scene.
+**	Can have pause menu open at the same time as either scene.
+**	Renders the cursor over the focused button.
+**	Does not render the scenes.
+*/
 class Navigation
 {
 public:
@@ -34,7 +38,18 @@ public:
 	void update();
 	void render();
 
-	FocusedPanel focusedPanel;
+	std::variant<
+		FocusedPanel::MainMenu,
+		FocusedPanel::ChessBoard,
+		FocusedPanel::RocketPurchase,
+		FocusedPanel::EndTurn
+	> gamePanel;
+
+	std::optional<FocusedPanel::PauseMenu> pauseMenu;
+
+	bool isGameSceneVisible() const;
+	bool isPauseMenuVisible() const;
+
 private:
 	Quad4Material material;
 	Renderer renderer;

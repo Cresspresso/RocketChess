@@ -1,9 +1,26 @@
+/*
+**	Bachelor of Software Engineering
+**	Media Design School
+**	Auckland
+**	New Zealand
+**
+**	(c) 2019 Media Design School
+**
+**	File		:	navigation.cpp
+**
+**	Summary		:	Handles player UI navigation with arrow keys.
+**
+**	Project		:	GD2S02 Software Engineering
+**	Author		:	Elijah Shadbolt
+**	Email		:	elijah.sha7979@mediadesign.school.nz
+**	Date Edited	:	23/08/2019
+*/
 
+#include "math_utils.hpp"
+#include "input.hpp"
+#include "console.hpp"
 #include "application.hpp"
 #include "singleton.hpp"
-#include "input.hpp"
-#include "math_utils.hpp"
-#include "console.hpp"
 
 #include "navigation.hpp"
 
@@ -11,9 +28,6 @@
 
 Navigation::Navigation()
 {
-	using MM = FocusedPanels::MainMenuPanel;
-	focusedPanel.emplace<MM>();
-
 	transform.localScale = vec3(100, 100, 1);
 
 	auto& resources = singleton::getResources();
@@ -23,6 +37,195 @@ Navigation::Navigation()
 	renderer.program = resources.programs.getProgram(ProgramIndexer::Quad4);
 	renderer.material = &material;
 	renderer.mesh = &(resources.meshes[MeshIndexer::Quad]);
+}
+
+
+
+bool Navigation::isGameSceneVisible() const
+{
+	return std::visit(overload{
+		[](FocusedPanel::MainMenu const&) { return false; },
+		[](auto const&) { return true; },
+		}, gamePanel);
+}
+
+
+
+bool Navigation::isPauseMenuVisible() const
+{
+	return static_cast<bool>(pauseMenu);
+}
+
+
+
+void Navigation::render()
+{
+	using namespace FocusedPanel;
+
+	bool doRender = true;
+
+	// update transform position
+	if (pauseMenu)
+	{
+		PauseMenu const& focusedPanelData = *pauseMenu;
+		using ButtonID = PauseMenu::ButtonID;
+		switch (focusedPanelData.focusedButton)
+		{
+		case ButtonID::Continue:
+		{
+			transform.localPosition = vec3(200, 200, 0);
+		}
+		break;
+
+		case ButtonID::ExitToMainMenu:
+		{
+			transform.localPosition = vec3(200, 100, 0);
+		}
+		break;
+
+		case ButtonID::ExitToDesktop:
+		{
+			transform.localPosition = vec3(200, 000, 0);
+		}
+		break;
+
+		default:
+		{
+			doRender = false;
+		}
+		break;
+		}
+	}
+	else
+	{
+		std::visit(overload{
+			// if it is a MainMenuPanel
+			[&](MainMenu& focusedPanelData)
+		{
+			using ButtonID = MainMenu::ButtonID;
+			switch (focusedPanelData.focusedButton)
+			{
+			case ButtonID::NewGame:
+			{
+				transform.localPosition = vec3(-300, 200, 0);
+			}
+			break;
+
+			case ButtonID::Instructions:
+			{
+				transform.localPosition = vec3(-300, 100, 0);
+			}
+			break;
+
+			case ButtonID::Options:
+			{
+				transform.localPosition = vec3(-300, 0, 0);
+			}
+			break;
+
+			case ButtonID::ExitToDesktop:
+			{
+				transform.localPosition = vec3(-300, -100, 0);
+			}
+			break;
+
+			default:
+			{
+				doRender = false;
+			}
+			break;
+			}
+		},
+			// else if it is a ChessBoardPanel
+			[&](ChessBoard& focusedPanelData)
+		{
+			ivec2 const coords = focusedPanelData.getFocusedCellCoords();
+
+			vec2 const boardOrigin = vec2(-200, -200);
+			transform.localPosition = vec3(boardOrigin + vec2(coords.x * 100, coords.y * 100), 0);
+		},
+			// else if
+			[&](RocketPurchase& focusedPanelData)
+		{
+			using ButtonID = RocketPurchase::ButtonID;
+			switch (focusedPanelData.focusedButton)
+			{
+			case ButtonID::BackToBoard:
+			{
+				transform.localPosition = vec3(200, 200, 0);
+			}
+			break;
+
+			case ButtonID::RPG:
+			{
+				transform.localPosition = vec3(200, 100, 0);
+			}
+			break;
+
+			case ButtonID::ConventionalMissile:
+			{
+				transform.localPosition = vec3(200, 000, 0);
+			}
+			break;
+
+			case ButtonID::ICBM:
+			{
+				transform.localPosition = vec3(200, -100, 0);
+			}
+			break;
+
+			case ButtonID::Voyager1:
+			{
+				transform.localPosition = vec3(200, -200, 0);
+			}
+			break;
+
+			default:
+			{
+				doRender = false;
+			}
+			break;
+			}
+		},
+			// else if
+			[&](EndTurn& focusedPanelData)
+		{
+			using ButtonID = EndTurn::ButtonID;
+			switch (focusedPanelData.focusedButton)
+			{
+			case ButtonID::EndTurn:
+			{
+				transform.localPosition = vec3(300, -100, 0);
+			}
+			break;
+
+			case ButtonID::Undo:
+			{
+				transform.localPosition = vec3(300, -200, 0);
+			}
+			break;
+
+			default:
+			{
+				doRender = false;
+			}
+			break;
+			}
+		},
+			}, gamePanel);
+	}
+	//~ end visit
+
+	// after updating transform
+	if (doRender)
+	{
+		transform.recalculate();
+		renderer.modelMatrix = transform.modelMatrix;
+		if (RC_SUCCESS != renderer.render())
+		{
+			throw std::runtime_error("Failed to render Navigation");
+		}
+	}
 }
 
 
@@ -75,7 +278,18 @@ namespace
 
 void Navigation::update()
 {
-	if (getKeyboardState(' ') == InputState::DownFirst)
+	if (getKeyboardState(KEY_ESCAPE) == InputState::DownFirst)
+	{
+		if (pauseMenu)
+		{
+			pauseMenu = std::nullopt;
+		}
+		else
+		{
+			pauseMenu = FocusedPanel::PauseMenu();
+		}
+	}
+	else if (getKeyboardState(KEY_SPACE) == InputState::DownFirst)
 	{
 		invokeAction();
 	}
@@ -87,196 +301,57 @@ void Navigation::update()
 
 
 
-void Navigation::render()
-{
-	bool doRender = true;
-
-	// update transform position
-
-	// do a switch statement on focusedPanel.
-	{
-		using namespace FocusedPanels;
-		focusedPanel.visit<void>(
-			// if it is a MainMenuPanel
-			[&](MainMenuPanel& focusedPanelData)
-		{
-			using ButtonID = MainMenuPanel::ButtonID;
-			switch (focusedPanelData.focusedButton)
-			{
-			case ButtonID::NewGame:
-			{
-				transform.localPosition = vec3(-300, 200, 0);
-			}
-			break;
-
-			case ButtonID::Instructions:
-			{
-				transform.localPosition = vec3(-300, 100, 0);
-			}
-			break;
-
-			case ButtonID::Options:
-			{
-				transform.localPosition = vec3(-300, 0, 0);
-			}
-			break;
-
-			case ButtonID::ExitToDesktop:
-			{
-				transform.localPosition = vec3(-300, -100, 0);
-			}
-			break;
-
-			default:
-			{
-				doRender = false;
-			}
-			break;
-			}
-		},
-			// else if it is a ChessBoardPanel
-			[&](ChessBoardPanel& focusedPanelData)
-		{
-			ivec2 const coords = focusedPanelData.getFocusedCellCoords();
-
-			vec2 const boardOrigin = vec2(-200, -200);
-			transform.localPosition = vec3(boardOrigin + vec2(coords.x * 100, coords.y * 100), 0);
-		},
-			// else if
-			[&](RocketPurchasePanel& focusedPanelData)
-		{
-			using ButtonID = RocketPurchasePanel::ButtonID;
-			switch (focusedPanelData.focusedButton)
-			{
-			case ButtonID::BackToBoard:
-			{
-				transform.localPosition = vec3(200, 200, 0);
-			}
-			break;
-
-			case ButtonID::RPG:
-			{
-				transform.localPosition = vec3(200, 100, 0);
-			}
-			break;
-
-			case ButtonID::ConventionalMissile:
-			{
-				transform.localPosition = vec3(200, 000, 0);
-			}
-			break;
-
-			case ButtonID::ICBM:
-			{
-				transform.localPosition = vec3(200, -100, 0);
-			}
-			break;
-
-			case ButtonID::Voyager1:
-			{
-				transform.localPosition = vec3(200, -200, 0);
-			}
-			break;
-
-			default:
-			{
-				doRender = false;
-			}
-			break;
-			}
-		},
-			// else if
-			[&](EndTurnPanel& focusedPanelData)
-		{
-			using ButtonID = EndTurnPanel::ButtonID;
-			switch (focusedPanelData.focusedButton)
-			{
-			case ButtonID::EndTurn:
-			{
-				transform.localPosition = vec3(300, -100, 0);
-			}
-			break;
-
-			case ButtonID::Undo:
-			{
-				transform.localPosition = vec3(300, -200, 0);
-			}
-			break;
-
-			default:
-			{
-				doRender = false;
-			}
-			break;
-			}
-		},
-			// else if
-			[&](PauseMenuPanel& focusedPanelData)
-		{
-			using ButtonID = PauseMenuPanel::ButtonID;
-			switch (focusedPanelData.focusedButton)
-			{
-			case ButtonID::Continue:
-			{
-				transform.localPosition = vec3(200, 200, 0);
-			}
-			break;
-
-			case ButtonID::ExitToMainMenu:
-			{
-				transform.localPosition = vec3(200, 100, 0);
-			}
-			break;
-
-			case ButtonID::ExitToDesktop:
-			{
-				transform.localPosition = vec3(200, 000, 0);
-			}
-			break;
-
-			default:
-			{
-				doRender = false;
-			}
-			break;
-			}
-		}
-		);
-	}
-	//~ end visit
-
-	// after updating transform
-	if (doRender)
-	{
-		transform.recalculate();
-		renderer.modelMatrix = transform.modelMatrix;
-		if (RC_SUCCESS != renderer.render())
-		{
-			throw std::runtime_error("Failed to render Navigation");
-		}
-	}
-}
-
-
-
 void Navigation::invokeAction()
 {
-	// invoke focused button...
+	using namespace FocusedPanel;
 
-	// do a switch statement on focusedPanel.
+	if (pauseMenu)
 	{
-		using namespace FocusedPanels;
-		focusedPanel.visit<void>(
-			// if it is a MainMenuPanel
-			[&](MainMenuPanel& focusedPanelData)
+		PauseMenu& focusedPanelData = *pauseMenu;
+		using ButtonID = PauseMenu::ButtonID;
+		switch (focusedPanelData.focusedButton)
 		{
-			using ButtonID = MainMenuPanel::ButtonID;
+		case ButtonID::Continue:
+		{
+			pauseMenu = std::nullopt;
+		}
+		break;
+
+		case ButtonID::ExitToMainMenu:
+		{
+			gamePanel = MainMenu();
+			pauseMenu = std::nullopt;
+		}
+		break;
+
+		case ButtonID::ExitToDesktop:
+		{
+			glutLeaveMainLoop();
+		}
+		break;
+
+		default:
+		{
+#ifdef _DEBUG
+			console::error("focusedPanelData has an invalid focusedButton value.");
+#endif
+			focusedPanelData.focusedButton = ButtonID::Continue;
+		}
+		break;
+		}
+	}
+	else
+	{
+		std::visit(overload{
+			// if it is a MainMenuPanel
+			[&](MainMenu& focusedPanelData)
+		{
+			using ButtonID = MainMenu::ButtonID;
 			switch (focusedPanelData.focusedButton)
 			{
 			case ButtonID::NewGame:
 			{
-				// TODO
-				console::error("NewGame button not implemented.");
+				gamePanel = ChessBoard();
 			}
 			break;
 
@@ -311,22 +386,30 @@ void Navigation::invokeAction()
 			}
 		},
 			// else if it is a ChessBoardPanel
-			[&](ChessBoardPanel& focusedPanelData)
+			[&](ChessBoard& focusedPanelData)
 		{
 			ivec2 const coords = focusedPanelData.getFocusedCellCoords();
+
 			// TODO
-			console::error("Action in Board not implemented.");
+			// DEBUG
+			if (coords == ivec2(0, 1))
+			{
+				gamePanel = RocketPurchase();
+			}
+			else
+			{
+				console::error("Action in Board not implemented.");
+			}
 		},
 			// else if
-			[&](RocketPurchasePanel& focusedPanelData)
+			[&](RocketPurchase& focusedPanelData)
 		{
-			using ButtonID = RocketPurchasePanel::ButtonID;
+			using ButtonID = RocketPurchase::ButtonID;
 			switch (focusedPanelData.focusedButton)
 			{
 			case ButtonID::BackToBoard:
 			{
-				// TODO
-				console::error("BackToBoard button not implemented.");
+				gamePanel = ChessBoard();
 			}
 			break;
 
@@ -369,15 +452,16 @@ void Navigation::invokeAction()
 			}
 		},
 			// else if
-			[&](EndTurnPanel& focusedPanelData)
+			[&](EndTurn& focusedPanelData)
 		{
-			using ButtonID = EndTurnPanel::ButtonID;
+			using ButtonID = EndTurn::ButtonID;
 			switch (focusedPanelData.focusedButton)
 			{
 			case ButtonID::EndTurn:
 			{
+				// DEBUG
+				gamePanel = MainMenu();
 				// TODO
-				console::error("EndTurn button not implemented.");
 			}
 			break;
 
@@ -398,41 +482,7 @@ void Navigation::invokeAction()
 			break;
 			}
 		},
-			// else if
-			[&](PauseMenuPanel& focusedPanelData)
-		{
-			using ButtonID = PauseMenuPanel::ButtonID;
-			switch (focusedPanelData.focusedButton)
-			{
-			case ButtonID::Continue:
-			{
-				// TODO
-			}
-			break;
-
-			case ButtonID::ExitToMainMenu:
-			{
-				// TODO
-			}
-			break;
-
-			case ButtonID::ExitToDesktop:
-			{
-				glutLeaveMainLoop();
-			}
-			break;
-
-			default:
-			{
-#ifdef _DEBUG
-				console::error("focusedPanelData has an invalid focusedButton value.");
-#endif
-				focusedPanelData.focusedButton = ButtonID::Continue;
-			}
-			break;
-			}
-		}
-		);
+			}, gamePanel);
 	}
 	//~ end visit
 }
@@ -451,12 +501,32 @@ void Navigation::handleMoveInput()
 
 	if (dir == ivec2(0, 0)) { return; }
 
-	// do a switch statement on focusedPanel.
+
+
+	using namespace FocusedPanel;
+
+	if (pauseMenu)
 	{
-		using namespace FocusedPanels;
-		focusedPanel.visit<void>(
+		PauseMenu& focusedPanelData = *pauseMenu;
+		auto const cycleFocusedButton = [&](int delta)
+		{
+			cycleEnumInPlace(focusedPanelData.focusedButton, delta);
+		};
+
+		if (moveUp)
+		{
+			cycleFocusedButton(-1);
+		}
+		if (moveDown)
+		{
+			cycleFocusedButton(1);
+		}
+	}
+	else
+	{
+		std::visit(overload{
 			// if it is a MainMenuPanel
-			[&](MainMenuPanel& focusedPanelData)
+			[&](MainMenu& focusedPanelData)
 		{
 			auto const cycleFocusedButton = [&](int delta)
 			{
@@ -473,7 +543,7 @@ void Navigation::handleMoveInput()
 			}
 		},
 			// else if it is a ChessBoardPanel
-			[&](ChessBoardPanel& focusedPanelData)
+			[&](ChessBoard& focusedPanelData)
 		{
 			ivec2 current = focusedPanelData.getFocusedCellCoords();
 			current.x = cycle<int>(current.x + dir.x, 8);
@@ -481,7 +551,7 @@ void Navigation::handleMoveInput()
 			focusedPanelData.setFocusedCellCoords(current);
 		},
 			// else if
-			[&](RocketPurchasePanel& focusedPanelData)
+			[&](RocketPurchase& focusedPanelData)
 		{
 			auto const cycleFocusedButton = [&](int delta)
 			{
@@ -498,7 +568,7 @@ void Navigation::handleMoveInput()
 			}
 		},
 			// else if
-			[&](EndTurnPanel& focusedPanelData)
+			[&](EndTurn& focusedPanelData)
 		{
 			auto const cycleFocusedButton = [&](int delta)
 			{
@@ -515,7 +585,7 @@ void Navigation::handleMoveInput()
 			}
 		},
 			// else if
-			[&](PauseMenuPanel& focusedPanelData)
+			[&](PauseMenu& focusedPanelData)
 		{
 			auto const cycleFocusedButton = [&](int delta)
 			{
@@ -531,7 +601,7 @@ void Navigation::handleMoveInput()
 				cycleFocusedButton(1);
 			}
 		}
-		);
+			}, gamePanel);
 	}
 	//~ end visit
 }

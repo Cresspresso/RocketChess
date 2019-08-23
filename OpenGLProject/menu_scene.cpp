@@ -81,7 +81,6 @@
 			initButton(button);
 
 			// set callback
-			button.onClickLeft.hotkeys.push_back(KEY_ESCAPE);
 			button.onClickLeft.action = []
 			{
 				glutLeaveMainLoop();

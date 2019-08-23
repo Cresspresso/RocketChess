@@ -439,6 +439,9 @@
     <ClCompile Include="navigation.cpp">
       <Filter>Source Files\rocket_chess</Filter>
     </ClCompile>
+    <ClCompile Include="focused_panel.cpp">
+      <Filter>Source Files\rocket_chess</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cubemap_material.hpp">

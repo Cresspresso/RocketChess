@@ -196,6 +196,7 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="camera_orbit_entity.cpp" />
     <ClCompile Include="client.cpp" />
+    <ClCompile Include="focused_panel.cpp" />
     <ClCompile Include="fog_material.cpp" />
     <ClCompile Include="navigation.cpp" />
     <ClCompile Include="network_entity_threads.cpp" />
