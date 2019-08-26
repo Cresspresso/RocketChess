@@ -68,6 +68,11 @@ struct Scene
 
 	std::array<MenuButtonEntity, 8*8> boardButtons;
 
+	TextEntity currentPlayerLabel;
+	TextEntity SovietCurrency;
+	TextEntity UnitedStatesCurrency;
+
+
 	ReturnCode initEntities();
 
 

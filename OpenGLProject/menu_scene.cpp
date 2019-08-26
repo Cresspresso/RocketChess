@@ -1,4 +1,4 @@
-/*
+﻿/*
 **	Bachelor of Software Engineering
 **	Media Design School
 **	Auckland
@@ -163,6 +163,39 @@
 			button.buttonEntity.transform.localPosition = vec3(0, 200 - static_cast<int>(i) * 100, 0);
 			button.buttonEntity.textEntity.textRenderer.text = mainMenuButtonTexts[i];
 		}
+
+		//------------------------------------------------//
+		//-------------------UI Text----------------------//
+		//------------------------------------------------//
+		int Rubles = 0; // Values Can be Set to equal
+		int Dollars = 0; // Functional values for currency...
+
+
+		SovietCurrency.textRenderer.text = "Soviet Rubles $ " + toString(Rubles);
+		UnitedStatesCurrency.textRenderer.text = "US Dollars $ " + toString(Dollars);
+		SovietCurrency.transform.localPosition = vec3(315, 300, 0);
+		UnitedStatesCurrency.transform.localPosition = vec3(335, 250, 0);
+
+
+		//
+		// Player Turn Labels
+		//
+		
+		if (isCurrentPlayerTwo == true) // Needs Switching
+		{
+			currentPlayerLabel.transform.localPosition = vec3(365, 350, 0);
+			
+		}
+		else if (isCurrentPlayerTwo == false)
+		{
+			currentPlayerLabel.transform.localPosition = vec3(365, 350, 0);
+
+		}
+		else
+		{
+
+		}
+
 
 		return RC_SUCCESS;
 	}
@@ -365,19 +398,26 @@
 			auto& PlayerType = isCurrentPlayerTwo;
 			if (isCurrentPlayerTwo == true) // Needs Switching
 			{
-				DEBUG_LOG("United States Move");
-				//isCurrentPlayerTwo = false;
+				DEBUG_LOG("US's Move");
+				currentPlayerLabel.textRenderer.text = "US's Move";
+				currentPlayerLabel.material.tint = vec3(0.2,0.1,0.85);//(0.65, 0.2, 0.85);
+				
+				isCurrentPlayerTwo = false;
 			}
-			if (isCurrentPlayerTwo == false) // Default:
+			else if (isCurrentPlayerTwo == false) // Default:
 			{
 				DEBUG_LOG("USSR's Move");
-				//isCurrentPlayerTwo = true;
+				currentPlayerLabel.textRenderer.text = "USSR's Move";
+				currentPlayerLabel.material.tint = vec3(0.65, 1, 0.65);
+				isCurrentPlayerTwo = true;
 			}
 			else 
 			{
 
 			}
-
+			DO_ANYALL(currentPlayerLabel.render());
+			DO_ANYALL(SovietCurrency.render());
+			DO_ANYALL(UnitedStatesCurrency.render());
 
 			// switch statment on steroids
 			{
