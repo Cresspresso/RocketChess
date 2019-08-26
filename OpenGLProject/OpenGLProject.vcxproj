@@ -193,11 +193,13 @@
     <ClCompile Include="audio.cpp" />
     <ClCompile Include="box_range.cpp" />
     <ClCompile Include="button.cpp" />
+    <ClCompile Include="button_renderer.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="camera_orbit_entity.cpp" />
     <ClCompile Include="client.cpp" />
     <ClCompile Include="focused_panel.cpp" />
     <ClCompile Include="fog_material.cpp" />
+    <ClCompile Include="main_menu_button_renderer.cpp" />
     <ClCompile Include="navigation.cpp" />
     <ClCompile Include="network_entity_threads.cpp" />
     <ClCompile Include="network_manager.cpp" />
@@ -277,6 +279,7 @@
     <ClInclude Include="audio.hpp" />
     <ClInclude Include="box_range.hpp" />
     <ClInclude Include="button.hpp" />
+    <ClInclude Include="button_renderer.hpp" />
     <ClInclude Include="camera.hpp" />
     <ClInclude Include="camera_orbit_entity.hpp" />
     <ClInclude Include="ChessAction.hpp" />
@@ -286,6 +289,7 @@
     <ClInclude Include="compatibility_threading.hpp" />
     <ClInclude Include="fog_material.hpp" />
     <ClInclude Include="focused_panel.hpp" />
+    <ClInclude Include="main_menu_button_renderer.hpp" />
     <ClInclude Include="navigation.hpp" />
     <ClInclude Include="network_state.hpp" />
     <ClInclude Include="network_entity_threads.hpp" />

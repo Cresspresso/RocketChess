@@ -16,6 +16,9 @@
 **	Date Edited	:	26/08/2019
 */
 
+#include "resource_warehouse.hpp"
+#include "singleton.hpp"
+
 #include "button_renderer.hpp"
 
 
@@ -26,6 +29,10 @@ ButtonRenderer::ButtonRenderer()
 
 	backgroundTransform.parentModelMatrix = parent;
 	textTransform.parentModelMatrix = parent;
+
+	auto& resources = singleton::getResources();
+	text.font = &(resources.fonts[FontIndexer::Arial]);
+	text.renderer.mesh = &(resources.meshes[MeshIndexer::Text]);
 }
 
 

@@ -18,8 +18,6 @@ MainMenuButtonRenderer::MainMenuButtonRenderer()
 
 	br.backgroundTransform.localScale = vec3(120,60,1);
 
-	br.text.font = &(resources.fonts[FontIndexer::Arial]);
-
 	br.textTransform.localPosition = vec3(-br.backgroundTransform.localScale.x, 0, 0);
 }
 

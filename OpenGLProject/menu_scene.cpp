@@ -150,6 +150,21 @@
 			}
 		}
 
+		// menu buttons
+		static constexpr char const*const mainMenuButtonTexts[] {
+			"New Game",
+			"Instructions",
+			"Options",
+			"Exit to Desktop",
+		};
+		for (size_t i = 0; i < mainMenuButtonRenderers.size(); i++)
+		{
+			auto& button = mainMenuButtonRenderers[i];
+			button.br.transform.localPosition = vec3(0, static_cast<int>(i) * 70 - 200, 0);
+			button.br.text.text = mainMenuButtonTexts[i];
+			button.br.textTransform.localScale = vec3(10, 10, 1);
+		}
+
 		return RC_SUCCESS;
 	}
 
@@ -341,6 +356,25 @@
 						DO_ANYALL(button.render());
 					}
 				}
+			}
+
+			// switch statment on steroids
+			{
+				ReturnCode const r = this->navigation->visit(overload{
+					[&](FocusedPanel::MainMenu const& panelData) // case MainMenu:
+				{
+					for (size_t i = 0; i < mainMenuButtonRenderers.size(); i++)
+					{
+						DO_ANYALL(mainMenuButtonRenderers[i].render());
+					}
+					return RC_SUCCESS;
+				},
+					[&](auto const& other) // default:
+				{
+					return RC_ERROR;
+				},
+					});
+				DO_ANYALL(r);
 			}
 
 			try { navigation->render(); } CATCH_PRINT();
