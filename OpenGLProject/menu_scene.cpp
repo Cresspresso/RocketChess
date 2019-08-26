@@ -357,17 +357,21 @@
 				}
 			}
 
+			
+			// Needs To Be Set To A Button Similar To The Quit Button
+			// Also Needs To Have A Defined State Of Play Where Players Can
+			// Take Turns Moving Their Pieces In Accordance To The Rules Of Chess
 			// Call UI Section for the Players move US & USSR
 			auto& PlayerType = isCurrentPlayerTwo;
 			if (isCurrentPlayerTwo == true) // Needs Switching
 			{
 				DEBUG_LOG("United States Move");
-				isCurrentPlayerTwo = false;
+				//isCurrentPlayerTwo = false;
 			}
 			if (isCurrentPlayerTwo == false) // Default:
 			{
 				DEBUG_LOG("USSR's Move");
-				isCurrentPlayerTwo = true;
+				//isCurrentPlayerTwo = true;
 			}
 			else 
 			{
