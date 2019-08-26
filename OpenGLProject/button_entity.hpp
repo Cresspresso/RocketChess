@@ -22,18 +22,14 @@
 #include <vector>
 
 #include "text_entity.hpp"
-#include "quad4_material.hpp"
+#include "sprite_entity.hpp"
 
 
 
 struct ButtonEntity
 {
 	Transform transform;
-
-	Transform backgroundTransform; // child
-	Renderer background;
-	Quad4Material matBG;
-
+	SpriteEntity backgroundEntity;
 	TextEntity textEntity;
 
 	ButtonEntity();

@@ -242,6 +242,7 @@
     <ClCompile Include="application.cpp" />
     <ClCompile Include="singleton.cpp" />
     <ClCompile Include="socket.cpp" />
+    <ClCompile Include="sprite_entity.cpp" />
     <ClCompile Include="texture_manager.cpp" />
     <ClCompile Include="text_entity.cpp" />
     <ClCompile Include="text_renderer.cpp" />
@@ -350,6 +351,7 @@
     <ClInclude Include="application.hpp" />
     <ClInclude Include="singleton.hpp" />
     <ClInclude Include="socket.hpp" />
+    <ClInclude Include="sprite_entity.hpp" />
     <ClInclude Include="statistic_container.hpp" />
     <ClInclude Include="stc_message_type.hpp" />
     <ClInclude Include="text_entity.hpp" />

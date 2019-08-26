@@ -19,9 +19,7 @@
 #pragma once
 
 #include "focused_panel.hpp"
-#include "renderer.hpp"
-#include "transform.hpp"
-#include "quad4_material.hpp"
+#include "sprite_entity.hpp"
 
 
 
@@ -47,6 +45,8 @@ public:
 
 	std::optional<FocusedPanel::PauseMenu> pauseMenu;
 
+	SpriteEntity spriteEntity;
+
 	bool isGameSceneVisible() const;
 	bool isPauseMenuVisible() const;
 
@@ -60,10 +60,6 @@ public:
 	}
 
 private:
-	Quad4Material material;
-	Renderer renderer;
-	Transform transform;
-
 	void invokeAction();
 	void handleMoveInput();
 };
