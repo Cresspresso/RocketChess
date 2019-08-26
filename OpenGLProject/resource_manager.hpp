@@ -62,8 +62,6 @@ struct ResourceManager /* abstract, with non-virtual destructor */
 		}
 	}
 
-
-
 	virtual ReturnCode load(Resource& out, size_t i) = 0;
 
 	ReturnCode init()

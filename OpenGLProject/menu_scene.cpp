@@ -172,7 +172,7 @@
 
 			else
 			{
-				isCurrentPlayerTwo = !isCurrentPlayerTwo;
+				isCurrentPlayerTwo = !isCurrentPlayerTwo; 
 				DEBUG_LOG("Next player's turn");
 				return RC_SUCCESS;
 			}
@@ -342,6 +342,25 @@
 					}
 				}
 			}
+
+			// Call UI Section for the Players move US & USSR
+			auto& PlayerType = isCurrentPlayerTwo;
+			if (isCurrentPlayerTwo == true) // Needs Switching
+			{
+				DEBUG_LOG("United States Move");
+				isCurrentPlayerTwo = false;
+			}
+			if (isCurrentPlayerTwo == false) // Default:
+			{
+				DEBUG_LOG("USSR's Move");
+				isCurrentPlayerTwo = true;
+			}
+			else 
+			{
+
+			}
+
+
 
 			try { navigation->render(); } CATCH_PRINT();
 		}

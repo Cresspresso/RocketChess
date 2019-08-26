@@ -189,7 +189,7 @@ ReturnCode innerMain(int argc, char** argv)
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA | GLUT_STENCIL);
 	glutInitWindowPosition(100, 100);
 	glutInitWindowSize(screen::getWidth(), screen::getHeight());
-	glutCreateWindow("OpenGLProject4");
+	glutCreateWindow("Rocket Chess");
 
 	ASSERT0(glewInit());
 
