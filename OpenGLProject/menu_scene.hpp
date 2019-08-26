@@ -38,7 +38,7 @@
 
 #include "ChessPiece.hpp"
 #include "ChessAction.hpp"
-#include "main_menu_button_renderer.hpp"
+#include "main_menu_button_entity.hpp"
 
 #include "navigation.hpp"
 
@@ -62,9 +62,9 @@ struct Scene
 	SimpleEntity visibleBoard; // TODO
 
 	std::array<
-		MainMenuButtonRenderer,
+		MainMenuButtonEntity,
 		static_cast<int>(FocusedPanel::MainMenu::ButtonID::MAX) + 1
-	> mainMenuButtonRenderers;
+	> mainMenuButtons;
 
 	std::array<MenuButtonEntity, 8*8> boardButtons;
 

@@ -442,10 +442,13 @@
     <ClCompile Include="focused_panel.cpp">
       <Filter>Source Files\rocket_chess</Filter>
     </ClCompile>
-    <ClCompile Include="button_renderer.cpp">
+    <ClCompile Include="button_entity.cpp">
       <Filter>Source Files\rocket_chess</Filter>
     </ClCompile>
-    <ClCompile Include="main_menu_button_renderer.cpp">
+    <ClCompile Include="main_menu_button_entity.cpp">
+      <Filter>Source Files\rocket_chess</Filter>
+    </ClCompile>
+    <ClCompile Include="text_entity.cpp">
       <Filter>Source Files\rocket_chess</Filter>
     </ClCompile>
   </ItemGroup>
@@ -783,10 +786,13 @@
     <ClInclude Include="navigation.hpp">
       <Filter>Source Files\rocket_chess</Filter>
     </ClInclude>
-    <ClInclude Include="button_renderer.hpp">
+    <ClInclude Include="text_entity.hpp">
       <Filter>Source Files\rocket_chess</Filter>
     </ClInclude>
-    <ClInclude Include="main_menu_button_renderer.hpp">
+    <ClInclude Include="button_entity.hpp">
+      <Filter>Source Files\rocket_chess</Filter>
+    </ClInclude>
+    <ClInclude Include="main_menu_button_entity.hpp">
       <Filter>Source Files\rocket_chess</Filter>
     </ClInclude>
   </ItemGroup>

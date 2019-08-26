@@ -157,11 +157,11 @@
 			"Options",
 			"Exit to Desktop",
 		};
-		for (size_t i = 0; i < mainMenuButtonRenderers.size(); i++)
+		for (size_t i = 0; i < mainMenuButtons.size(); i++)
 		{
-			auto& button = mainMenuButtonRenderers[i];
-			button.br.transform.localPosition = vec3(0, static_cast<int>(i) * 100 - 200, 0);
-			button.br.text.text = mainMenuButtonTexts[i];
+			auto& button = mainMenuButtons[i];
+			button.buttonEntity.transform.localPosition = vec3(0, 200 - static_cast<int>(i) * 100, 0);
+			button.buttonEntity.textEntity.textRenderer.text = mainMenuButtonTexts[i];
 		}
 
 		return RC_SUCCESS;
@@ -384,11 +384,12 @@
 				ReturnCode const r = this->navigation->visit(overload{
 					[&](FocusedPanel::MainMenu const& panelData) // case MainMenu:
 				{
-					for (size_t i = 0; i < mainMenuButtonRenderers.size(); i++)
+					BEGIN_ANYALL();
+					for (size_t i = 0; i < mainMenuButtons.size(); i++)
 					{
-						DO_ANYALL(mainMenuButtonRenderers[i].render());
+						DO_ANYALL(mainMenuButtons[i].render());
 					}
-					return RC_SUCCESS;
+					return END_ANYALL();
 				},
 					[&](auto const& other) // default:
 				{
