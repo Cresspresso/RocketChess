@@ -29,22 +29,24 @@ ReturnCode Application::init()
 {
 	BEGIN_ANYALL();
 	DO_ANYALL(resources.init());
-	DO_ANYALL(scene.init());
+	scene.emplace();
+	DO_ANYALL(scene->init());
 	return END_ANYALL();
 }
 
 void Application::destroy() noexcept
 {
-	scene.destroy();
+	scene->destroy();
+	scene.reset();
 	resources.destroy();
 }
 
 ReturnCode Application::update()
 {
-	return scene.update();
+	return scene->update();
 }
 
 ReturnCode Application::render()
 {
-	return scene.render();
+	return scene->render();
 }
