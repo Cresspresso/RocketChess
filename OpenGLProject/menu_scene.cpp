@@ -316,7 +316,10 @@
 		}
 	}
 
+	//makes it launch the missile where the cursor is pointing
+	void Scene::LaunchTheMissile() {
 
+	}
 
 	ReturnCode Scene::render()
 	{

@@ -2,13 +2,14 @@
 #include "MissileManager.h"
 #include "ChessPiece.hpp"
 #include "Money.h"
+#include "menu_scene.hpp"
 
 #include "console.hpp"
 
 
 //reference to Money.h
 Money money;
-
+Scene menuScene;
 
 //checks to see which missile the player has tried to purchase
 //missileChoice is which missile they want to buy 
@@ -61,22 +62,11 @@ void missileManager::launchMissile(){
 //choose position on grid to launch missile
 bool missileManager::checkMissileTarget(){
 	
+
+	menuScene.LaunchTheMissile();
 	
-	/*
-	TODO Waiting on grid
-
-	choose a space on the board
-	if(choice is out of range){
-		print("was not in range")
-		return false;
-	}
-	else{
-		missileTarget = chosen cell;
-		return true;
-	}
-	*/
-
 	return false;
+
 }
 
 void missileManager::destroyPiece() {
