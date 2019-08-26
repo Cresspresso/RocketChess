@@ -55,7 +55,7 @@ public:
 	{
 		return std::visit(
 			std::forward<Visitor>(visitor),
-			static_cast<decltype(gamePanel) const&>(gamePanel)
+			gamePanel
 		);
 	}
 
