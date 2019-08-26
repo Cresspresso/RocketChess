@@ -50,6 +50,15 @@ public:
 	bool isGameSceneVisible() const;
 	bool isPauseMenuVisible() const;
 
+	template<class Visitor>
+	auto visit(Visitor&& visitor)
+	{
+		return std::visit(
+			std::forward<Visitor>(visitor),
+			static_cast<decltype(gamePanel) const&>(gamePanel)
+		);
+	}
+
 private:
 	Quad4Material material;
 	Renderer renderer;
