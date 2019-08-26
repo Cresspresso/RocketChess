@@ -97,5 +97,5 @@ struct Scene
 	void initButton(Button& button);
 	ReturnCode LaunchedMissile();
 
-	void MissilePosition();
+	ReturnCode MissilePosition();
 };

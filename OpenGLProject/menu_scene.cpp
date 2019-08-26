@@ -331,7 +331,31 @@
 	}
 
 	//chose where to launch the missile
-	void Scene::MissilePosition() {
+	ReturnCode Scene::MissilePosition() {
+
+		BEGIN_ANYALL();
+		{
+			//moves cursor back to the chessboard
+			navigation->gamePanel = FocusedPanel::ChessBoard();
+		// switch statment on steroids
+		{
+			ReturnCode const r = this->navigation->visit(overload{
+				[&](FocusedPanel::ChessBoard const& panelData) // case MainMenu:
+			{
+				ivec2 cursor = panelData.getFocusedCellCoords();
+				return RC_SUCCESS;
+			},
+				[&](auto const& other) // default:
+			{
+				return RC_ERROR;
+			},
+				});
+			DO_ANYALL(r);
+		}
+
+		try { navigation->render(); } CATCH_PRINT();
+	}
+	return END_ANYALL();
 
 		/*TODO
 		player choses where to launch the missile
