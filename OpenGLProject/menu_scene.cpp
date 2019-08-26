@@ -45,7 +45,7 @@
 
 		matButtonText.tint = vec3(0);
 
-		for (int i = 0; i < chessMaterials.size(); i++)
+		for (size_t i = 0; i < chessMaterials.size(); i++)
 		{
 			chessMaterials[i].tex1 = resources.textures[static_cast<int>(TextureIndexer::BishopUS) + i];
 		}
@@ -81,7 +81,6 @@
 			initButton(button);
 
 			// set callback
-			button.onClickLeft.hotkeys.push_back(KEY_ESCAPE);
 			button.onClickLeft.action = []
 			{
 				glutLeaveMainLoop();
@@ -94,6 +93,8 @@
 				tx.text = "Quit (ESC)";
 				tx.position.x += 20;
 			}
+
+			button.transform.localPosition = vec3(500, 0, 0);
 		}
 
 		// board
@@ -133,7 +134,7 @@
 					tx.position = vec2(-buttonHalfSize.x, -4);
 				}
 
-				button.transform.localPosition = glm::vec3(x * 100 - 200, y * 100 - 350, 0);
+				button.transform.localPosition = glm::vec3(x * 100 - 440, y * 100 - 350, 0);
 
 				// init text renderer
 				{
@@ -226,6 +227,7 @@
 			DO_ANYALL(initMaterials());
 			DO_ANYALL(initEntities());
 			DO_ANYALL(initBehaviour());
+			try { navigation = std::make_unique<Navigation>(); } CATCH_PRINT();
 		}
 		return END_ANYALL();
 	}
@@ -236,8 +238,14 @@
 	{
 		BEGIN_ANYALL();
 		{
-			// button horizontal layout at top-left corner of hud
+			try
 			{
+				navigation->update();
+			}
+			CATCH_PRINT();
+
+			// button horizontal layout at top-left corner of hud
+			/*{
 				vec2 const hudHalfSize = cameraHud.projection.calculateHalfSize();
 				vec3 const buttonHalfSize = 0.5f
 					* quitButton.button.backgroundTransform.localScale
@@ -247,7 +255,7 @@
 					hudHalfSize.y - buttonHalfSize.y
 				);
 				quitButton.button.transform.localPosition = vec3(menuButtonPos, 0);
-			}
+			}*/
 
 			for (auto& b : boardButtons)
 			{
@@ -335,6 +343,8 @@
 					}
 				}
 			}
+
+			try { navigation->render(); } CATCH_PRINT();
 		}
 		return END_ANYALL();
 	}

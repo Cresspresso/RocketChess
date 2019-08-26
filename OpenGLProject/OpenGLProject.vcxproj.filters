@@ -950,6 +950,9 @@
     <Filter Include="Source Files\misc">
       <UniqueIdentifier>{1d660f0e-c8cc-476f-8673-20e49022fe48}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\rocket_chess">
+      <UniqueIdentifier>{faa47e77-77e1-484d-ba2a-54052d4b5420}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\phong.frags">
@@ -1287,6 +1290,12 @@
     <ClCompile Include="toggle_music.cpp">
       <Filter>Source Files\scenes</Filter>
     </ClCompile>
+    <ClCompile Include="navigation.cpp">
+      <Filter>Source Files\rocket_chess</Filter>
+    </ClCompile>
+    <ClCompile Include="focused_panel.cpp">
+      <Filter>Source Files\rocket_chess</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cubemap_material.hpp">
@@ -1615,6 +1624,12 @@
     </ClInclude>
     <ClInclude Include="toggle_music.hpp">
       <Filter>Source Files\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="focused_panel.hpp">
+      <Filter>Source Files\rocket_chess</Filter>
+    </ClInclude>
+    <ClInclude Include="navigation.hpp">
+      <Filter>Source Files\rocket_chess</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

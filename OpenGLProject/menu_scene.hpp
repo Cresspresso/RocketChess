@@ -39,6 +39,10 @@
 #include "ChessPiece.hpp"
 #include "ChessAction.hpp"
 
+#include "navigation.hpp"
+
+
+
 struct Scene
 {
 	// Materials
@@ -54,7 +58,7 @@ struct Scene
 	// Entities
 	Camera cameraHud;
 	MenuButtonEntity quitButton;
-	SimpleEntity visibleBoard;
+	SimpleEntity visibleBoard; // TODO
 
 	std::array<MenuButtonEntity, 8*8> boardButtons;
 
@@ -73,10 +77,12 @@ struct Scene
 	int GetPieceType(int x, int y);
 	ReturnCode onCellClicked(int x, int y);
 
+	std::unique_ptr<Navigation> navigation;
+
 
 
 	ReturnCode init();
-	void destroy() noexcept {}
+	void destroy() noexcept { navigation.reset(); }
 
 	ReturnCode update();
 	ReturnCode render();
