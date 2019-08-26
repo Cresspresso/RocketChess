@@ -193,13 +193,13 @@
     <ClCompile Include="audio.cpp" />
     <ClCompile Include="box_range.cpp" />
     <ClCompile Include="button.cpp" />
-    <ClCompile Include="button_renderer.cpp" />
+    <ClCompile Include="button_entity.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="camera_orbit_entity.cpp" />
     <ClCompile Include="client.cpp" />
     <ClCompile Include="focused_panel.cpp" />
     <ClCompile Include="fog_material.cpp" />
-    <ClCompile Include="main_menu_button_renderer.cpp" />
+    <ClCompile Include="main_menu_button_entity.cpp" />
     <ClCompile Include="navigation.cpp" />
     <ClCompile Include="HistoryEventLog.cpp" />
     <ClCompile Include="menuSwap.cpp" />
@@ -246,7 +246,9 @@
     <ClCompile Include="application.cpp" />
     <ClCompile Include="singleton.cpp" />
     <ClCompile Include="socket.cpp" />
+    <ClCompile Include="sprite_entity.cpp" />
     <ClCompile Include="texture_manager.cpp" />
+    <ClCompile Include="text_entity.cpp" />
     <ClCompile Include="text_renderer.cpp" />
     <ClCompile Include="toggle_music.cpp" />
     <ClCompile Include="transform.cpp" />
@@ -283,7 +285,7 @@
     <ClInclude Include="audio.hpp" />
     <ClInclude Include="box_range.hpp" />
     <ClInclude Include="button.hpp" />
-    <ClInclude Include="button_renderer.hpp" />
+    <ClInclude Include="button_entity.hpp" />
     <ClInclude Include="camera.hpp" />
     <ClInclude Include="camera_orbit_entity.hpp" />
     <ClInclude Include="ChessAction.hpp" />
@@ -293,7 +295,7 @@
     <ClInclude Include="compatibility_threading.hpp" />
     <ClInclude Include="fog_material.hpp" />
     <ClInclude Include="focused_panel.hpp" />
-    <ClInclude Include="main_menu_button_renderer.hpp" />
+    <ClInclude Include="main_menu_button_entity.hpp" />
     <ClInclude Include="navigation.hpp" />
     <ClInclude Include="HistoryEventLog.h" />
     <ClInclude Include="menuSwap.h" />
@@ -357,8 +359,10 @@
     <ClInclude Include="application.hpp" />
     <ClInclude Include="singleton.hpp" />
     <ClInclude Include="socket.hpp" />
+    <ClInclude Include="sprite_entity.hpp" />
     <ClInclude Include="statistic_container.hpp" />
     <ClInclude Include="stc_message_type.hpp" />
+    <ClInclude Include="text_entity.hpp" />
     <ClInclude Include="to_string.hpp" />
     <ClInclude Include="unique_init_ptr.hpp" />
     <ClInclude Include="texture_manager.hpp" />

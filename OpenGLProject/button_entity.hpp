@@ -21,25 +21,18 @@
 #include <functional>
 #include <vector>
 
-#include "transform.hpp"
-#include "text_renderer.hpp"
-#include "quad4_material.hpp"
+#include "text_entity.hpp"
+#include "sprite_entity.hpp"
 
 
 
-struct ButtonRenderer
+struct ButtonEntity
 {
 	Transform transform;
+	SpriteEntity backgroundEntity;
+	TextEntity textEntity;
 
-	Transform backgroundTransform; // child
-	Renderer background;
-	Quad4Material matBG;
-
-	Transform textTransform; // child
-	TextRenderer text;
-	TextMaterial matText;
-
-	ButtonRenderer();
+	ButtonEntity();
 
 	// recalculates all transform matrices
 	void recalculate();

@@ -29,15 +29,8 @@
 
 Navigation::Navigation()
 {
-	transform.localScale = vec3(100, 100, 1);
-
-	auto& resources = singleton::getResources();
-
-	material.tex1 = resources.textures[TextureIndexer::AwesomeFace];
-
-	renderer.program = resources.programs.getProgram(ProgramIndexer::Quad4);
-	renderer.material = &material;
-	renderer.mesh = &(resources.meshes[MeshIndexer::Quad]);
+	spriteEntity.setTexture(TextureIndexer::AwesomeFace);
+	spriteEntity.transform.localScale = vec3(100, 100, 1);
 }
 
 
@@ -74,19 +67,19 @@ void Navigation::render()
 		{
 		case ButtonID::Continue:
 		{
-			transform.localPosition = vec3(200, 200, 0);
+			spriteEntity.transform.localPosition = vec3(0, 200, 0);
 		}
 		break;
 
 		case ButtonID::ExitToMainMenu:
 		{
-			transform.localPosition = vec3(200, 100, 0);
+			spriteEntity.transform.localPosition = vec3(0, 100, 0);
 		}
 		break;
 
 		case ButtonID::ExitToDesktop:
 		{
-			transform.localPosition = vec3(200, 000, 0);
+			spriteEntity.transform.localPosition = vec3(0, 000, 0);
 		}
 		break;
 
@@ -108,25 +101,25 @@ void Navigation::render()
 			{
 			case ButtonID::NewGame:
 			{
-				transform.localPosition = vec3(-300, 200, 0);
+				spriteEntity.transform.localPosition = vec3(0, 200, 0);
 			}
 			break;
 
 			case ButtonID::Instructions:
 			{
-				transform.localPosition = vec3(-300, 100, 0);
+				spriteEntity.transform.localPosition = vec3(0, 100, 0);
 			}
 			break;
 
 			case ButtonID::Options:
 			{
-				transform.localPosition = vec3(-300, 0, 0);
+				spriteEntity.transform.localPosition = vec3(0, 0, 0);
 			}
 			break;
 
 			case ButtonID::ExitToDesktop:
 			{
-				transform.localPosition = vec3(-300, -100, 0);
+				spriteEntity.transform.localPosition = vec3(0, -100, 0);
 			}
 			break;
 
@@ -143,7 +136,7 @@ void Navigation::render()
 			ivec2 const coords = focusedPanelData.getFocusedCellCoords();
 
 			vec2 const boardOrigin = vec2(-200, -200);
-			transform.localPosition = vec3(boardOrigin + vec2(coords.x * 100, coords.y * 100), 0);
+			spriteEntity.transform.localPosition = vec3(boardOrigin + vec2(coords.x * 100, coords.y * 100), 0);
 		},
 			// else if
 			[&](RocketPurchase& focusedPanelData)
@@ -153,31 +146,31 @@ void Navigation::render()
 			{
 			case ButtonID::BackToBoard:
 			{
-				transform.localPosition = vec3(200, 200, 0);
+				spriteEntity.transform.localPosition = vec3(200, 200, 0);
 			}
 			break;
 
 			case ButtonID::RPG:
 			{
-				transform.localPosition = vec3(200, 100, 0);
+				spriteEntity.transform.localPosition = vec3(200, 100, 0);
 			}
 			break;
 
 			case ButtonID::ConventionalMissile:
 			{
-				transform.localPosition = vec3(200, 000, 0);
+				spriteEntity.transform.localPosition = vec3(200, 000, 0);
 			}
 			break;
 
 			case ButtonID::ICBM:
 			{
-				transform.localPosition = vec3(200, -100, 0);
+				spriteEntity.transform.localPosition = vec3(200, -100, 0);
 			}
 			break;
 
 			case ButtonID::Voyager1:
 			{
-				transform.localPosition = vec3(200, -200, 0);
+				spriteEntity.transform.localPosition = vec3(200, -200, 0);
 			}
 			break;
 
@@ -196,13 +189,13 @@ void Navigation::render()
 			{
 			case ButtonID::EndTurn:
 			{
-				transform.localPosition = vec3(300, -100, 0);
+				spriteEntity.transform.localPosition = vec3(300, -100, 0);
 			}
 			break;
 
 			case ButtonID::Undo:
 			{
-				transform.localPosition = vec3(300, -200, 0);
+				spriteEntity.transform.localPosition = vec3(300, -200, 0);
 			}
 			break;
 
@@ -220,9 +213,7 @@ void Navigation::render()
 	// after updating transform
 	if (doRender)
 	{
-		transform.recalculate();
-		renderer.modelMatrix = transform.modelMatrix;
-		if (RC_SUCCESS != renderer.render())
+		if (RC_SUCCESS != spriteEntity.render())
 		{
 			throw std::runtime_error("Failed to render Navigation");
 		}
