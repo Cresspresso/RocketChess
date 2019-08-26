@@ -23,6 +23,9 @@
 
 #include "transform.hpp"
 #include "text_renderer.hpp"
+#include "quad4_material.hpp"
+
+
 
 struct ButtonRenderer
 {
@@ -30,9 +33,11 @@ struct ButtonRenderer
 
 	Transform backgroundTransform; // child
 	Renderer background;
+	Quad4Material matBG;
 
 	Transform textTransform; // child
 	TextRenderer text;
+	TextMaterial matText;
 
 	ButtonRenderer();
 

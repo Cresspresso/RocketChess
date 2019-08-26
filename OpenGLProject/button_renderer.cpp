@@ -30,8 +30,19 @@ ButtonRenderer::ButtonRenderer()
 	backgroundTransform.parentModelMatrix = parent;
 	textTransform.parentModelMatrix = parent;
 
+
+
 	auto& resources = singleton::getResources();
+
+	matBG.tex1 = resources.textures[TextureIndexer::Button];
+
+	background.material = &matBG;
+	background.program = resources.programs.getProgram(ProgramIndexer::Quad4);
+	background.mesh = &(resources.meshes[MeshIndexer::Quad]);
+
 	text.font = &(resources.fonts[FontIndexer::Arial]);
+	text.renderer.material = &matText;
+	text.renderer.program = resources.programs.getProgram(ProgramIndexer::Text);
 	text.renderer.mesh = &(resources.meshes[MeshIndexer::Text]);
 }
 
