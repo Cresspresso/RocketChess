@@ -26,8 +26,6 @@
 #include "MissileManager.h"
 
 
-missileManager missile;
-
 
 Navigation::Navigation()
 {

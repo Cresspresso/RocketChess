@@ -28,7 +28,7 @@
 #include "resource_warehouse.hpp"
 
 #include "debug_log.hpp"
-
+#include "MissileManager.h"
 #include "menu_scene.hpp"
 
 
@@ -171,8 +171,6 @@
 #pragma endregion ~Scene::Builder
 #pragma region Scene
 
-
-
 	ReturnCode Scene::onCellClicked(int x, int y)
 	{
 		if (selectedCoords)
@@ -240,6 +238,8 @@
 			DO_ANYALL(initEntities());
 			DO_ANYALL(initBehaviour());
 			try { navigation = std::make_unique<Navigation>(); } CATCH_PRINT();
+
+			missile.scene = this;
 		}
 		return END_ANYALL();
 	}
@@ -330,8 +330,30 @@
 		}
 	}
 
-	//makes it launch the missile where the cursor is pointing
-	void Scene::LaunchTheMissile() {
+	//chose where to launch the missile
+	void Scene::MissilePosition() {
+
+		/*TODO
+		player choses where to launch the missile
+		checks to see what piece is under it and passes that back to the
+		missile manager and the missile manager can determine whether
+		the piece is destroyed or not*/
+
+	}
+
+
+	//returns user to the chessboard after launching the missile
+	ReturnCode Scene::LaunchedMissile() {
+		
+		BEGIN_ANYALL();
+		{
+			//resets the cursor back to the chessBoard
+			navigation->gamePanel = FocusedPanel::ChessBoard();
+
+			try { navigation->render(); } CATCH_PRINT();
+		}
+			
+		return END_ANYALL();
 
 	}
 

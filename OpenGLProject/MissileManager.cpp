@@ -9,7 +9,6 @@
 
 //reference to Money.h
 Money money;
-Scene menuScene;
 
 //checks to see which missile the player has tried to purchase
 //missileChoice is which missile they want to buy 
@@ -21,9 +20,9 @@ void missileManager::purchaseMissile(int missileChoice){
 	
 	//rpg missile
 	case 1:
-			launchableMissile = RPG;
-			//move to choosing missile launch position
-			launchMissile();
+		launchableMissile = RPG;
+		//move to choosing missile launch position
+		launchMissile();
 		break;
 	//ballistic missile
 	case 2:
@@ -55,36 +54,32 @@ void missileManager::launchMissile(){
 	missilePos = checkMissileTarget();
 
 	//launch missile and destroy piece if able
-	destroyPiece();
+	destroyPiece(missilePos);
 }
 
 
 //choose position on grid to launch missile
-bool missileManager::checkMissileTarget(){
+int missileManager::checkMissileTarget(){
 	
-
-	menuScene.LaunchTheMissile();
-	
-	return false;
-
+	return missilePos;
 }
 
-void missileManager::destroyPiece() {
+void missileManager::destroyPiece(int missilePos) {
 
 	switch (launchableMissile) {
 
 		//checks to see what the RPG can destroy
 	case RPG:
 		console::error("Tried to launch RPG");
+		scene->LaunchedMissile();
 		
 		//RPG Can only take pawns
-
-
 		break;
 
 		//checks to see what the ballistic missile can destroy
 	case BALLISTIC:
 		console::error("Tried to launch Ballistic Missile");
+		scene->LaunchedMissile();
 		//ballistic missiles can take pawns rooks and bishops
 
 		break;
@@ -92,12 +87,14 @@ void missileManager::destroyPiece() {
 	//checks to see what the ICBM can destroy
 	case ICBM:
 		console::error("Tried to launch ICBM");
+		scene->LaunchedMissile();
 		//can take anything but the King
 		break;
 
 	//Whoever, launches this wins
 	case VOYAGER:
 		console::error("Tried to launch Voyager");
+		scene->LaunchedMissile();
 		//win the game
 		break;
 
