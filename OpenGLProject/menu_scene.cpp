@@ -160,9 +160,8 @@
 		for (size_t i = 0; i < mainMenuButtonRenderers.size(); i++)
 		{
 			auto& button = mainMenuButtonRenderers[i];
-			button.br.transform.localPosition = vec3(0, static_cast<int>(i) * 70 - 200, 0);
+			button.br.transform.localPosition = vec3(0, static_cast<int>(i) * 100 - 200, 0);
 			button.br.text.text = mainMenuButtonTexts[i];
-			button.br.textTransform.localScale = vec3(10, 10, 1);
 		}
 
 		return RC_SUCCESS;
