@@ -195,57 +195,6 @@
 
 
 
-	void Scene::initTextRenderer(TextRenderer & entity)
-	{
-		auto& resources = singleton::getResources();
-
-		entity.font = &(resources.fonts[FontIndexer::Arial]);
-
-		// Note: Mesh vertex buffer is modified at runtime.
-		// DO NOT RENDER IN MULTITHREAD.
-		auto& r = entity.renderer;
-		r.program = resources.programs[ProgramIndexer::Text].program;
-		r.mesh = &(resources.meshes[MeshIndexer::Text]);
-		r.material = &matButtonText;
-	}
-
-	void Scene::initButton(Button& button)
-	{
-		auto& resources = singleton::getResources();
-
-		// init collider transform
-		{
-			auto& ct = button.colliderTransform;
-			ct.localScale = vec3(120, 30, 1);
-		}
-
-		// init background transform
-		{
-			auto& bgt = button.backgroundTransform;
-			bgt.localScale = vec3(2.f * vec2(button.colliderTransform.localScale), 1);
-		}
-
-		// init background
-		{
-			auto& bg = button.background;
-			bg.program = resources.programs[ProgramIndexer::Quad4].program;
-			bg.mesh = &(resources.meshes[MeshIndexer::Quad]);
-			bg.material = &matButtonBackground;
-		}
-
-		// init text renderer
-		{
-			auto& tx = button.text;
-			initTextRenderer(tx); // &(materials.buttonMenuText);
-			tx.scale = vec2(1);
-
-			vec3 const buttonHalfSize = 0.5f * button.backgroundTransform.localScale;
-			tx.position = vec2(-buttonHalfSize.x, -4);
-		}
-	}
-
-
-
 	ReturnCode Scene::render()
 	{
 		cameraHud.recalculate();

@@ -26,11 +26,11 @@ ReturnCode Renderer::render()
 	g_mvp = g_cameraVPMatrix * g_modelMatrix;
 
 	// TODO better error handling
-	ASSERT1(material);
+	ASSERT1_RE(material, "material is null");
 	HANDLE_ALL(material->prepare());
 	
-	ASSERT1(mesh);
-	ASSERT1(program);
+	ASSERT1_RE(mesh, "mesh is null");
+	ASSERT1_RE(program, "program is null");
 
 	glUseProgram(program);
 	HANDLE_ALL(material->apply(program));
