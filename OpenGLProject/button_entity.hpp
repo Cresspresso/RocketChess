@@ -21,13 +21,12 @@
 #include <functional>
 #include <vector>
 
-#include "transform.hpp"
-#include "text_renderer.hpp"
+#include "text_entity.hpp"
 #include "quad4_material.hpp"
 
 
 
-struct ButtonRenderer
+struct ButtonEntity
 {
 	Transform transform;
 
@@ -35,11 +34,9 @@ struct ButtonRenderer
 	Renderer background;
 	Quad4Material matBG;
 
-	Transform textTransform; // child
-	TextRenderer text;
-	TextMaterial matText;
+	TextEntity textEntity;
 
-	ButtonRenderer();
+	ButtonEntity();
 
 	// recalculates all transform matrices
 	void recalculate();

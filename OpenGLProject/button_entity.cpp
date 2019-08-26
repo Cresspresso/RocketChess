@@ -19,17 +19,21 @@
 #include "resource_warehouse.hpp"
 #include "singleton.hpp"
 
-#include "button_renderer.hpp"
+#include "button_entity.hpp"
 
 
 
-ButtonRenderer::ButtonRenderer()
+ButtonEntity::ButtonEntity()
 {
 	auto* parent = &transform.modelMatrix;
 
 	backgroundTransform.parentModelMatrix = parent;
-	textTransform.parentModelMatrix = parent;
+	textEntity.transform.parentModelMatrix = parent;
 
+
+	backgroundTransform.localScale = vec3(200, 80, 1);
+	textEntity.transform.localPosition = vec3(-backgroundTransform.localScale.x / 2 + 10, 0, 0);
+	textEntity.material.tint = vec3(0);
 
 
 	auto& resources = singleton::getResources();
@@ -39,35 +43,30 @@ ButtonRenderer::ButtonRenderer()
 	background.material = &matBG;
 	background.program = resources.programs.getProgram(ProgramIndexer::Quad4);
 	background.mesh = &(resources.meshes[MeshIndexer::Quad]);
-
-	text.font = &(resources.fonts[FontIndexer::Arial]);
-	text.renderer.material = &matText;
-	text.renderer.program = resources.programs.getProgram(ProgramIndexer::Text);
-	text.renderer.mesh = &(resources.meshes[MeshIndexer::Text]);
 }
 
 
 
-void ButtonRenderer::recalculate()
+void ButtonEntity::recalculate()
 {
 	transform.recalculate();
 	backgroundTransform.recalculate();
-	textTransform.recalculate();
+	textEntity.recalculate();
 }
 
 
 
-ReturnCode ButtonRenderer::render()
+ReturnCode ButtonEntity::render()
 {
-	recalculate();
+	transform.recalculate();
+	backgroundTransform.recalculate();
 
 	BEGIN_ANYALL();
 
 	background.modelMatrix = backgroundTransform.modelMatrix;
 	DO_ANYALL(background.render());
 
-	text.renderer.modelMatrix = textTransform.modelMatrix;
-	DO_ANYALL(text.render());
+	DO_ANYALL(textEntity.render());
 
 	return END_ANYALL();
 }
