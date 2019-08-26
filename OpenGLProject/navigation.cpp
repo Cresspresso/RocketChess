@@ -23,7 +23,10 @@
 #include "singleton.hpp"
 
 #include "navigation.hpp"
+#include "MissileManager.h"
 
+
+missileManager missile;
 
 
 Navigation::Navigation()
@@ -415,29 +418,29 @@ void Navigation::invokeAction()
 
 			case ButtonID::RPG:
 			{
-				// TODO
-				console::error("RPG button not implemented.");
+				//purchase rpg
+				missile.purchaseMissile(1);
 			}
 			break;
 
 			case ButtonID::ConventionalMissile:
 			{
-				// TODO
-				console::error("ConventionalMissile button not implemented.");
+				//purchase Ballistic missile
+				missile.purchaseMissile(2);
 			}
 			break;
 
 			case ButtonID::ICBM:
 			{
-				// TODO
-				console::error("ICBM button not implemented.");
+				//purchase ICBM
+				missile.purchaseMissile(3);
 			}
 			break;
 
 			case ButtonID::Voyager1:
 			{
-				// TODO
-				console::error("Voyager1 button not implemented.");
+				//purchase Voyager
+				missile.purchaseMissile(4);
 			}
 			break;
 

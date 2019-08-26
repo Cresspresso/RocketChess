@@ -141,8 +141,6 @@
 					auto& tx = button.text;
 					tx.text = std::to_string(x) + "," + std::to_string(y);
 				}
-
-				button.onClickLeft.hotkeys.push_back(32);
 				// set click action
 				button.onClickLeft.action = [this, x, y]
 				{
