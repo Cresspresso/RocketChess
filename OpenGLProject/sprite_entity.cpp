@@ -6,13 +6,17 @@
 
 
 
-SpriteEntity::SpriteEntity()
+SpriteEntity::SpriteEntity(TextureIndexer id)
 {
 	auto& resources = singleton::getResources();
 
 	renderer.material = &material;
 	renderer.program = resources.programs.getProgram(ProgramIndexer::Quad4);
 	renderer.mesh = &(resources.meshes[MeshIndexer::Quad]);
+
+	setTexture(id);
+
+	transform.localScale = vec3(100, 100, 1);
 }
 
 

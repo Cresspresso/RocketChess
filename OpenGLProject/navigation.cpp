@@ -66,19 +66,19 @@ void Navigation::render()
 		{
 		case ButtonID::Continue:
 		{
-			spriteEntity.transform.localPosition = vec3(0, 200, 0);
+			spriteEntity.transform.localPosition = vec3(-200, 100, 0);
 		}
 		break;
 
 		case ButtonID::ExitToMainMenu:
 		{
-			spriteEntity.transform.localPosition = vec3(0, 100, 0);
+			spriteEntity.transform.localPosition = vec3(-200, 000, 0);
 		}
 		break;
 
 		case ButtonID::ExitToDesktop:
 		{
-			spriteEntity.transform.localPosition = vec3(0, 000, 0);
+			spriteEntity.transform.localPosition = vec3(-200, -100, 0);
 		}
 		break;
 
@@ -134,8 +134,8 @@ void Navigation::render()
 		{
 			ivec2 const coords = focusedPanelData.getFocusedCellCoords();
 
-			vec2 const boardOrigin = vec2(-200, -200);
-			spriteEntity.transform.localPosition = vec3(boardOrigin + vec2(coords.x * 100, coords.y * 100), 0);
+			vec2 const boardOrigin = vec2(-430, -200);
+			spriteEntity.transform.localPosition = vec3(boardOrigin + vec2(coords.x * 70, coords.y * 70), 0);
 		},
 			// else if
 			[&](RocketPurchase& focusedPanelData)

@@ -14,7 +14,7 @@ struct SpriteEntity
 	Renderer renderer;
 	Quad4Material material;
 
-	SpriteEntity();
+	explicit SpriteEntity(TextureIndexer id = TextureIndexer::Rayman);
 
 	void setTexture(TextureIndexer id);
 
