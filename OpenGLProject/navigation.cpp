@@ -66,19 +66,19 @@ void Navigation::render()
 		{
 		case ButtonID::Continue:
 		{
-			spriteEntity.transform.localPosition = vec3(0, 200, 0);
+			spriteEntity.transform.localPosition = vec3(-200, 100, 0);
 		}
 		break;
 
 		case ButtonID::ExitToMainMenu:
 		{
-			spriteEntity.transform.localPosition = vec3(0, 100, 0);
+			spriteEntity.transform.localPosition = vec3(-200, 000, 0);
 		}
 		break;
 
 		case ButtonID::ExitToDesktop:
 		{
-			spriteEntity.transform.localPosition = vec3(0, 000, 0);
+			spriteEntity.transform.localPosition = vec3(-200, -100, 0);
 		}
 		break;
 

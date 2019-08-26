@@ -45,9 +45,9 @@
 
 		matButtonText.tint = vec3(0);
 
-		for (size_t i = 0; i < chessMaterials.size(); i++)
+		for (size_t i = 0; i < chessSprites.size(); i++)
 		{
-			chessMaterials[i].tex1 = resources.textures[static_cast<int>(TextureIndexer::BishopUS) + i];
+			chessSprites[i].setTexture(static_cast<TextureIndexer>(static_cast<int>(TextureIndexer::BishopUS) + i));
 		}
 
 		return RC_SUCCESS;
@@ -75,94 +75,27 @@
 			cameraHud.recalculate();
 		}
 
-		// quit button
-		{
-			auto& button = quitButton.button;
-			initButton(button);
-
-			// set callback
-			button.onClickLeft.action = []
+		// main menu buttons
+		mainMenuButtons = MainMenuButtons{
+			vec3(0, 200, 0),
+			vec3(0, -100, 0),
 			{
-				glutLeaveMainLoop();
-				return RC_SUCCESS;
-			};
-
-			// init text renderer
-			{
-				auto& tx = button.text;
-				tx.text = "Quit (ESC)";
-				tx.position.x += 20;
-			}
-
-			button.transform.localPosition = vec3(500, 0, 0);
-		}
-
-		// board
-		for (int y = 0; y < 8; ++y)
-		{
-			for (int x = 0; x < 8; ++x)
-			{
-				auto& button = boardButtons[x + y * 8].button;
-
-				// init collider transform
-				{
-					auto& ct = button.colliderTransform;
-					ct.localScale = vec3(40, 40, 1);
-				}
-
-				// init background transform
-				{
-					auto& bgt = button.backgroundTransform;
-					bgt.localScale = vec3(2.f * vec2(button.colliderTransform.localScale), 1);
-				}
-
-				// init background
-				{
-					auto& bg = button.background;
-					bg.program = resources.programs[ProgramIndexer::Quad4].program;
-					bg.mesh = &(resources.meshes[MeshIndexer::Quad]);
-					bg.material = &matButtonBackground;// &(materials.buttonMenuBackground);
-				}
-
-				// init text renderer
-				{
-					auto& tx = button.text;
-					initTextRenderer(tx); // &(materials.buttonMenuText);
-					tx.scale = vec2(1);
-
-					vec3 const buttonHalfSize = 0.5f * button.backgroundTransform.localScale;
-					tx.position = vec2(-buttonHalfSize.x, -4);
-				}
-
-				button.transform.localPosition = glm::vec3(x * 100 - 440, y * 100 - 350, 0);
-
-				// init text renderer
-				{
-					auto& tx = button.text;
-					tx.text = std::to_string(x) + "," + std::to_string(y);
-				}
-
-				// set click action
-				button.onClickLeft.action = [this, x, y]
-				{
-					return onCellClicked(x, y);
-				};
-			}
-		}
-
-		// menu buttons
-		static constexpr char const*const mainMenuButtonTexts[] {
 			"New Game",
 			"Instructions",
 			"Options",
 			"Exit to Desktop",
+			},
 		};
-		for (size_t i = 0; i < mainMenuButtons.size(); i++)
-		{
-			auto& button = mainMenuButtons[i];
-			button.buttonEntity.transform.localPosition = vec3(0, 200 - static_cast<int>(i) * 100, 0);
-			button.buttonEntity.textEntity.textRenderer.text = mainMenuButtonTexts[i];
-		}
+
+		pauseMenuButtons = MainMenuButtons{
+			vec3(-200, 100, 0),
+			vec3(0, -100, 0),
+			{
+			"Continue",
+			"Exit to Menu",
+			"Exit to Desktop",
+			},
+		};
 
 		return RC_SUCCESS;
 	}
@@ -256,26 +189,6 @@
 				navigation->update();
 			}
 			CATCH_PRINT();
-
-			// button horizontal layout at top-left corner of hud
-			/*{
-				vec2 const hudHalfSize = cameraHud.projection.calculateHalfSize();
-				vec3 const buttonHalfSize = 0.5f
-					* quitButton.button.backgroundTransform.localScale
-					* quitButton.scaleHovered;
-				vec2 const menuButtonPos = vec2(
-					-hudHalfSize.x + buttonHalfSize.x,
-					hudHalfSize.y - buttonHalfSize.y
-				);
-				quitButton.button.transform.localPosition = vec3(menuButtonPos, 0);
-			}*/
-
-			for (auto& b : boardButtons)
-			{
-				DO_ANYALL(b.update());
-			}
-
-			DO_ANYALL(quitButton.update());
 		}
 		return END_ANYALL();
 	}
@@ -340,19 +253,16 @@
 
 		BEGIN_ANYALL();
 		{
-			DO_ANYALL(quitButton.render());
-
 			for (int y = 0; y < 8; y++)
 			{
 				for (int x = 0; x < 8; x++)
 				{
 					auto& piece = boardPieces[x + y * 8];
-					auto& button = boardButtons[x + y * 8];
 					if (piece.type != ChessPiece::None)
 					{
-						button.button.text.text = stringLink(symbol(piece.type), " ", (piece.isPlayer2 ? "2" : "1"));
-						button.button.background.material = &(chessMaterials[GetPieceType(x, y)]);
-						DO_ANYALL(button.render());
+						auto& sprite = chessSprites[static_cast<int>(piece.type)];
+						sprite.transform.localPosition = vec3(x * 100 - 300, y * 100 - 200, 0);
+						DO_ANYALL(sprite.render());
 					}
 				}
 			}
@@ -362,19 +272,19 @@
 				ReturnCode const r = this->navigation->visit(overload{
 					[&](FocusedPanel::MainMenu const& panelData) // case MainMenu:
 				{
-					BEGIN_ANYALL();
-					for (size_t i = 0; i < mainMenuButtons.size(); i++)
-					{
-						DO_ANYALL(mainMenuButtons[i].render());
-					}
-					return END_ANYALL();
+					return mainMenuButtons.render();
 				},
 					[&](auto const& other) // default:
 				{
-					return RC_ERROR;
+					return RC_SUCCESS;
 				},
 					});
 				DO_ANYALL(r);
+			}
+
+			if (navigation->pauseMenu)
+			{
+				DO_ANYALL(pauseMenuButtons.render());
 			}
 
 			try { navigation->render(); } CATCH_PRINT();

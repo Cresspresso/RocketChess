@@ -38,7 +38,7 @@
 
 #include "ChessPiece.hpp"
 #include "ChessAction.hpp"
-#include "main_menu_button_entity.hpp"
+#include "main_menu_buttons.hpp"
 
 #include "navigation.hpp"
 
@@ -49,8 +49,8 @@ struct Scene
 	// Materials
 	Quad4Material matButtonBackground;
 	TextMaterial matButtonText;
-			
-	std::array<Quad4Material, 12> chessMaterials;
+
+	std::array<SpriteEntity, 12> chessSprites;
 
 	ReturnCode initMaterials();
 
@@ -58,15 +58,9 @@ struct Scene
 
 	// Entities
 	Camera cameraHud;
-	MenuButtonEntity quitButton;
-	SimpleEntity visibleBoard; // TODO
 
-	std::array<
-		MainMenuButtonEntity,
-		static_cast<int>(FocusedPanel::MainMenu::ButtonID::MAX) + 1
-	> mainMenuButtons;
-
-	std::array<MenuButtonEntity, 8*8> boardButtons;
+	MainMenuButtons mainMenuButtons;
+	MainMenuButtons pauseMenuButtons;
 
 	ReturnCode initEntities();
 

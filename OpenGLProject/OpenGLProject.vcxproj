@@ -199,6 +199,7 @@
     <ClCompile Include="client.cpp" />
     <ClCompile Include="focused_panel.cpp" />
     <ClCompile Include="fog_material.cpp" />
+    <ClCompile Include="main_menu_buttons.cpp" />
     <ClCompile Include="main_menu_button_entity.cpp" />
     <ClCompile Include="navigation.cpp" />
     <ClCompile Include="network_entity_threads.cpp" />
@@ -292,6 +293,7 @@
     <ClInclude Include="fog_material.hpp" />
     <ClInclude Include="focused_panel.hpp" />
     <ClInclude Include="main_menu_button_entity.hpp" />
+    <ClInclude Include="main_menu_buttons.hpp" />
     <ClInclude Include="navigation.hpp" />
     <ClInclude Include="network_state.hpp" />
     <ClInclude Include="network_entity_threads.hpp" />

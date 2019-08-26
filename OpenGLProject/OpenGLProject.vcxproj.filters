@@ -454,6 +454,9 @@
     <ClCompile Include="sprite_entity.cpp">
       <Filter>Source Files\rocket_chess</Filter>
     </ClCompile>
+    <ClCompile Include="main_menu_buttons.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cubemap_material.hpp">
@@ -799,6 +802,9 @@
       <Filter>Source Files\rocket_chess</Filter>
     </ClInclude>
     <ClInclude Include="sprite_entity.hpp">
+      <Filter>Source Files\rocket_chess</Filter>
+    </ClInclude>
+    <ClInclude Include="main_menu_buttons.hpp">
       <Filter>Source Files\rocket_chess</Filter>
     </ClInclude>
   </ItemGroup>
