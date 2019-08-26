@@ -33,7 +33,7 @@
 struct Application
 {
 	ResourceWarehouse resources;
-	Scene scene;
+	std::optional<Scene> scene;
 
 
 

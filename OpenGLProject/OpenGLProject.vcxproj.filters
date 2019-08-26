@@ -442,6 +442,12 @@
     <ClCompile Include="focused_panel.cpp">
       <Filter>Source Files\rocket_chess</Filter>
     </ClCompile>
+    <ClCompile Include="button_renderer.cpp">
+      <Filter>Source Files\rocket_chess</Filter>
+    </ClCompile>
+    <ClCompile Include="main_menu_button_renderer.cpp">
+      <Filter>Source Files\rocket_chess</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cubemap_material.hpp">
@@ -775,6 +781,12 @@
       <Filter>Source Files\rocket_chess</Filter>
     </ClInclude>
     <ClInclude Include="navigation.hpp">
+      <Filter>Source Files\rocket_chess</Filter>
+    </ClInclude>
+    <ClInclude Include="button_renderer.hpp">
+      <Filter>Source Files\rocket_chess</Filter>
+    </ClInclude>
+    <ClInclude Include="main_menu_button_renderer.hpp">
       <Filter>Source Files\rocket_chess</Filter>
     </ClInclude>
   </ItemGroup>
