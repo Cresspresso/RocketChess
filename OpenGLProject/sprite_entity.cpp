@@ -15,6 +15,8 @@ SpriteEntity::SpriteEntity(TextureIndexer id)
 	renderer.mesh = &(resources.meshes[MeshIndexer::Quad]);
 
 	setTexture(id);
+
+	transform.localScale = vec3(100, 100, 1);
 }
 
 

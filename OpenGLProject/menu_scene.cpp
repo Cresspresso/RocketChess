@@ -33,29 +33,6 @@
 
 
 
-#pragma region Scene::Materials::Builder
-
-
-
-	ReturnCode Scene::initMaterials()
-	{
-		auto& resources = singleton::getResources();
-
-		matButtonBackground.tex1 = resources.textures[TextureIndexer::Button];
-
-		matButtonText.tint = vec3(0);
-
-		for (size_t i = 0; i < chessSprites.size(); i++)
-		{
-			chessSprites[i].setTexture(static_cast<TextureIndexer>(static_cast<int>(TextureIndexer::BishopUS) + i));
-		}
-
-		return RC_SUCCESS;
-	}
-
-
-
-#pragma endregion ~Scene::Materials::Builder
 #pragma region Scene::Builder
 
 
@@ -96,6 +73,26 @@
 			"Exit to Desktop",
 			},
 		};
+
+		missilePurchaseButtons = MainMenuButtons{
+			vec3(300, 100, 0),
+			vec3(0, -100, 0),
+			{
+			"Cancel",
+			"RPG",
+			"Conventional Missile",
+			"ICBM",
+			"Voyager 1",
+			},
+		};
+
+		// chess piece types
+		for (size_t i = 0; i < chessSprites.size(); i++)
+		{
+			auto& sprite = chessSprites[i];
+			sprite.setTexture(static_cast<TextureIndexer>(static_cast<int>(TextureIndexer::BishopUS) + i));
+			sprite.transform.localScale = vec3(64, 64, 1);
+		}
 
 		return RC_SUCCESS;
 	}
@@ -170,7 +167,6 @@
 	{
 		BEGIN_ANYALL();
 		{
-			DO_ANYALL(initMaterials());
 			DO_ANYALL(initEntities());
 			DO_ANYALL(initBehaviour());
 			try { navigation = std::make_unique<Navigation>(); } CATCH_PRINT();
@@ -202,6 +198,7 @@
 
 		BEGIN_ANYALL();
 		{
+			// render board
 			for (int y = 0; y < 8; y++)
 			{
 				for (int x = 0; x < 8; x++)
@@ -209,32 +206,60 @@
 					auto& piece = boardPieces[x + y * 8];
 					if (piece.type != ChessPiece::None)
 					{
-						auto& sprite = chessSprites[static_cast<int>(piece.type)];
-						sprite.transform.localPosition = vec3(x * 100 - 300, y * 100 - 200, 0);
+						auto& sprite = chessSprites[GetPieceType(x, y)];
+						sprite.transform.localPosition = vec3(x * 70 - 430, y * 70 - 200, 0);
 						DO_ANYALL(sprite.render());
 					}
 				}
 			}
 
-			// switch statment on steroids
+
+
+			// render missile purchase buttons
 			{
-				ReturnCode const r = this->navigation->visit(overload{
-					[&](FocusedPanel::MainMenu const& panelData) // case MainMenu:
+				this->navigation->visit(overload{
+					[&](FocusedPanel::MainMenu const& panelData)
 				{
-					return mainMenuButtons.render();
 				},
-					[&](auto const& other) // default:
+					[&](FocusedPanel::RocketPurchase const& panelData)
 				{
-					return RC_SUCCESS;
+					missilePurchaseButtons.highlight(static_cast<size_t>(panelData.focusedButton));
+					DO_ANYALL(missilePurchaseButtons.render());
+				},
+				[&](auto const& other)
+				{
+					missilePurchaseButtons.highlight(std::nullopt);
+					DO_ANYALL(missilePurchaseButtons.render());
 				},
 					});
-				DO_ANYALL(r);
 			}
 
+
+
+			// render main menu buttons
+			{
+				this->navigation->visit(overload{
+					[&](FocusedPanel::MainMenu const& panelData)
+				{
+					mainMenuButtons.highlight(static_cast<size_t>(panelData.focusedButton));
+					DO_ANYALL(mainMenuButtons.render());
+				},
+				[&](auto const& other)
+				{
+				},
+					});
+			}
+
+
+
+			// render pause menu buttons
 			if (navigation->pauseMenu)
 			{
+				pauseMenuButtons.highlight(static_cast<size_t>(navigation->pauseMenu->focusedButton));
 				DO_ANYALL(pauseMenuButtons.render());
 			}
+
+
 
 			try { navigation->render(); } CATCH_PRINT();
 		}

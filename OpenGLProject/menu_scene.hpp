@@ -46,21 +46,13 @@
 
 struct Scene
 {
-	// Materials
-	Quad4Material matButtonBackground;
-	TextMaterial matButtonText;
-
-	std::array<SpriteEntity, 12> chessSprites;
-
-	ReturnCode initMaterials();
-
-
-
 	// Entities
 	Camera cameraHud;
 
 	MainMenuButtons mainMenuButtons;
 	MainMenuButtons pauseMenuButtons;
+	MainMenuButtons missilePurchaseButtons;
+	std::array<SpriteEntity, 12> chessSprites;
 
 	ReturnCode initEntities();
 

@@ -16,6 +16,21 @@ MainMenuButtons::MainMenuButtons(vec3 const & position, vec3 const & offset, std
 
 
 
+void MainMenuButtons::highlight(std::optional<size_t> index)
+{
+	for (auto& button : buttons)
+	{
+		button.buttonEntity.transform.localScale = vec3(1);
+	}
+
+	if (index)
+	{
+		buttons[*index].buttonEntity.transform.localScale = vec3(1.2f, 1.2f, 1);
+	}
+}
+
+
+
 ReturnCode MainMenuButtons::render()
 {
 	BEGIN_ANYALL();
