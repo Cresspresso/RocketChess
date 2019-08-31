@@ -232,22 +232,31 @@
 		BEGIN_ANYALL();
 		{
 			// render board
-			for (int y = 0; y < 8; y++)
 			{
-				for (int x = 0; x < 8; x++)
+				this->navigation->visit(overload{
+					[&](FocusedPanel::MainMenu const& panelData)
 				{
-					auto& piece = boardPieces[x + y * 8];
-					if (piece.type != ChessPiece::None)
+				},
+					[&](auto const& other)
+				{
+					// render chess board
+					for (int y = 0; y < 8; y++)
 					{
-						auto& sprite = chessSprites[GetPieceType(x, y)];
-						sprite.transform.localPosition = vec3(x * 70 - 430, y * 70 - 200, 0);
-						DO_ANYALL(sprite.render());
+						for (int x = 0; x < 8; x++)
+						{
+							auto& piece = boardPieces[x + y * 8];
+							if (piece.type != ChessPiece::None)
+							{
+								auto& sprite = chessSprites[GetPieceType(x, y)];
+								sprite.transform.localPosition = vec3(x * 70 - 430, y * 70 - 200, 0);
+								DO_ANYALL(sprite.render());
+							}
+						}
 					}
-				}
+				},
+					});
 			}
 
-//<<<<<<< HEAD
-			
 			// Needs To Be Set To A Button Similar To The Quit Button
 			// Also Needs To Have A Defined State Of Play Where Players Can
 			// Take Turns Moving Their Pieces In Accordance To The Rules Of Chess
@@ -276,12 +285,9 @@
 			DO_ANYALL(SovietCurrency.render());
 			DO_ANYALL(UnitedStatesCurrency.render());
 
-			// switch statment on steroids
-//=======
 
 
 			// render missile purchase buttons
-//>>>>>>> af2db2072a7909aed14444b1407b27e48182e38a
 			{
 				this->navigation->visit(overload{
 					[&](FocusedPanel::MainMenu const& panelData)
