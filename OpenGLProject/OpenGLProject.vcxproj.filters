@@ -455,7 +455,7 @@
       <Filter>Source Files\rocket_chess</Filter>
     </ClCompile>
     <ClCompile Include="main_menu_buttons.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\rocket_chess</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
