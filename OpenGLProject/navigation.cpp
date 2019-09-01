@@ -26,7 +26,8 @@
 
 
 
-Navigation::Navigation()
+Navigation::Navigation(std::function<void(ivec2)> onChessBoardCellPressed)
+	: onChessBoardCellPressed(onChessBoardCellPressed)
 {
 	spriteEntity.setTexture(TextureIndexer::AwesomeFace);
 	spriteEntity.transform.localScale = vec3(100, 100, 1);
@@ -282,6 +283,9 @@ void Navigation::update()
 	}
 	else if (getKeyboardState(KEY_SPACE) == InputState::DownFirst)
 	{
+#ifdef _DEBUG
+		console::log("SPACE pressed.");
+#endif
 		invokeAction();
 	}
 	else
@@ -380,16 +384,13 @@ void Navigation::invokeAction()
 			[&](ChessBoard& focusedPanelData)
 		{
 			ivec2 const coords = focusedPanelData.getFocusedCellCoords();
-
-			// TODO
-			// DEBUG
-			if (coords == ivec2(0, 1))
+			if (onChessBoardCellPressed != nullptr)
 			{
-				gamePanel = RocketPurchase();
+				onChessBoardCellPressed(coords);
 			}
 			else
 			{
-				console::error("Action in Board not implemented.");
+				console::error("Action is not provided for when board cell pressed.");
 			}
 		},
 			// else if

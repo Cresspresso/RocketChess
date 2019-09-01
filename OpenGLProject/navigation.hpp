@@ -18,6 +18,8 @@
 
 #pragma once
 
+#include <functional>
+
 #include "focused_panel.hpp"
 #include "sprite_entity.hpp"
 
@@ -32,7 +34,7 @@
 class Navigation
 {
 public:
-	Navigation();
+	explicit Navigation(std::function<void(ivec2)> onChessBoardCellPressed);
 	void update();
 	void render();
 
@@ -46,6 +48,8 @@ public:
 	std::optional<FocusedPanel::PauseMenu> pauseMenu;
 
 	SpriteEntity spriteEntity;
+
+	std::function<void(ivec2)> onChessBoardCellPressed = nullptr;
 
 	bool isGameSceneVisible() const;
 	bool isPauseMenuVisible() const;

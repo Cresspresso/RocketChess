@@ -137,64 +137,195 @@
 
 
 
-	ReturnCode Scene::onCellClicked(int x, int y)
+	void Scene::onCellClicked(ivec2 cellCoords)
 	{
+		size_t const thatLinearIndex = getLinearIndex(cellCoords);
+		auto& thatPiece = boardPieces[thatLinearIndex];
+
 		if (selectedCoords)
 		{
-			if (*selectedCoords == ivec2(x, y))
+			auto& selectedPiece = boardPieces[getLinearIndex(*selectedCoords)];
+			assert(selectedPiece.isPlayer2 == this->isCurrentPlayerTwo);
+			 
+			auto it = availableActions.find(thatLinearIndex);
+			if (it == availableActions.end()) // if no available action there
 			{
-				selectedCoords.reset();
-				return RC_SUCCESS;
+				// deselect
+				selectedCoords = std::nullopt;
+				availableActions.clear();
 			}
-
-			else
+			else // if available action there
 			{
-				isCurrentPlayerTwo = !isCurrentPlayerTwo; 
+				auto const& action = it->second;
+				switch (action.type)
+				{
+				case ChessActionType::PawnMoveOne:
+				{
+					if (thatPiece.type == ChessPiece::None)
+					{
+						thatPiece = selectedPiece;
+						selectedPiece = { ChessPiece::None };
+					}
+					// else TODO invalid move sound effect
+				}
+				break;
+
+				case ChessActionType::KingMove:
+				{
+					if (thatPiece.type == ChessPiece::None)
+					{
+						thatPiece = selectedPiece;
+						selectedPiece = { ChessPiece::None };
+					}
+					else if (thatPiece.isPlayer2 != selectedPiece.isPlayer2)
+					{
+						// TODO gain money from capture
+						thatPiece = selectedPiece;
+						selectedPiece = { ChessPiece::None };
+					}
+					// else TODO invalid move sound effect
+				}
+				break;
+
+				default:
+					throw std::runtime_error("ChessActionType functionality not implemented");
+					break;
+				}
+
+				// finish move
+				selectedCoords = std::nullopt;
+				availableActions.clear();
+
+				// next players's turn
+				isCurrentPlayerTwo = !isCurrentPlayerTwo;
 				DEBUG_LOG("Next player's turn");
-				return RC_SUCCESS;
 			}
 		}
-		else
+		else // if no cell is currently selected, select the allied piece
 		{
-			auto& piece = boardPieces[x + y * 8];
-			bool const isPlayer2 = piece.isPlayer2;
-			int const yForward = isPlayer2 ? -1 : 1;
-			switch (piece.type) {
-			case ChessPiece::Pawn:
+			if (thatPiece.type != ChessPiece::None)
 			{
-				auto& other = boardPieces[(x)+(y + yForward) * 8];
-				if (other.type == ChessPiece::None)
+				if (this->isCurrentPlayerTwo == thatPiece.isPlayer2)
 				{
-					other = piece;
-					piece = { ChessPiece::None };
-					return RC_SUCCESS;
+					selectedCoords = cellCoords;
+
+					availableActions.clear();
+
+					int const yForward = thatPiece.isPlayer2 ? -1 : 1;
+					
+					// TODO test if king is in 'Check' before providing actions.
+					switch (thatPiece.type)
+					{
+					case ChessPiece::Pawn:
+					{
+						// action: move 1 space forward (up for white, down for black)
+						ivec2 const actionCoords = cellCoords + ivec2(0, yForward);
+						if (isValidCoords(actionCoords))
+						{
+							size_t const actionLinearIndex = getLinearIndex(actionCoords);
+							// if the destination space is empty
+							auto const& destPiece = boardPieces[actionLinearIndex];
+							if (destPiece.type == ChessPiece::None)
+							{
+								// the action can be performed
+								ChessActionType const type = (actionCoords.y == 0 || actionCoords.y == boardSize - 1)
+									? ChessActionType::PawnPromotion
+									: ChessActionType::PawnMoveOne;
+
+								availableActions.insert(std::make_pair(
+									actionLinearIndex,
+									ChessAction{ type, actionCoords }
+								));
+							}
+						}
+					}
+					break;
+
+					case ChessPiece::King:
+					{
+						// action: move 1 space in any direction
+						static std::array<ivec2, 8> const neighboursCoords{
+							ivec2(-1, 1), ivec2(0, 1), ivec2(1, 1),
+							ivec2(-1, 0), ivec2(1, 1),
+							ivec2(-1, -1), ivec2(0, -1), ivec2(1, -1)
+						};
+
+						for (ivec2 const& neighbourCoords : neighboursCoords)
+						{
+							ivec2 const actionCoords = cellCoords + neighbourCoords;
+							if (isValidCoords(actionCoords))
+							{
+								size_t const actionLinearIndex = getLinearIndex(actionCoords);
+								// if the destination space is empty
+								auto const& destPiece = boardPieces[actionLinearIndex];
+								if (destPiece.type == ChessPiece::None)
+								{
+									// check if enemy king is next to destination
+									bool const enemyKingNearDestination = std::any_of(neighboursCoords.begin(), neighboursCoords.end(),
+										[&](ivec2 const& neighbourCoords)
+									{
+										ivec2 const kingCoords = actionCoords + neighbourCoords;
+										if (!isValidCoords(kingCoords))
+										{
+											return false;
+										}
+										auto const& kingPiece = boardPieces[getLinearIndex(kingCoords)];
+										return kingPiece.type == ChessPiece::King
+											&& kingPiece.isPlayer2 != thatPiece.isPlayer2;
+									});
+
+									if (!enemyKingNearDestination)
+									{
+										availableActions.insert(std::make_pair(
+											actionLinearIndex,
+											ChessAction{ ChessActionType::KingMove, actionCoords }
+										));
+									}
+								}
+							}
+						}
+					}
+					break;
+
+					case ChessPiece::None:
+						throw std::runtime_error("should be unreachable code");
+						break;
+
+					default:
+						throw std::runtime_error("invalid chess piece type");
+						break;
+					}
+
+					// after adding actions
+					// if no actions exist
+					// deselect
+					if (availableActions.empty())
+					{
+						selectedCoords = std::nullopt;
+					}
 				}
-				return RC_ERROR;
 			}
-			case ChessPiece::King:
-			{
-				auto& other = boardPieces[(x)+(y + yForward) * 8];
-				if (other.type == ChessPiece::None)
-				{
-					other = piece;
-					piece = { ChessPiece::None };
-					return RC_SUCCESS;
-				}
-				else if (other.isPlayer2 != piece.isPlayer2)
-				{
-					// TODO gain money from capture
-					other = piece;
-					piece = { ChessPiece::None };
-					return RC_SUCCESS;
-				}
-			}
-			case ChessPiece::None:
-			default:
-				break;
-			}
-			return RC_ERROR;
 		}
 	}
+
+
+
+	bool Scene::isValidCoords(ivec2 cellCoords)
+	{
+		return cellCoords.x >= 0 && cellCoords.x < boardSize
+			&& cellCoords.y >= 0 && cellCoords.y < boardSize;
+	}
+
+	size_t Scene::getLinearIndex(ivec2 cellCoords)
+	{
+		if (!isValidCoords(cellCoords))
+		{
+			throw std::runtime_error("cell coords out of range");
+		}
+		return static_cast<size_t>(cellCoords.x) + static_cast<size_t>(cellCoords.y) * boardSize;
+	}
+
+
 
 	ReturnCode Scene::init()
 	{
@@ -202,7 +333,12 @@
 		{
 			DO_ANYALL(initEntities());
 			DO_ANYALL(initBehaviour());
-			try { navigation = std::make_unique<Navigation>(); } CATCH_PRINT();
+
+			try {
+				navigation = std::make_unique<Navigation>(
+					[this](ivec2 coords) { onCellClicked(coords); }
+				);
+			} CATCH_PRINT();
 		}
 		return END_ANYALL();
 	}
@@ -240,11 +376,11 @@
 					[&](auto const& other)
 				{
 					// render chess board
-					for (int y = 0; y < 8; y++)
+					for (int y = 0; y < boardSize; y++)
 					{
-						for (int x = 0; x < 8; x++)
+						for (int x = 0; x < boardSize; x++)
 						{
-							auto& piece = boardPieces[x + y * 8];
+							auto& piece = boardPieces[getLinearIndex({ x, y })];
 							if (piece.type != ChessPiece::None)
 							{
 								auto& sprite = chessSprites[GetPieceType(x, y)];
@@ -252,6 +388,19 @@
 								DO_ANYALL(sprite.render());
 							}
 						}
+					}
+
+					// render available actions
+					for (auto const& pair : availableActions)
+					{
+						ChessAction const& action = pair.second;
+						ivec2 const& coords = action.coords;
+						vec2 const position = vec2(coords) * 70.0f + vec2(-430, -200);
+
+						// TODO use different sprite with texture for action type.
+						auto& sprite = chessSprites[0];
+						sprite.transform.localPosition = vec3(position, 0);
+						DO_ANYALL(sprite.render());
 					}
 				},
 					});
@@ -264,22 +413,13 @@
 			auto& PlayerType = isCurrentPlayerTwo;
 			if (isCurrentPlayerTwo == true) // Needs Switching
 			{
-				DEBUG_LOG("US's Move");
 				currentPlayerLabel.textRenderer.text = "US's Move";
 				currentPlayerLabel.material.tint = vec3(0.2,0.1,0.85);//(0.65, 0.2, 0.85);
-				
-				isCurrentPlayerTwo = false;
 			}
-			else if (isCurrentPlayerTwo == false) // Default:
+			else //if (isCurrentPlayerTwo == false) // Default:
 			{
-				DEBUG_LOG("USSR's Move");
 				currentPlayerLabel.textRenderer.text = "USSR's Move";
 				currentPlayerLabel.material.tint = vec3(0.65, 1, 0.65);
-				isCurrentPlayerTwo = true;
-			}
-			else 
-			{
-
 			}
 			DO_ANYALL(currentPlayerLabel.render());
 			DO_ANYALL(SovietCurrency.render());

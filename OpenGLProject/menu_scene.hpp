@@ -65,14 +65,18 @@ struct Scene
 
 	// Behaviour
 	std::array<OwnedChessPiece, 8 * 8> boardPieces;
-	std::map<ivec2, ChessAction> availableActions;
+	std::map<size_t, ChessAction> availableActions; // key is linear index into board
 	std::optional<ivec2> selectedCoords;
 	bool isCurrentPlayerTwo = false;
 
 	ReturnCode initBehaviour();
 
 	int GetPieceType(int x, int y);
-	ReturnCode onCellClicked(int x, int y);
+	void onCellClicked(ivec2 cellCoords);
+
+	static constexpr size_t const boardSize = 8;
+	static bool isValidCoords(ivec2 cellCoords);
+	static size_t getLinearIndex(ivec2 cellCoords);
 
 	std::unique_ptr<Navigation> navigation;
 
