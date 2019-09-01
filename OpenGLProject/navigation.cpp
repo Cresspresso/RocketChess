@@ -19,8 +19,6 @@
 #include "math_utils.hpp"
 #include "input.hpp"
 #include "console.hpp"
-#include "application.hpp"
-#include "singleton.hpp"
 
 #include "navigation.hpp"
 
@@ -29,8 +27,8 @@
 Navigation::Navigation(std::function<void(ivec2)> onChessBoardCellPressed)
 	: onChessBoardCellPressed(onChessBoardCellPressed)
 {
-	spriteEntity.setTexture(TextureIndexer::AwesomeFace);
-	spriteEntity.transform.localScale = vec3(100, 100, 1);
+	spriteEntity.setTexture(TextureIndexer::Cursor);
+	spriteEntity.transform.localScale = vec3(72, 72, 1);
 }
 
 
@@ -213,10 +211,16 @@ void Navigation::render()
 	// after updating transform
 	if (doRender)
 	{
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 		if (RC_SUCCESS != spriteEntity.render())
 		{
+			glDisable(GL_BLEND);
 			throw std::runtime_error("Failed to render Navigation");
 		}
+
+		glDisable(GL_BLEND);
 	}
 }
 

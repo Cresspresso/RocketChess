@@ -53,6 +53,8 @@ struct Scene
 	MainMenuButtons pauseMenuButtons;
 	MainMenuButtons missilePurchaseButtons;
 	std::array<SpriteEntity, 12> chessSprites;
+	SpriteEntity selectionSprite;
+	SpriteEntity actionSprite;
 
 	TextEntity currentPlayerLabel;
 	TextEntity SovietCurrency;

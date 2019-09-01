@@ -41,6 +41,9 @@ enum class TextureIndexer : size_t
 	RookUS,
 	RookUSSR,
 	ChessBoard,
+	Selection,
+	Action,
+	Cursor,
 	END
 };
 constexpr size_t TextureIndexerEND = static_cast<size_t>(TextureIndexer::END);
@@ -73,6 +76,9 @@ struct TextureManager : public ResourceManager<GLuint, TextureIndexerEND, Textur
 		"QueenUSSR.png",
 		"RookUS.png",
 		"RookUSSR.png",
-		"Chess-Board.jpg"
+		"Chess-Board.jpg",
+		"Selection.png",
+		"Action.png",
+		"Cursor.png",
 	};
 };

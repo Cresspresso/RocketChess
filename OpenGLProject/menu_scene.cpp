@@ -86,6 +86,14 @@
 			},
 		};
 
+
+		selectionSprite.setTexture(TextureIndexer::Selection);
+		selectionSprite.transform.localScale = vec3(64, 64, 1);
+
+		actionSprite.setTexture(TextureIndexer::Action);
+		actionSprite.transform.localScale = vec3(64, 64, 1);
+
+
 		// chess piece types
 		for (size_t i = 0; i < chessSprites.size(); i++)
 		{
@@ -375,6 +383,13 @@
 				},
 					[&](auto const& other)
 				{
+					auto const coordsToHudPosition = [](ivec2 coords) -> vec3
+					{
+						return vec3(
+							vec2(coords) * 70.0f + vec2(-430, -200),
+							0);
+					};
+
 					// render chess board
 					for (int y = 0; y < boardSize; y++)
 					{
@@ -384,24 +399,33 @@
 							if (piece.type != ChessPiece::None)
 							{
 								auto& sprite = chessSprites[GetPieceType(x, y)];
-								sprite.transform.localPosition = vec3(x * 70 - 430, y * 70 - 200, 0);
+								sprite.transform.localPosition = coordsToHudPosition({ x, y });
 								DO_ANYALL(sprite.render());
 							}
 						}
+					}
+
+					glEnable(GL_BLEND);
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+					// render selection outline
+					if (selectedCoords)
+					{
+						selectionSprite.transform.localPosition = coordsToHudPosition(*selectedCoords);
+						DO_ANYALL(selectionSprite.render());
 					}
 
 					// render available actions
 					for (auto const& pair : availableActions)
 					{
 						ChessAction const& action = pair.second;
-						ivec2 const& coords = action.coords;
-						vec2 const position = vec2(coords) * 70.0f + vec2(-430, -200);
 
 						// TODO use different sprite with texture for action type.
-						auto& sprite = chessSprites[0];
-						sprite.transform.localPosition = vec3(position, 0);
-						DO_ANYALL(sprite.render());
+						actionSprite.transform.localPosition = coordsToHudPosition(action.coords);
+						DO_ANYALL(actionSprite.render());
 					}
+
+					glDisable(GL_BLEND);
 				},
 					});
 			}
