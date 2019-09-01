@@ -254,7 +254,7 @@
 						// action: move 1 space in any direction
 						static std::array<ivec2, 8> const neighboursCoords{
 							ivec2(-1, 1), ivec2(0, 1), ivec2(1, 1),
-							ivec2(-1, 0), ivec2(1, 1),
+							ivec2(-1, 0), ivec2(1, 0),
 							ivec2(-1, -1), ivec2(0, -1), ivec2(1, -1)
 						};
 
@@ -360,8 +360,13 @@
 			try
 			{
 				navigation->update();
+				DO_ANYALL(RC_SUCCESS);
 			}
-			CATCH_PRINT();
+			catch (...)
+			{
+				*g_reason = "navigation->update() failed";
+				DO_ANYALL(RC_ERROR);
+			}
 		}
 		return END_ANYALL();
 	}

@@ -44,6 +44,8 @@
 #include "closing_state.hpp"
 #include "console.hpp"
 
+#include "debug_log.hpp"
+
 
 
 #ifdef X64
@@ -201,6 +203,9 @@ ReturnCode innerMain(int argc, char** argv)
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 
+	// time
+	Time::init();
+
 	// audio
 	HANDLE_ALL(initAudio());
 
@@ -208,7 +213,6 @@ ReturnCode innerMain(int argc, char** argv)
 	HANDLE_ALL(singleton::instance.initPtr()); // must be dot operator
 
 	// first update
-	Time::init();
 	update();
 
 	// callbacks
