@@ -16,6 +16,8 @@
 **	Date Edited	:	10/06/2019
 */
 
+#include "final_act.hpp"
+
 #include "entity_utils.hpp"
 
 #include "singleton.hpp"
@@ -154,44 +156,53 @@
 		{
 			auto& selectedPiece = boardPieces[getLinearIndex(*selectedCoords)];
 			assert(selectedPiece.isPlayer2 == this->isCurrentPlayerTwo);
-			 
+
+			auto const deselect = [&] {
+				selectedCoords = std::nullopt;
+				availableActions.clear();
+			};
+
 			auto it = availableActions.find(thatLinearIndex);
 			if (it == availableActions.end()) // if no available action there
 			{
-				// deselect
-				selectedCoords = std::nullopt;
-				availableActions.clear();
+				deselect();
 			}
 			else // if available action there
 			{
+				FINAL_ACT(fa, [&]()noexcept
+				{
+					// finish move
+					deselect();
+
+					// next players's turn
+					isCurrentPlayerTwo = !isCurrentPlayerTwo;
+					DEBUG_LOG("Next player's turn");
+				});
+
+				auto const regularMove = [&] {
+					if (thatPiece.type != ChessPiece::None)
+					{
+						assert(thatPiece.isPlayer2 != selectedPiece.isPlayer2);
+						// TODO gain money from capture for specific piece type
+					}
+
+					thatPiece = selectedPiece;
+					selectedPiece = { ChessPiece::None };
+				};
+
 				auto const& action = it->second;
 				switch (action.type)
 				{
-				case ChessActionType::PawnMoveOne:
+				case ChessActionType::RegularMove:
 				{
-					if (thatPiece.type == ChessPiece::None)
-					{
-						thatPiece = selectedPiece;
-						selectedPiece = { ChessPiece::None };
-					}
-					// else TODO invalid move sound effect
+					regularMove();
 				}
 				break;
 
-				case ChessActionType::KingMove:
+				case ChessActionType::PawnPromotion:
 				{
-					if (thatPiece.type == ChessPiece::None)
-					{
-						thatPiece = selectedPiece;
-						selectedPiece = { ChessPiece::None };
-					}
-					else if (thatPiece.isPlayer2 != selectedPiece.isPlayer2)
-					{
-						// TODO gain money from capture
-						thatPiece = selectedPiece;
-						selectedPiece = { ChessPiece::None };
-					}
-					// else TODO invalid move sound effect
+					regularMove();
+					throw std::runtime_error("PawnPromotion functionality not implemented");
 				}
 				break;
 
@@ -199,17 +210,11 @@
 					throw std::runtime_error("ChessActionType functionality not implemented");
 					break;
 				}
-
-				// finish move
-				selectedCoords = std::nullopt;
-				availableActions.clear();
-
-				// next players's turn
-				isCurrentPlayerTwo = !isCurrentPlayerTwo;
-				DEBUG_LOG("Next player's turn");
 			}
 		}
-		else // if no cell is currently selected, select the allied piece
+		
+		// NOTE: no 'else'. If it was deselected, check for new selection.
+		// if no cell is currently selected, select the allied piece
 		{
 			if (thatPiece.type != ChessPiece::None)
 			{
@@ -226,24 +231,50 @@
 					{
 					case ChessPiece::Pawn:
 					{
-						// action: move 1 space forward (up for white, down for black)
-						ivec2 const actionCoords = cellCoords + ivec2(0, yForward);
-						if (isValidCoords(actionCoords))
+						// action: move 1 space forward or diagonal (up for white, down for black)
+						std::array<ivec2, 3> const relativeCoords{
+							ivec2(-1, yForward), ivec2(0, yForward), ivec2(1, yForward)
+						};
+
+						for (ivec2 const& relativeCoord : relativeCoords)
 						{
-							size_t const actionLinearIndex = getLinearIndex(actionCoords);
-							// if the destination space is empty
-							auto const& destPiece = boardPieces[actionLinearIndex];
-							if (destPiece.type == ChessPiece::None)
+							ivec2 const actionCoords = cellCoords + relativeCoord;
+							if (isValidCoords(actionCoords))
 							{
-								// the action can be performed
+								size_t const actionLinearIndex = getLinearIndex(actionCoords);
+								auto const& destPiece = boardPieces[actionLinearIndex];
+
 								ChessActionType const type = (actionCoords.y == 0 || actionCoords.y == boardSize - 1)
 									? ChessActionType::PawnPromotion
-									: ChessActionType::PawnMoveOne;
+									: ChessActionType::RegularMove;
 
-								availableActions.insert(std::make_pair(
-									actionLinearIndex,
-									ChessAction{ type, actionCoords }
-								));
+								auto const add = [&] {
+									availableActions.insert(std::make_pair(
+										actionLinearIndex,
+										ChessAction{ type, actionCoords }
+									));
+								};
+
+								// if moving straight forward
+								if (relativeCoord.x == 0)
+								{
+									// if the destination space is empty
+									if (destPiece.type == ChessPiece::None)
+									{
+										// the action can be performed
+										add();
+									}
+								}
+								else // if moving diagonally forward
+								{
+									// if enemy on destination
+									if (destPiece.type != ChessPiece::None
+										&& destPiece.isPlayer2 != thatPiece.isPlayer2)
+									{
+										// the action can be performed
+										add();
+									}
+								}
 							}
 						}
 					}
@@ -264,9 +295,10 @@
 							if (isValidCoords(actionCoords))
 							{
 								size_t const actionLinearIndex = getLinearIndex(actionCoords);
-								// if the destination space is empty
+								// if the destination space is empty or has enemy piece
 								auto const& destPiece = boardPieces[actionLinearIndex];
-								if (destPiece.type == ChessPiece::None)
+								if (destPiece.type == ChessPiece::None
+									|| destPiece.isPlayer2 != isCurrentPlayerTwo)
 								{
 									// check if enemy king is next to destination
 									bool const enemyKingNearDestination = std::any_of(neighboursCoords.begin(), neighboursCoords.end(),
@@ -286,7 +318,7 @@
 									{
 										availableActions.insert(std::make_pair(
 											actionLinearIndex,
-											ChessAction{ ChessActionType::KingMove, actionCoords }
+											ChessAction{ ChessActionType::RegularMove, actionCoords }
 										));
 									}
 								}
@@ -300,6 +332,7 @@
 						break;
 
 					default:
+						selectedCoords = std::nullopt;
 						throw std::runtime_error("invalid chess piece type");
 						break;
 					}
@@ -364,7 +397,7 @@
 			}
 			catch (...)
 			{
-				*g_reason = "navigation->update() failed";
+				*g_reason = "navigation->update() failed: " + stringException();
 				DO_ANYALL(RC_ERROR);
 			}
 		}

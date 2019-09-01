@@ -233,21 +233,27 @@ namespace
 	{
 		ivec2 dir{ 0, 0 };
 
-		if (getKeyboardState('w') == InputState::DownFirst) { dir.y++; }
-		if (getKeyboardState('W') == InputState::DownFirst) { dir.y++; }
-		if (getSpecialState(GLUT_KEY_UP) == InputState::DownFirst) { dir.y++; }
+		auto const isPressed = [](InputState state)
+		{
+			return state == InputState::DownFirst
+				|| state == InputState::DownAgain;
+		};
 
-		if (getKeyboardState('s') == InputState::DownFirst) { dir.y--; }
-		if (getKeyboardState('S') == InputState::DownFirst) { dir.y--; }
-		if (getSpecialState(GLUT_KEY_DOWN) == InputState::DownFirst) { dir.y--; }
+		if (isPressed(getKeyboardState('w'))) { dir.y++; }
+		if (isPressed(getKeyboardState('W'))) { dir.y++; }
+		if (isPressed(getSpecialState(GLUT_KEY_UP))) { dir.y++; }
 
-		if (getKeyboardState('d') == InputState::DownFirst) { dir.x++; }
-		if (getKeyboardState('D') == InputState::DownFirst) { dir.x++; }
-		if (getSpecialState(GLUT_KEY_RIGHT) == InputState::DownFirst) { dir.x++; }
+		if (isPressed(getKeyboardState('s'))) { dir.y--; }
+		if (isPressed(getKeyboardState('S'))) { dir.y--; }
+		if (isPressed(getSpecialState(GLUT_KEY_DOWN))) { dir.y--; }
 
-		if (getKeyboardState('a') == InputState::DownFirst) { dir.x--; }
-		if (getKeyboardState('A') == InputState::DownFirst) { dir.x--; }
-		if (getSpecialState(GLUT_KEY_LEFT) == InputState::DownFirst) { dir.x--; }
+		if (isPressed(getKeyboardState('d'))) { dir.x++; }
+		if (isPressed(getKeyboardState('D'))) { dir.x++; }
+		if (isPressed(getSpecialState(GLUT_KEY_RIGHT))) { dir.x++; }
+
+		if (isPressed(getKeyboardState('a'))) { dir.x--; }
+		if (isPressed(getKeyboardState('A'))) { dir.x--; }
+		if (isPressed(getSpecialState(GLUT_KEY_LEFT))) { dir.x--; }
 
 		return dir;
 	}

@@ -5,9 +5,7 @@
 
 enum class ChessActionType
 {
-	PawnMoveOne,
-	PawnCapture,
-	KingMove,
+	RegularMove,
 	PawnPromotion,
 };
 
