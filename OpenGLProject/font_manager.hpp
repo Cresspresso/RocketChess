@@ -44,7 +44,7 @@ struct FontManager : public ResourceManager<Font, FontIndexerEND, FontIndexer>
 		"arial",
 		"SnackerComic",
 		"waltographUI",
-		// "BankGothicMedium"
+		// "BankGothicMedium" // To Be Added
 	};
 	static constexpr std::array<int, FontIndexerEND> sizes =
 	{

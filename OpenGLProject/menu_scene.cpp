@@ -91,12 +91,16 @@
 			},
 		};
 
-
+		// Textures Init Here
 		selectionSprite.setTexture(TextureIndexer::Selection);
 		selectionSprite.transform.localScale = vec3(64, 64, 1);
 
 		actionSprite.setTexture(TextureIndexer::Action);
 		actionSprite.transform.localScale = vec3(64, 64, 1);
+
+		boardSprite.setTexture(TextureIndexer::ChessBoard);
+		boardSprite.transform.localScale = vec3(615, 610, 1);
+		boardSprite.transform.localPosition = vec3(-186.75, 45.5, 0);
 
 
 		// chess piece types
@@ -420,6 +424,8 @@
 
 		BEGIN_ANYALL();
 		{
+			DO_ANYALL(boardSprite.render());
+
 			// render tab help
 			if (navigation->isGameSceneVisible())
 			{
@@ -441,7 +447,9 @@
 							0);
 					};
 
-					// render chess board
+					// render chess board array
+
+				
 					for (int y = 0; y < boardSize; y++)
 					{
 						for (int x = 0; x < boardSize; x++)
