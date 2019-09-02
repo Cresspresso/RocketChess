@@ -146,6 +146,56 @@
 #pragma region Scene
 
 
+	//chose where to launch the missile
+	ReturnCode Scene::MissilePosition() {
+
+		BEGIN_ANYALL();
+		{
+			//moves cursor back to the chessboard
+			navigation->gamePanel = FocusedPanel::ChessBoard();
+			// switch statment on steroids
+			{
+				ReturnCode const r = this->navigation->visit(overload{
+					[&](FocusedPanel::ChessBoard const& panelData) // case MainMenu:
+				{
+					ivec2 cursor = panelData.getFocusedCellCoords();
+					return RC_SUCCESS;
+				},
+					[&](auto const& other) // default:
+				{
+					return RC_ERROR;
+				},
+					});
+				DO_ANYALL(r);
+			}
+
+			try { navigation->render(); } CATCH_PRINT();
+		}
+		return END_ANYALL();
+
+		/*TODO
+		player choses where to launch the missile
+		checks to see what piece is under it and passes that back to the
+		missile manager and the missile manager can determine whether
+		the piece is destroyed or not*/
+
+	}
+
+
+	//returns user to the chessboard after launching the missile
+	ReturnCode Scene::LaunchedMissile() {
+
+		BEGIN_ANYALL();
+		{
+			//resets the cursor back to the chessBoard
+			navigation->gamePanel = FocusedPanel::ChessBoard();
+
+			try { navigation->render(); } CATCH_PRINT();
+		}
+
+		return END_ANYALL();
+
+	}
 
 	void Scene::onCellClicked(ivec2 cellCoords)
 	{
@@ -486,29 +536,6 @@
 			DO_ANYALL(currentPlayerLabel.render());
 			DO_ANYALL(SovietCurrency.render());
 			DO_ANYALL(UnitedStatesCurrency.render());
-
-	//chose where to launch the missile
-	ReturnCode Scene::MissilePosition() {
-
-		BEGIN_ANYALL();
-		{
-			//moves cursor back to the chessboard
-			navigation->gamePanel = FocusedPanel::ChessBoard();
-		// switch statment on steroids
-		{
-			ReturnCode const r = this->navigation->visit(overload{
-				[&](FocusedPanel::ChessBoard const& panelData) // case MainMenu:
-			{
-				ivec2 cursor = panelData.getFocusedCellCoords();
-				return RC_SUCCESS;
-			},
-				[&](auto const& other) // default:
-			{
-				return RC_ERROR;
-			},
-				});
-			DO_ANYALL(r);
-		}
 
 			// render missile purchase buttons
 			{
