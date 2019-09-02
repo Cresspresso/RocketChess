@@ -44,6 +44,8 @@ enum class TextureIndexer : size_t
 	Selection,
 	Action,
 	Cursor,
+	USSRFLAG,
+	USFLAG,
 	END
 };
 constexpr size_t TextureIndexerEND = static_cast<size_t>(TextureIndexer::END);
@@ -80,5 +82,7 @@ struct TextureManager : public ResourceManager<GLuint, TextureIndexerEND, Textur
 		"Selection.png",
 		"Action.png",
 		"Cursor.png",
+		"UssrFlag.png",
+		"UnitedStatesFlag.png"
 	};
 };

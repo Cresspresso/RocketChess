@@ -56,6 +56,7 @@ struct Scene
 	SpriteEntity selectionSprite;
 	SpriteEntity actionSprite;
 	SpriteEntity boardSprite;
+	SpriteEntity CallingCard;
 
 	TextEntity currentPlayerLabel;
 	TextEntity SovietCurrency;

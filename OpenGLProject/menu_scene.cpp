@@ -102,6 +102,10 @@
 		boardSprite.transform.localScale = vec3(615, 610, 1);
 		boardSprite.transform.localPosition = vec3(-186.75, 45.5, 0);
 
+		CallingCard.setTexture(TextureIndexer::USSRFLAG);
+		CallingCard.transform.localScale = vec3(256, 128, 1);
+		CallingCard.transform.localPosition = vec3(405, 337, 0);
+
 
 		// chess piece types
 		for (size_t i = 0; i < chessSprites.size(); i++)
@@ -115,8 +119,8 @@
 		//-------------------UI Text----------------------//
 		//------------------------------------------------//
 
-		SovietCurrency.transform.localPosition = vec3(315, 300, 0);
-		UnitedStatesCurrency.transform.localPosition = vec3(335, 250, 0);
+		SovietCurrency.transform.localPosition = vec3(315, 200, 0);
+		UnitedStatesCurrency.transform.localPosition = vec3(335, 150, 0);
 
 		//
 		// Player Turn Labels
@@ -163,6 +167,8 @@
 					// next players's turn
 					isCurrentPlayerTwo = !isCurrentPlayerTwo;
 					DEBUG_LOG("Next player's turn");
+					// HERE!
+					CallingCard.setTexture(TextureIndexer::USFLAG);
 				});
 
 				auto const regularMove = [&] {
@@ -431,6 +437,9 @@
 
 				// render board
 				DO_ANYALL(boardSprite.render());
+
+				// render Calling card
+				DO_ANYALL(CallingCard.render());
 
 				auto const coordsToHudPosition = [](ivec2 coords) -> vec3
 				{
