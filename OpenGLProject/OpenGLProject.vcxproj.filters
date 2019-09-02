@@ -457,6 +457,18 @@
     <ClCompile Include="main_menu_buttons.cpp">
       <Filter>Source Files\rocket_chess</Filter>
     </ClCompile>
+    <ClCompile Include="HistoryEventLog.cpp">
+      <Filter>Source Files\rocket_chess</Filter>
+    </ClCompile>
+    <ClCompile Include="menuSwap.cpp">
+      <Filter>Source Files\rocket_chess</Filter>
+    </ClCompile>
+    <ClCompile Include="MissileManager.cpp">
+      <Filter>Source Files\rocket_chess</Filter>
+    </ClCompile>
+    <ClCompile Include="Money.cpp">
+      <Filter>Source Files\rocket_chess</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cubemap_material.hpp">
@@ -777,12 +789,6 @@
     <ClInclude Include="fog_material.hpp">
       <Filter>Source Files\materials</Filter>
     </ClInclude>
-    <ClInclude Include="ChessPiece.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ChessAction.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="toggle_music.hpp">
       <Filter>Source Files\scenes</Filter>
     </ClInclude>
@@ -805,6 +811,24 @@
       <Filter>Source Files\rocket_chess</Filter>
     </ClInclude>
     <ClInclude Include="main_menu_buttons.hpp">
+      <Filter>Source Files\rocket_chess</Filter>
+    </ClInclude>
+    <ClInclude Include="Money.h">
+      <Filter>Source Files\rocket_chess</Filter>
+    </ClInclude>
+    <ClInclude Include="ChessAction.hpp">
+      <Filter>Source Files\rocket_chess</Filter>
+    </ClInclude>
+    <ClInclude Include="ChessPiece.hpp">
+      <Filter>Source Files\rocket_chess</Filter>
+    </ClInclude>
+    <ClInclude Include="HistoryEventLog.h">
+      <Filter>Source Files\rocket_chess</Filter>
+    </ClInclude>
+    <ClInclude Include="menuSwap.h">
+      <Filter>Source Files\rocket_chess</Filter>
+    </ClInclude>
+    <ClInclude Include="MissileManager.h">
       <Filter>Source Files\rocket_chess</Filter>
     </ClInclude>
   </ItemGroup>

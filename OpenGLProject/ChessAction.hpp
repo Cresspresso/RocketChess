@@ -7,6 +7,7 @@ enum class ChessActionType
 {
 	RegularMove,
 	PawnPromotion,
+	RocketAttack,
 };
 
 struct ChessAction

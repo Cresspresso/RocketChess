@@ -34,7 +34,7 @@
 class Navigation
 {
 public:
-	explicit Navigation(std::function<void(ivec2)> onChessBoardCellPressed);
+	explicit Navigation(std::function<void(ivec2)> onChessBoardCellPressed, std::function<void(int)> onRocketPressed);
 	void update();
 	void render();
 
@@ -50,6 +50,7 @@ public:
 	SpriteEntity spriteEntity;
 
 	std::function<void(ivec2)> onChessBoardCellPressed = nullptr;
+	std::function<void(int)> onRocketPressed = nullptr;
 
 	bool isGameSceneVisible() const;
 	bool isPauseMenuVisible() const;
