@@ -148,73 +148,20 @@
 #pragma endregion ~Scene::Builder
 #pragma region Scene
 
+	void Scene::deselect() {
+		selectedCoords = std::nullopt;
+		isChoosingRocketTarget = false;
+		availableActions.clear();
+	};
 
-	//chose where to launch the missile
-	ReturnCode Scene::MissilePosition() {
-
-		BEGIN_ANYALL();
-		{
-			//moves cursor back to the chessboard
-			navigation->gamePanel = FocusedPanel::ChessBoard();
-			// switch statment on steroids
-			{
-				ReturnCode const r = this->navigation->visit(overload{
-					[&](FocusedPanel::ChessBoard const& panelData) // case MainMenu:
-				{
-					ivec2 cursor = panelData.getFocusedCellCoords();
-					return RC_SUCCESS;
-				},
-					[&](auto const& other) // default:
-				{
-					return RC_ERROR;
-				},
-					});
-				DO_ANYALL(r);
-			}
-
-			try { navigation->render(); } CATCH_PRINT();
-		}
-		return END_ANYALL();
-
-		/*TODO
-		player choses where to launch the missile
-		checks to see what piece is under it and passes that back to the
-		missile manager and the missile manager can determine whether
-		the piece is destroyed or not*/
-
-	}
-
-
-	//returns user to the chessboard after launching the missile
-	ReturnCode Scene::LaunchedMissile() {
-
-		BEGIN_ANYALL();
-		{
-			//resets the cursor back to the chessBoard
-			navigation->gamePanel = FocusedPanel::ChessBoard();
-
-			try { navigation->render(); } CATCH_PRINT();
-		}
-
-		return END_ANYALL();
-
-	}
 
 	void Scene::onCellClicked(ivec2 cellCoords)
 	{
 		size_t const thatLinearIndex = getLinearIndex(cellCoords);
 		auto& thatPiece = boardPieces[thatLinearIndex];
 
-		if (selectedCoords)
+		if (selectedCoords || isChoosingRocketTarget)
 		{
-			auto& selectedPiece = boardPieces[getLinearIndex(*selectedCoords)];
-			assert(selectedPiece.isPlayer2 == this->isCurrentPlayerTwo);
-
-			auto const deselect = [&] {
-				selectedCoords = std::nullopt;
-				availableActions.clear();
-			};
-
 			auto it = availableActions.find(thatLinearIndex);
 			if (it == availableActions.end()) // if no available action there
 			{
@@ -233,6 +180,8 @@
 				});
 
 				auto const regularMove = [&] {
+					assert(selectedCoords);
+					auto& selectedPiece = boardPieces[getLinearIndex(*selectedCoords)];
 					if (thatPiece.type != ChessPiece::None)
 					{
 						assert(thatPiece.isPlayer2 != selectedPiece.isPlayer2);
@@ -249,6 +198,12 @@
 				case ChessActionType::RegularMove:
 				{
 					regularMove();
+				}
+				break;
+
+				case ChessActionType::RocketAttack:
+				{
+					thatPiece = { ChessPiece::None };
 				}
 				break;
 
@@ -402,6 +357,35 @@
 		}
 	}
 
+	void Scene::onRocketClicked(int rocket)
+	{
+		deselect();
+		isChoosingRocketTarget = true;
+
+		switch (rocket)
+		{
+		case 1:
+			for (int y = 0; y < boardSize; y++)
+			{
+				for (int x = 0; x < boardSize; x++)
+				{
+					ivec2 const coords = ivec2(x, y);
+					auto const& piece = boardPieces[getLinearIndex(coords)];
+					if (piece.type != ChessPiece::None
+						&& piece.isPlayer2 != this->isCurrentPlayerTwo)
+					{
+						// TODO test piece type against rocket type
+						availableActions.insert(std::make_pair(
+							getLinearIndex(coords),
+							ChessAction{ ChessActionType::RocketAttack, coords }
+						));
+					}
+				}
+			}
+			break;
+		}
+	}
+
 
 
 	bool Scene::isValidCoords(ivec2 cellCoords)
@@ -430,9 +414,12 @@
 
 			try {
 				navigation = std::make_unique<Navigation>(
-					[this](ivec2 coords) { onCellClicked(coords); }
+					[this](ivec2 coords) { onCellClicked(coords); },
+				[this](int rocket) { onRocketClicked(rocket); }
 				);
 			} CATCH_PRINT();
+
+			missile.scene = this;
 		}
 		return END_ANYALL();
 	}
@@ -673,3 +660,48 @@
 	}
 
 #pragma endregion ~Scene
+
+
+#pragma region missileStuffs
+
+
+
+	//chose where to launch the missile
+	ReturnCode Scene::MissilePosition() {
+
+		BEGIN_ANYALL();
+		{
+			//moves cursor back to the chessboard
+			navigation->gamePanel = FocusedPanel::ChessBoard();
+		}
+		return END_ANYALL();
+
+		/*TODO
+		player choses where to launch the missile
+		checks to see what piece is under it and passes that back to the
+		missile manager and the missile manager can determine whether
+		the piece is destroyed or not*/
+
+	}
+
+
+	//returns user to the chessboard after launching the missile
+	ReturnCode Scene::LaunchedMissile() {
+
+		BEGIN_ANYALL();
+		{
+			//resets the cursor back to the chessBoard
+			navigation->gamePanel = FocusedPanel::ChessBoard();
+
+			try { navigation->render(); } CATCH_PRINT();
+		}
+
+		return END_ANYALL();
+
+	}
+
+
+
+
+
+#pragma endregion missileStuffs

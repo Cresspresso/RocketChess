@@ -51,17 +51,10 @@ void missileManager::purchaseMissile(int missileChoice){
 void missileManager::launchMissile(){
 
 	//choose missile target
-	missilePos = checkMissileTarget();
+	missilePos = scene->MissilePosition();
 
 	//launch missile and destroy piece if able
 	destroyPiece(missilePos);
-}
-
-
-//choose position on grid to launch missile
-int missileManager::checkMissileTarget(){
-	
-	return missilePos;
 }
 
 void missileManager::destroyPiece(int missilePos) {

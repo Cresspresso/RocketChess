@@ -25,8 +25,9 @@
 
 
 
-Navigation::Navigation(std::function<void(ivec2)> onChessBoardCellPressed)
-	: onChessBoardCellPressed(onChessBoardCellPressed)
+Navigation::Navigation(std::function<void(ivec2)> onChessBoardCellPressed, std::function<void(int)> onRocketPressed)
+	: onChessBoardCellPressed(onChessBoardCellPressed),
+	onRocketPressed(onRocketPressed)
 {
 	spriteEntity.setTexture(TextureIndexer::Cursor);
 	spriteEntity.transform.localScale = vec3(72, 72, 1);
@@ -434,29 +435,37 @@ void Navigation::invokeAction()
 
 			case ButtonID::RPG:
 			{
+				onRocketPressed(1);
+				gamePanel = ChessBoard();
 				//purchase rpg
-				missile.purchaseMissile(1);
+				//missile.purchaseMissile(1);
 			}
 			break;
 
 			case ButtonID::ConventionalMissile:
 			{
+				onRocketPressed(2);
+				gamePanel = ChessBoard();
 				//purchase Ballistic missile
-				missile.purchaseMissile(2);
+				//missile.purchaseMissile(2);
 			}
 			break;
 
 			case ButtonID::ICBM:
 			{
+				onRocketPressed(3);
+				gamePanel = ChessBoard();
 				//purchase ICBM
-				missile.purchaseMissile(3);
+				//missile.purchaseMissile(3);
 			}
 			break;
 
 			case ButtonID::Voyager1:
 			{
+				onRocketPressed(4);
+				gamePanel = ChessBoard();
 				//purchase Voyager
-				missile.purchaseMissile(4);
+				//missile.purchaseMissile(4);
 			}
 			break;
 

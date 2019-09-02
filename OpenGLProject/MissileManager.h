@@ -20,9 +20,6 @@ public:
 	//launch a missile once the player has bought one
 	void launchMissile();
 	
-	//checks to see if the target is fine
-	int checkMissileTarget();
-	
 	//checks to see if the position the 
 	//missile was fired in destroys a piece
 	void destroyPiece(int missilePos);

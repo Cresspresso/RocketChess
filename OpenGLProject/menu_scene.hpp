@@ -71,11 +71,14 @@ struct Scene
 	std::map<size_t, ChessAction> availableActions; // key is linear index into board
 	std::optional<ivec2> selectedCoords;
 	bool isCurrentPlayerTwo = false;
+	bool isChoosingRocketTarget = false;
+	void deselect();
 
 	ReturnCode initBehaviour();
 
 	int GetPieceType(int x, int y);
 	void onCellClicked(ivec2 cellCoords);
+	void onRocketClicked(int rocket);
 
 	static constexpr size_t const boardSize = 8;
 	static bool isValidCoords(ivec2 cellCoords);
