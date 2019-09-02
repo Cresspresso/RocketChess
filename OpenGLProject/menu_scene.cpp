@@ -76,8 +76,11 @@
 			},
 		};
 
+		TabHelp.textRenderer.text = "<- TAB ->";
+		TabHelp.transform.localPosition = vec3(120, 0, 0);
+
 		missilePurchaseButtons = MainMenuButtons{
-			vec3(300, 100, 0),
+			vec3(360, 100, 0),
 			vec3(0, -100, 0),
 			{
 			"Cancel",
@@ -419,6 +422,13 @@
 		{
 			DO_ANYALL(boardSprite.render());
 
+			// render tab help
+			if (navigation->isGameSceneVisible())
+			{
+				DO_ANYALL(TabHelp.render());
+			}
+
+			// render board
 			{
 				this->navigation->visit(overload{
 					[&](FocusedPanel::MainMenu const& panelData)
