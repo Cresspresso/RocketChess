@@ -55,6 +55,7 @@ struct Scene
 	std::array<SpriteEntity, 12> chessSprites;
 	SpriteEntity selectionSprite;
 	SpriteEntity actionSprite;
+	SpriteEntity boardSprite;
 
 	TextEntity currentPlayerLabel;
 	TextEntity SovietCurrency;
