@@ -424,102 +424,90 @@
 
 		BEGIN_ANYALL();
 		{
-			DO_ANYALL(boardSprite.render());
-
-			// render tab help
 			if (navigation->isGameSceneVisible())
 			{
+				// render help tab
 				DO_ANYALL(TabHelp.render());
-			}
 
-			// render board
-			{
-				this->navigation->visit(overload{
-					[&](FocusedPanel::MainMenu const& panelData)
+				// render board
+				DO_ANYALL(boardSprite.render());
+
+				auto const coordsToHudPosition = [](ivec2 coords) -> vec3
 				{
-				},
-					[&](auto const& other)
+					return vec3(
+						vec2(coords) * 70.0f + vec2(-430, -200),
+						0);
+				};
+
+				// render chess board array
+				for (int y = 0; y < boardSize; y++)
 				{
-					auto const coordsToHudPosition = [](ivec2 coords) -> vec3
+					for (int x = 0; x < boardSize; x++)
 					{
-						return vec3(
-							vec2(coords) * 70.0f + vec2(-430, -200),
-							0);
-					};
-
-					// render chess board array
-
-				
-					for (int y = 0; y < boardSize; y++)
-					{
-						for (int x = 0; x < boardSize; x++)
+						auto& piece = boardPieces[getLinearIndex({ x, y })];
+						if (piece.type != ChessPiece::None)
 						{
-							auto& piece = boardPieces[getLinearIndex({ x, y })];
-							if (piece.type != ChessPiece::None)
-							{
-								auto& sprite = chessSprites[GetPieceType(x, y)];
-								sprite.transform.localPosition = coordsToHudPosition({ x, y });
-								DO_ANYALL(sprite.render());
-							}
+							auto& sprite = chessSprites[GetPieceType(x, y)];
+							sprite.transform.localPosition = coordsToHudPosition({ x, y });
+							DO_ANYALL(sprite.render());
 						}
 					}
+				}
 
-					glEnable(GL_BLEND);
-					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+				glEnable(GL_BLEND);
+				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-					// render selection outline
-					if (selectedCoords)
-					{
-						selectionSprite.transform.localPosition = coordsToHudPosition(*selectedCoords);
-						DO_ANYALL(selectionSprite.render());
-					}
+				// render selection outline
+				if (selectedCoords)
+				{
+					selectionSprite.transform.localPosition = coordsToHudPosition(*selectedCoords);
+					DO_ANYALL(selectionSprite.render());
+				}
 
-					// render available actions
-					for (auto const& pair : availableActions)
-					{
-						ChessAction const& action = pair.second;
+				// render available actions
+				for (auto const& pair : availableActions)
+				{
+					ChessAction const& action = pair.second;
 
-						// TODO use different sprite with texture for action type.
-						actionSprite.transform.localPosition = coordsToHudPosition(action.coords);
-						DO_ANYALL(actionSprite.render());
-					}
+					// TODO use different sprite with texture for action type.
+					actionSprite.transform.localPosition = coordsToHudPosition(action.coords);
+					DO_ANYALL(actionSprite.render());
+				}
 
-					glDisable(GL_BLEND);
-				},
-					});
+				glDisable(GL_BLEND);
+
+
+
+				// Needs To Be Set To A Button Similar To The Quit Button
+				// Also Needs To Have A Defined State Of Play Where Players Can
+				// Take Turns Moving Their Pieces In Accordance To The Rules Of Chess
+				// Call UI Section for the Players move US & USSR
+				auto& PlayerType = isCurrentPlayerTwo;
+				if (isCurrentPlayerTwo == true) // Needs Switching
+				{
+					currentPlayerLabel.textRenderer.text = "US's Move";
+					currentPlayerLabel.material.tint = vec3(0.2, 0.1, 0.85);//(0.65, 0.2, 0.85);
+				}
+				else //if (isCurrentPlayerTwo == false) // Default:
+				{
+					currentPlayerLabel.textRenderer.text = "USSR's Move";
+					currentPlayerLabel.material.tint = vec3(0.65, 1, 0.65);
+				}
+				DO_ANYALL(currentPlayerLabel.render());
+
+				// render currency
+				SovietCurrency.textRenderer.text = "Soviet Rubles $ " + toString(Rubles);
+				UnitedStatesCurrency.textRenderer.text = "US Dollars $ " + toString(Dollars);
+				DO_ANYALL(SovietCurrency.render());
+				DO_ANYALL(UnitedStatesCurrency.render());
 			}
-
-			// Needs To Be Set To A Button Similar To The Quit Button
-			// Also Needs To Have A Defined State Of Play Where Players Can
-			// Take Turns Moving Their Pieces In Accordance To The Rules Of Chess
-			// Call UI Section for the Players move US & USSR
-			auto& PlayerType = isCurrentPlayerTwo;
-			if (isCurrentPlayerTwo == true) // Needs Switching
-			{
-				currentPlayerLabel.textRenderer.text = "US's Move";
-				currentPlayerLabel.material.tint = vec3(0.2,0.1,0.85);//(0.65, 0.2, 0.85);
-			}
-			else //if (isCurrentPlayerTwo == false) // Default:
-			{
-				currentPlayerLabel.textRenderer.text = "USSR's Move";
-				currentPlayerLabel.material.tint = vec3(0.65, 1, 0.65);
-			}
-			DO_ANYALL(currentPlayerLabel.render());
-
-			// render currency
-			SovietCurrency.textRenderer.text = "Soviet Rubles $ " + toString(Rubles);
-			UnitedStatesCurrency.textRenderer.text = "US Dollars $ " + toString(Dollars);
-			DO_ANYALL(SovietCurrency.render());
-			DO_ANYALL(UnitedStatesCurrency.render());
 
 
 
 			// render missile purchase buttons
 			{
 				this->navigation->visit(overload{
-					[&](FocusedPanel::MainMenu const& panelData)
-				{
-				},
+					[&](FocusedPanel::MainMenu const& panelData) {},
 					[&](FocusedPanel::RocketPurchase const& panelData)
 				{
 					missilePurchaseButtons.highlight(static_cast<size_t>(panelData.focusedButton));
