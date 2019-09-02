@@ -44,6 +44,7 @@ enum InputKeyboardKey : unsigned char
 	KEY_SPACE = ' ',
 	KEY_ESCAPE = 27,
 	KEY_ENTER = 13,
+	KEY_TAB = 9,
 };
 
 void onKeyboardDown(unsigned char key, int mouseX, int mouseY) noexcept;
