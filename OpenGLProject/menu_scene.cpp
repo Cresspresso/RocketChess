@@ -357,13 +357,18 @@
 		}
 	}
 
+
+	//Used for when a rocket is chosen to be shot
+	//prevents the user from destroying anything that the missile cannot
+	//destroy
 	void Scene::onRocketClicked(int rocket)
 	{
 		deselect();
 		isChoosingRocketTarget = true;
-
+		//based on what missile the user has chosen
 		switch (rocket)
 		{
+		//RPG
 		case 1:
 			for (int y = 0; y < boardSize; y++)
 			{
@@ -373,16 +378,18 @@
 					auto const& piece = boardPieces[getLinearIndex(coords)];
 					if (piece.type != ChessPiece::None
 						&& piece.isPlayer2 != this->isCurrentPlayerTwo)
-					{
-						// TODO test piece type against rocket type
-						availableActions.insert(std::make_pair(
-							getLinearIndex(coords),
-							ChessAction{ ChessActionType::RocketAttack, coords }
-						));
+					{//checking to see what pieces can be taken
+						if (piece.type == ChessPiece::Pawn) {
+							availableActions.insert(std::make_pair(
+								getLinearIndex(coords),
+								ChessAction{ ChessActionType::RocketAttack, coords }
+							));
+						}
 					}
 				}
 			}
 			break;
+		//Ballistic Missile
 		case 2: {
 			for (int y = 0; y < boardSize; y++)
 			{
@@ -392,17 +399,19 @@
 					auto const& piece = boardPieces[getLinearIndex(coords)];
 					if (piece.type != ChessPiece::None
 						&& piece.isPlayer2 != this->isCurrentPlayerTwo)
-					{
-						// TODO test piece type against rocket type
-						availableActions.insert(std::make_pair(
-							getLinearIndex(coords),
-							ChessAction{ ChessActionType::RocketAttack, coords }
-						));
+					{//checking to see what pieces can be taken
+						if (piece.type == ChessPiece::Pawn || piece.type == ChessPiece::Rook || piece.type == ChessPiece::Bishop) {
+							availableActions.insert(std::make_pair(
+								getLinearIndex(coords),
+								ChessAction{ ChessActionType::RocketAttack, coords }
+							));
+						}
 					}
 				}
 			}
 		}
 		break;
+		//ICBM
 		case 3: {
 			for (int y = 0; y < boardSize; y++)
 			{
@@ -412,35 +421,22 @@
 					auto const& piece = boardPieces[getLinearIndex(coords)];
 					if (piece.type != ChessPiece::None
 						&& piece.isPlayer2 != this->isCurrentPlayerTwo)
-					{
-						// TODO test piece type against rocket type
-						availableActions.insert(std::make_pair(
-							getLinearIndex(coords),
-							ChessAction{ ChessActionType::RocketAttack, coords }
-						));
+					{//checking to see what pieces can be taken
+						if (piece.type == ChessPiece::Pawn || piece.type == ChessPiece::Rook || piece.type == ChessPiece::Bishop || piece.type == ChessPiece::Queen || piece.type == ChessPiece::Knight) {
+							availableActions.insert(std::make_pair(
+								getLinearIndex(coords),
+								ChessAction{ ChessActionType::RocketAttack, coords }
+							));
+						}
 					}
 				}
 			}
 		}
 		break;
+		//Voyager 1
 		case 4: {
-			for (int y = 0; y < boardSize; y++)
-			{
-				for (int x = 0; x < boardSize; x++)
-				{
-					ivec2 const coords = ivec2(x, y);
-					auto const& piece = boardPieces[getLinearIndex(coords)];
-					if (piece.type != ChessPiece::None
-						&& piece.isPlayer2 != this->isCurrentPlayerTwo)
-					{
-						// TODO test piece type against rocket type
-						availableActions.insert(std::make_pair(
-							getLinearIndex(coords),
-							ChessAction{ ChessActionType::RocketAttack, coords }
-						));
-					}
-				}
-			}
+			//TODO: Setup the win con for this as this does not need to destroy any
+			//pieces it should just win the game
 		}
 		break;
 		}
