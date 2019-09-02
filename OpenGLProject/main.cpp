@@ -196,7 +196,7 @@ ReturnCode innerMain(int argc, char** argv)
 	ASSERT0(glewInit());
 
 	// initial GL properties
-	glClearColor(1, 0, 0, 1);
+	glClearColor(0.0625, 0.0625, 0.0625, 1);
 
 	glFrontFace(GL_CCW);
 
