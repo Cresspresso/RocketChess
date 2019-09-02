@@ -383,6 +383,66 @@
 				}
 			}
 			break;
+		case 2: {
+			for (int y = 0; y < boardSize; y++)
+			{
+				for (int x = 0; x < boardSize; x++)
+				{
+					ivec2 const coords = ivec2(x, y);
+					auto const& piece = boardPieces[getLinearIndex(coords)];
+					if (piece.type != ChessPiece::None
+						&& piece.isPlayer2 != this->isCurrentPlayerTwo)
+					{
+						// TODO test piece type against rocket type
+						availableActions.insert(std::make_pair(
+							getLinearIndex(coords),
+							ChessAction{ ChessActionType::RocketAttack, coords }
+						));
+					}
+				}
+			}
+		}
+		break;
+		case 3: {
+			for (int y = 0; y < boardSize; y++)
+			{
+				for (int x = 0; x < boardSize; x++)
+				{
+					ivec2 const coords = ivec2(x, y);
+					auto const& piece = boardPieces[getLinearIndex(coords)];
+					if (piece.type != ChessPiece::None
+						&& piece.isPlayer2 != this->isCurrentPlayerTwo)
+					{
+						// TODO test piece type against rocket type
+						availableActions.insert(std::make_pair(
+							getLinearIndex(coords),
+							ChessAction{ ChessActionType::RocketAttack, coords }
+						));
+					}
+				}
+			}
+		}
+		break;
+		case 4: {
+			for (int y = 0; y < boardSize; y++)
+			{
+				for (int x = 0; x < boardSize; x++)
+				{
+					ivec2 const coords = ivec2(x, y);
+					auto const& piece = boardPieces[getLinearIndex(coords)];
+					if (piece.type != ChessPiece::None
+						&& piece.isPlayer2 != this->isCurrentPlayerTwo)
+					{
+						// TODO test piece type against rocket type
+						availableActions.insert(std::make_pair(
+							getLinearIndex(coords),
+							ChessAction{ ChessActionType::RocketAttack, coords }
+						));
+					}
+				}
+			}
+		}
+		break;
 		}
 	}
 
