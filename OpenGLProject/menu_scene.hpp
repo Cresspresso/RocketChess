@@ -59,6 +59,7 @@ struct Scene
 	TextEntity currentPlayerLabel;
 	TextEntity SovietCurrency;
 	TextEntity UnitedStatesCurrency;
+	TextEntity TabHelp;
 
 
 	ReturnCode initEntities();

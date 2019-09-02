@@ -292,6 +292,22 @@ void Navigation::update()
 			pauseMenu = FocusedPanel::PauseMenu();
 		}
 	}
+	else if (getKeyboardState(KEY_TAB) == InputState::DownFirst)
+	{
+		if (!pauseMenu)
+		{
+			using namespace FocusedPanel;
+			visit(overload{
+				[&](ChessBoard const&) {
+					gamePanel = RocketPurchase();
+				},
+				[&](RocketPurchase const&) {
+					gamePanel = ChessBoard();
+				},
+				[&](auto const&) {}
+			});
+		}
+	}
 	else if (getKeyboardState(KEY_SPACE) == InputState::DownFirst)
 	{
 #ifdef _DEBUG
