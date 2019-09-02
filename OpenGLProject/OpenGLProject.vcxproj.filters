@@ -1,3 +1,857 @@
+<<<<<<< HEAD
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{825049fe-9b41-4b6e-9dd0-a40c12ba93dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Shaders">
+      <UniqueIdentifier>{755c73e7-7ea5-4658-9b1a-d3bdcdce71de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\materials">
+      <UniqueIdentifier>{d98dd547-92b6-4e13-8492-69ebbc0d4efe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\entities">
+      <UniqueIdentifier>{433e501a-5bf5-4880-a277-d1fca3733403}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\meshes">
+      <UniqueIdentifier>{7ff84480-4c43-4ccf-a4a5-f2510b350230}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\utilities">
+      <UniqueIdentifier>{c40b2169-a517-4a78-a58e-3dd55c195563}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\common">
+      <UniqueIdentifier>{f2e6201c-361a-4697-9c14-287a73fb854e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\modules">
+      <UniqueIdentifier>{d5eb2305-79e3-481a-9e00-813bac847e32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\entities\components">
+      <UniqueIdentifier>{5a09a677-cfc5-4009-b7f8-a9537bff9e83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\entities\cameras">
+      <UniqueIdentifier>{6d2847a2-ed00-412d-8586-0eaede3617e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\resources">
+      <UniqueIdentifier>{970cb559-68d3-4e36-8d02-1f83f3c1fd7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scenes">
+      <UniqueIdentifier>{68fb1d22-8e47-469d-b1d6-250acf4a799e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\application">
+      <UniqueIdentifier>{3b2aa0c5-f425-47de-b530-eeb6613aa36f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scenes\menu_scene">
+      <UniqueIdentifier>{28a8b5fe-49e4-4501-ab01-fa072e95c0a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\resource_managers">
+      <UniqueIdentifier>{ad3fdd93-1b8c-4704-b4f2-cdc2f9ce281f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\entities\buttons">
+      <UniqueIdentifier>{4b860516-c70b-4f34-9fcc-0affcbc499ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\entities\agents">
+      <UniqueIdentifier>{c69552b2-efd1-4025-bebd-a2d38fc5f019}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scenes\builders">
+      <UniqueIdentifier>{d8fb116a-afd4-4ccd-91d4-2d9936c25619}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\entities\robotron">
+      <UniqueIdentifier>{21f99b02-c770-4b7d-9814-f8352bf14783}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\networking">
+      <UniqueIdentifier>{3adeae7c-a3e5-435a-af7e-5c2b5c9db422}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\networking\new">
+      <UniqueIdentifier>{b527006d-6603-408b-8a42-382b7686be59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\networking\old">
+      <UniqueIdentifier>{a5e784e1-388b-4949-b2ed-59286fcb72b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\utilities\container">
+      <UniqueIdentifier>{bf0ee46e-65c5-4122-b51e-077b251873b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\utilities\raii">
+      <UniqueIdentifier>{3090c132-a85d-4b2f-bb6f-6241c0c45ee1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\console">
+      <UniqueIdentifier>{fee3107b-dd96-4e29-9f3f-d6129fedf352}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\main">
+      <UniqueIdentifier>{ce53575d-b302-4fa1-a53c-869b04887145}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\utilities\threading">
+      <UniqueIdentifier>{2dfbc9a5-420e-40fd-bb62-a68ad51258f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\utilities\console">
+      <UniqueIdentifier>{7315ef9f-af10-4c97-8924-ed6079be2bb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\utilities\exceptions">
+      <UniqueIdentifier>{4929912b-6286-433f-a63c-7d8f81624878}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\utilities\math">
+      <UniqueIdentifier>{096e5c72-ce01-42a7-857d-b61dedb5b6c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\misc">
+      <UniqueIdentifier>{1d660f0e-c8cc-476f-8673-20e49022fe48}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Shaders\phong.frags">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\phong.verts">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\unlit_color.frags">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\unlit_color.verts">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\tri.frags">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\tri.verts">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\tri2.frags">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\tri2.verts">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\tri3.frags">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\tri3.verts">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\quad2.frags">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\quad2.verts">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\quad3.frags">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\quad3.verts">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\quad4.frags">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\quad4.verts">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\blinn_phong.frags">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\blinn_phong.verts">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\rim_lighting.frags">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\rim_lighting.verts">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\gouraud.frags">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\gouraud.verts">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\skybox.frags">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\skybox.verts">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\reflection.frags">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\reflection.verts">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\model.frags">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\model.verts">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\text.frags">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\text.verts">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\linear_fog.frags">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\linear_fog.verts">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="cubemap_material.cpp">
+      <Filter>Source Files\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="phong_material.cpp">
+      <Filter>Source Files\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="quad4_material.cpp">
+      <Filter>Source Files\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="rim_lighting_material.cpp">
+      <Filter>Source Files\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="skybox_entity.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="pyramid.cpp">
+      <Filter>Source Files\meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="mesh.cpp">
+      <Filter>Source Files\meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="sphere.cpp">
+      <Filter>Source Files\meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="quad.cpp">
+      <Filter>Source Files\meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="errors.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="textures.cpp">
+      <Filter>Source Files\resources</Filter>
+    </ClCompile>
+    <ClCompile Include="program.cpp">
+      <Filter>Source Files\resources</Filter>
+    </ClCompile>
+    <ClCompile Include="world_math.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="cubemap_mesh.cpp">
+      <Filter>Source Files\meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="globals.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="fix_normals_material.cpp">
+      <Filter>Source Files\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="reflection_material.cpp">
+      <Filter>Source Files\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="mvp_material.cpp">
+      <Filter>Source Files\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="screen.cpp">
+      <Filter>Source Files\modules</Filter>
+    </ClCompile>
+    <ClCompile Include="time.cpp">
+      <Filter>Source Files\modules</Filter>
+    </ClCompile>
+    <ClCompile Include="input.cpp">
+      <Filter>Source Files\modules</Filter>
+    </ClCompile>
+    <ClCompile Include="simple_entity.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="transform.cpp">
+      <Filter>Source Files\entities\components</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer.cpp">
+      <Filter>Source Files\entities\components</Filter>
+    </ClCompile>
+    <ClCompile Include="rigidbody.cpp">
+      <Filter>Source Files\entities\components</Filter>
+    </ClCompile>
+    <ClCompile Include="audio.cpp">
+      <Filter>Source Files\modules</Filter>
+    </ClCompile>
+    <ClCompile Include="camera_orbit_entity.cpp">
+      <Filter>Source Files\entities\cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>Source Files\entities\cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="font.cpp">
+      <Filter>Source Files\resources</Filter>
+    </ClCompile>
+    <ClCompile Include="text_renderer.cpp">
+      <Filter>Source Files\entities\components</Filter>
+    </ClCompile>
+    <ClCompile Include="shader.cpp">
+      <Filter>Source Files\resources</Filter>
+    </ClCompile>
+    <ClCompile Include="program_manager.cpp">
+      <Filter>Source Files\resource_managers</Filter>
+    </ClCompile>
+    <ClCompile Include="application.cpp">
+      <Filter>Source Files\application</Filter>
+    </ClCompile>
+    <ClCompile Include="singleton.cpp">
+      <Filter>Source Files\application</Filter>
+    </ClCompile>
+    <ClCompile Include="font_manager.cpp">
+      <Filter>Source Files\resource_managers</Filter>
+    </ClCompile>
+    <ClCompile Include="texture_manager.cpp">
+      <Filter>Source Files\resource_managers</Filter>
+    </ClCompile>
+    <ClCompile Include="cubemap_manager.cpp">
+      <Filter>Source Files\resource_managers</Filter>
+    </ClCompile>
+    <ClCompile Include="mesh_manager.cpp">
+      <Filter>Source Files\resource_managers</Filter>
+    </ClCompile>
+    <ClCompile Include="resource_warehouse.cpp">
+      <Filter>Source Files\application</Filter>
+    </ClCompile>
+    <ClCompile Include="toggle_music.cpp">
+      <Filter>Source Files\scenes\menu_scene</Filter>
+    </ClCompile>
+    <ClCompile Include="button.cpp">
+      <Filter>Source Files\entities\buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="menu_button.cpp">
+      <Filter>Source Files\entities\buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="pursuer.cpp">
+      <Filter>Source Files\entities\agents</Filter>
+    </ClCompile>
+    <ClCompile Include="seeker.cpp">
+      <Filter>Source Files\entities\agents</Filter>
+    </ClCompile>
+    <ClCompile Include="mover.cpp">
+      <Filter>Source Files\entities\agents</Filter>
+    </ClCompile>
+    <ClCompile Include="basic_materials_builder.cpp">
+      <Filter>Source Files\scenes\builders</Filter>
+    </ClCompile>
+    <ClCompile Include="basic_scene_builder.cpp">
+      <Filter>Source Files\scenes\builders</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Source Files\entities\robotron</Filter>
+    </ClCompile>
+    <ClCompile Include="address.cpp">
+      <Filter>Source Files\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="socket.cpp">
+      <Filter>Source Files\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="network.cpp">
+      <Filter>Source Files\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="wsa_error.cpp">
+      <Filter>Source Files\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="handle_exception.cpp">
+      <Filter>Source Files\networking</Filter>
+    </ClCompile>
+    <ClCompile Include="seeker_enemy.cpp">
+      <Filter>Source Files\entities\robotron</Filter>
+    </ClCompile>
+    <ClCompile Include="box_range.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="lobby_scene.cpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="seek_scene.cpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="robotron_scene.cpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="pursue_scene.cpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="menu_scene.cpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="wanderer.cpp">
+      <Filter>Source Files\entities\agents</Filter>
+    </ClCompile>
+    <ClCompile Include="wander_scene.cpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="mouse_mover.cpp">
+      <Filter>Source Files\entities\agents</Filter>
+    </ClCompile>
+    <ClCompile Include="arrival_scene.cpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="leader_following_scene.cpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="multiplayer_scene.cpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="common.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="console.cpp">
+      <Filter>Source Files\console</Filter>
+    </ClCompile>
+    <ClCompile Include="console_message_queue.cpp">
+      <Filter>Source Files\console</Filter>
+    </ClCompile>
+    <ClCompile Include="closing_state.cpp">
+      <Filter>Source Files\main</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files\main</Filter>
+    </ClCompile>
+    <ClCompile Include="read_entire_file.cpp">
+      <Filter>Source Files\utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="config.cpp">
+      <Filter>Source Files\application</Filter>
+    </ClCompile>
+    <ClCompile Include="console_color.cpp">
+      <Filter>Source Files\utilities\console</Filter>
+    </ClCompile>
+    <ClCompile Include="random.cpp">
+      <Filter>Source Files\utilities\math</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>Source Files\misc</Filter>
+    </ClCompile>
+    <ClCompile Include="old_network_entity.cpp">
+      <Filter>Source Files\networking\old</Filter>
+    </ClCompile>
+    <ClCompile Include="old_server.cpp">
+      <Filter>Source Files\networking\old</Filter>
+    </ClCompile>
+    <ClCompile Include="old_client.cpp">
+      <Filter>Source Files\networking\old</Filter>
+    </ClCompile>
+    <ClCompile Include="old_console_tools.cpp">
+      <Filter>Source Files\networking\old</Filter>
+    </ClCompile>
+    <ClCompile Include="old_main_network.cpp">
+      <Filter>Source Files\networking\old</Filter>
+    </ClCompile>
+    <ClCompile Include="network_entity.cpp">
+      <Filter>Source Files\networking\new</Filter>
+    </ClCompile>
+    <ClCompile Include="client.cpp">
+      <Filter>Source Files\networking\new</Filter>
+    </ClCompile>
+    <ClCompile Include="server.cpp">
+      <Filter>Source Files\networking\new</Filter>
+    </ClCompile>
+    <ClCompile Include="network_serialization.cpp">
+      <Filter>Source Files\networking\new</Filter>
+    </ClCompile>
+    <ClCompile Include="network_message_type.cpp">
+      <Filter>Source Files\networking\new</Filter>
+    </ClCompile>
+    <ClCompile Include="network_manager.cpp">
+      <Filter>Source Files\networking\new</Filter>
+    </ClCompile>
+    <ClCompile Include="network_entity_threads.cpp">
+      <Filter>Source Files\networking\new</Filter>
+    </ClCompile>
+    <ClCompile Include="fog_material.cpp">
+      <Filter>Source Files\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="MissileManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HistoryEventLog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Money.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="menuSwap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cubemap_material.hpp">
+      <Filter>Source Files\materials</Filter>
+    </ClInclude>
+    <ClInclude Include="material.hpp">
+      <Filter>Source Files\materials</Filter>
+    </ClInclude>
+    <ClInclude Include="phong_material.hpp">
+      <Filter>Source Files\materials</Filter>
+    </ClInclude>
+    <ClInclude Include="quad4_material.hpp">
+      <Filter>Source Files\materials</Filter>
+    </ClInclude>
+    <ClInclude Include="rim_lighting_material.hpp">
+      <Filter>Source Files\materials</Filter>
+    </ClInclude>
+    <ClInclude Include="skybox_entity.hpp">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="pyramid.hpp">
+      <Filter>Source Files\meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="mesh.hpp">
+      <Filter>Source Files\meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="sphere.hpp">
+      <Filter>Source Files\meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="quad.hpp">
+      <Filter>Source Files\meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="common.hpp">
+      <Filter>Source Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="errors.hpp">
+      <Filter>Source Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="textures.hpp">
+      <Filter>Source Files\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="program.hpp">
+      <Filter>Source Files\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="world_math.hpp">
+      <Filter>Source Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="cubemap_mesh.hpp">
+      <Filter>Source Files\meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="globals.hpp">
+      <Filter>Source Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="fix_normals_material.hpp">
+      <Filter>Source Files\materials</Filter>
+    </ClInclude>
+    <ClInclude Include="reflection_material.hpp">
+      <Filter>Source Files\materials</Filter>
+    </ClInclude>
+    <ClInclude Include="drawable.hpp">
+      <Filter>Source Files\meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="mvp_material.hpp">
+      <Filter>Source Files\materials</Filter>
+    </ClInclude>
+    <ClInclude Include="screen.hpp">
+      <Filter>Source Files\modules</Filter>
+    </ClInclude>
+    <ClInclude Include="time.hpp">
+      <Filter>Source Files\modules</Filter>
+    </ClInclude>
+    <ClInclude Include="input.hpp">
+      <Filter>Source Files\modules</Filter>
+    </ClInclude>
+    <ClInclude Include="simple_entity.hpp">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="transform.hpp">
+      <Filter>Source Files\entities\components</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer.hpp">
+      <Filter>Source Files\entities\components</Filter>
+    </ClInclude>
+    <ClInclude Include="rigidbody.hpp">
+      <Filter>Source Files\entities\components</Filter>
+    </ClInclude>
+    <ClInclude Include="audio.hpp">
+      <Filter>Source Files\modules</Filter>
+    </ClInclude>
+    <ClInclude Include="camera_orbit_entity.hpp">
+      <Filter>Source Files\entities\cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.hpp">
+      <Filter>Source Files\entities\cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="font.hpp">
+      <Filter>Source Files\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="text_renderer.hpp">
+      <Filter>Source Files\entities\components</Filter>
+    </ClInclude>
+    <ClInclude Include="entity_utils.hpp">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="shader.hpp">
+      <Filter>Source Files\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="program_manager.hpp">
+      <Filter>Source Files\resource_managers</Filter>
+    </ClInclude>
+    <ClInclude Include="resource_manager.hpp">
+      <Filter>Source Files\resource_managers</Filter>
+    </ClInclude>
+    <ClInclude Include="application.hpp">
+      <Filter>Source Files\application</Filter>
+    </ClInclude>
+    <ClInclude Include="singleton.hpp">
+      <Filter>Source Files\application</Filter>
+    </ClInclude>
+    <ClInclude Include="font_manager.hpp">
+      <Filter>Source Files\resource_managers</Filter>
+    </ClInclude>
+    <ClInclude Include="texture_manager.hpp">
+      <Filter>Source Files\resource_managers</Filter>
+    </ClInclude>
+    <ClInclude Include="cubemap_manager.hpp">
+      <Filter>Source Files\resource_managers</Filter>
+    </ClInclude>
+    <ClInclude Include="mesh_manager.hpp">
+      <Filter>Source Files\resource_managers</Filter>
+    </ClInclude>
+    <ClInclude Include="resource_warehouse.hpp">
+      <Filter>Source Files\application</Filter>
+    </ClInclude>
+    <ClInclude Include="toggle_music.hpp">
+      <Filter>Source Files\scenes\menu_scene</Filter>
+    </ClInclude>
+    <ClInclude Include="unique_init_ptr.hpp">
+      <Filter>Source Files\application</Filter>
+    </ClInclude>
+    <ClInclude Include="button.hpp">
+      <Filter>Source Files\entities\buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="menu_button.hpp">
+      <Filter>Source Files\entities\buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="pursuer.hpp">
+      <Filter>Source Files\entities\agents</Filter>
+    </ClInclude>
+    <ClInclude Include="seeker.hpp">
+      <Filter>Source Files\entities\agents</Filter>
+    </ClInclude>
+    <ClInclude Include="mover.hpp">
+      <Filter>Source Files\entities\agents</Filter>
+    </ClInclude>
+    <ClInclude Include="basic_materials_builder.hpp">
+      <Filter>Source Files\scenes\builders</Filter>
+    </ClInclude>
+    <ClInclude Include="basic_scene_builder.hpp">
+      <Filter>Source Files\scenes\builders</Filter>
+    </ClInclude>
+    <ClInclude Include="player.hpp">
+      <Filter>Source Files\entities\robotron</Filter>
+    </ClInclude>
+    <ClInclude Include="address.hpp">
+      <Filter>Source Files\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="socket.hpp">
+      <Filter>Source Files\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="network.hpp">
+      <Filter>Source Files\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="wsa_error.hpp">
+      <Filter>Source Files\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="packet.hpp">
+      <Filter>Source Files\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="info.hpp">
+      <Filter>Source Files\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="stc_message_type.hpp">
+      <Filter>Source Files\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="cts_message_type.hpp">
+      <Filter>Source Files\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="message.hpp">
+      <Filter>Source Files\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="handle_exception.hpp">
+      <Filter>Source Files\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="seeker_enemy.hpp">
+      <Filter>Source Files\entities\robotron</Filter>
+    </ClInclude>
+    <ClInclude Include="box_range.hpp">
+      <Filter>Source Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="lobby_scene.hpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="seek_scene.hpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="robotron_scene.hpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="pursue_scene.hpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="menu_scene.hpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="wander_scene.hpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="wanderer.hpp">
+      <Filter>Source Files\entities\agents</Filter>
+    </ClInclude>
+    <ClInclude Include="arrival_scene.hpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="mouse_mover.hpp">
+      <Filter>Source Files\entities\agents</Filter>
+    </ClInclude>
+    <ClInclude Include="leader_following_scene.hpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="multiplayer_scene.hpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="console.hpp">
+      <Filter>Source Files\console</Filter>
+    </ClInclude>
+    <ClInclude Include="console_message_queue.hpp">
+      <Filter>Source Files\console</Filter>
+    </ClInclude>
+    <ClInclude Include="accumulate_container.hpp">
+      <Filter>Source Files\utilities\container</Filter>
+    </ClInclude>
+    <ClInclude Include="container.hpp">
+      <Filter>Source Files\utilities\container</Filter>
+    </ClInclude>
+    <ClInclude Include="map_container.hpp">
+      <Filter>Source Files\utilities\container</Filter>
+    </ClInclude>
+    <ClInclude Include="print_container.hpp">
+      <Filter>Source Files\utilities\container</Filter>
+    </ClInclude>
+    <ClInclude Include="closing_state.hpp">
+      <Filter>Source Files\main</Filter>
+    </ClInclude>
+    <ClInclude Include="statistic_container.hpp">
+      <Filter>Source Files\utilities\container</Filter>
+    </ClInclude>
+    <ClInclude Include="final_act.hpp">
+      <Filter>Source Files\utilities\raii</Filter>
+    </ClInclude>
+    <ClInclude Include="find_container.hpp">
+      <Filter>Source Files\utilities\container</Filter>
+    </ClInclude>
+    <ClInclude Include="work_queue.hpp">
+      <Filter>Source Files\utilities\threading</Filter>
+    </ClInclude>
+    <ClInclude Include="to_string.hpp">
+      <Filter>Source Files\utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="lambda.hpp">
+      <Filter>Source Files\utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="read_entire_file.hpp">
+      <Filter>Source Files\utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="config.hpp">
+      <Filter>Source Files\application</Filter>
+    </ClInclude>
+    <ClInclude Include="console_color.hpp">
+      <Filter>Source Files\utilities\console</Filter>
+    </ClInclude>
+    <ClInclude Include="error_code_exception.hpp">
+      <Filter>Source Files\utilities\exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="math_utils.hpp">
+      <Filter>Source Files\utilities\math</Filter>
+    </ClInclude>
+    <ClInclude Include="random.hpp">
+      <Filter>Source Files\utilities\math</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelMesh.h">
+      <Filter>Source Files\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="game.hpp">
+      <Filter>Source Files\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Source Files\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="old_network_entity.hpp">
+      <Filter>Source Files\networking\old</Filter>
+    </ClInclude>
+    <ClInclude Include="old_server.hpp">
+      <Filter>Source Files\networking\old</Filter>
+    </ClInclude>
+    <ClInclude Include="old_client.hpp">
+      <Filter>Source Files\networking\old</Filter>
+    </ClInclude>
+    <ClInclude Include="old_console_tools.hpp">
+      <Filter>Source Files\networking\old</Filter>
+    </ClInclude>
+    <ClInclude Include="network_entity.hpp">
+      <Filter>Source Files\networking\new</Filter>
+    </ClInclude>
+    <ClInclude Include="network_message_type.hpp">
+      <Filter>Source Files\networking\new</Filter>
+    </ClInclude>
+    <ClInclude Include="client.hpp">
+      <Filter>Source Files\networking\new</Filter>
+    </ClInclude>
+    <ClInclude Include="server.hpp">
+      <Filter>Source Files\networking\new</Filter>
+    </ClInclude>
+    <ClInclude Include="network_serialization.hpp">
+      <Filter>Source Files\networking\new</Filter>
+    </ClInclude>
+    <ClInclude Include="port_constants.hpp">
+      <Filter>Source Files\networking\new</Filter>
+    </ClInclude>
+    <ClInclude Include="compatibility_threading.hpp">
+      <Filter>Source Files\utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="compatibility.hpp">
+      <Filter>Source Files\utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="scene_indexer.hpp">
+      <Filter>Source Files\application</Filter>
+    </ClInclude>
+    <ClInclude Include="network_manager.hpp">
+      <Filter>Source Files\networking\new</Filter>
+    </ClInclude>
+    <ClInclude Include="network_entity_threads.hpp">
+      <Filter>Source Files\networking\new</Filter>
+    </ClInclude>
+    <ClInclude Include="network_state.hpp">
+      <Filter>Source Files\networking\new</Filter>
+    </ClInclude>
+    <ClInclude Include="debug_log.hpp">
+      <Filter>Source Files\console</Filter>
+    </ClInclude>
+    <ClInclude Include="fog_material.hpp">
+      <Filter>Source Files\materials</Filter>
+    </ClInclude>
+    <ClInclude Include="MissileManager.h" />
+    <ClInclude Include="HistoryEventLog.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Money.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="menuSwap.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="config.txt" />
+    <Text Include="credits.txt" />
+    <Text Include="README.txt" />
+  </ItemGroup>
+=======
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
@@ -813,4 +1667,5 @@
     <Text Include="credits.txt" />
     <Text Include="README.txt" />
   </ItemGroup>
+>>>>>>> master
 </Project>

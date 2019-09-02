@@ -44,6 +44,7 @@ struct Button
 		ReturnCode update(); // checks input for the hotkey
 		ReturnCode operator()(); // invokes the action
 	};
+
 	ClickEvent onClickLeft;
 	ClickEvent onClickRight;
 

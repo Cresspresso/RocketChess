@@ -30,7 +30,7 @@
 #include "resource_warehouse.hpp"
 
 #include "debug_log.hpp"
-
+#include "MissileManager.h"
 #include "menu_scene.hpp"
 
 
@@ -131,6 +131,11 @@
 #pragma endregion ~Scene::Builder
 #pragma region Scene
 
+	void Scene::deselect() {
+		selectedCoords = std::nullopt;
+		isChoosingRocketTarget = false;
+		availableActions.clear();
+	};
 
 
 	void Scene::onCellClicked(ivec2 cellCoords)
@@ -138,16 +143,8 @@
 		size_t const thatLinearIndex = getLinearIndex(cellCoords);
 		auto& thatPiece = boardPieces[thatLinearIndex];
 
-		if (selectedCoords)
+		if (selectedCoords || isChoosingRocketTarget)
 		{
-			auto& selectedPiece = boardPieces[getLinearIndex(*selectedCoords)];
-			assert(selectedPiece.isPlayer2 == this->isCurrentPlayerTwo);
-
-			auto const deselect = [&] {
-				selectedCoords = std::nullopt;
-				availableActions.clear();
-			};
-
 			auto it = availableActions.find(thatLinearIndex);
 			if (it == availableActions.end()) // if no available action there
 			{
@@ -166,6 +163,8 @@
 				});
 
 				auto const regularMove = [&] {
+					assert(selectedCoords);
+					auto& selectedPiece = boardPieces[getLinearIndex(*selectedCoords)];
 					if (thatPiece.type != ChessPiece::None)
 					{
 						assert(thatPiece.isPlayer2 != selectedPiece.isPlayer2);
@@ -207,6 +206,12 @@
 				case ChessActionType::RegularMove:
 				{
 					regularMove();
+				}
+				break;
+
+				case ChessActionType::RocketAttack:
+				{
+					thatPiece = { ChessPiece::None };
 				}
 				break;
 
@@ -361,6 +366,91 @@
 	}
 
 
+	//Used for when a rocket is chosen to be shot
+	//prevents the user from destroying anything that the missile cannot
+	//destroy
+	void Scene::onRocketClicked(int rocket)
+	{
+		deselect();
+		isChoosingRocketTarget = true;
+		//based on what missile the user has chosen
+		switch (rocket)
+		{
+		//RPG
+		case 1:
+			for (int y = 0; y < boardSize; y++)
+			{
+				for (int x = 0; x < boardSize; x++)
+				{
+					ivec2 const coords = ivec2(x, y);
+					auto const& piece = boardPieces[getLinearIndex(coords)];
+					if (piece.type != ChessPiece::None
+						&& piece.isPlayer2 != this->isCurrentPlayerTwo)
+					{//checking to see what pieces can be taken
+						if (piece.type == ChessPiece::Pawn) {
+							availableActions.insert(std::make_pair(
+								getLinearIndex(coords),
+								ChessAction{ ChessActionType::RocketAttack, coords }
+							));
+						}
+					}
+				}
+			}
+			break;
+		//Ballistic Missile
+		case 2: {
+			for (int y = 0; y < boardSize; y++)
+			{
+				for (int x = 0; x < boardSize; x++)
+				{
+					ivec2 const coords = ivec2(x, y);
+					auto const& piece = boardPieces[getLinearIndex(coords)];
+					if (piece.type != ChessPiece::None
+						&& piece.isPlayer2 != this->isCurrentPlayerTwo)
+					{//checking to see what pieces can be taken
+						if (piece.type == ChessPiece::Pawn || piece.type == ChessPiece::Rook || piece.type == ChessPiece::Bishop) {
+							availableActions.insert(std::make_pair(
+								getLinearIndex(coords),
+								ChessAction{ ChessActionType::RocketAttack, coords }
+							));
+						}
+					}
+				}
+			}
+		}
+		break;
+		//ICBM
+		case 3: {
+			for (int y = 0; y < boardSize; y++)
+			{
+				for (int x = 0; x < boardSize; x++)
+				{
+					ivec2 const coords = ivec2(x, y);
+					auto const& piece = boardPieces[getLinearIndex(coords)];
+					if (piece.type != ChessPiece::None
+						&& piece.isPlayer2 != this->isCurrentPlayerTwo)
+					{//checking to see what pieces can be taken
+						if (piece.type == ChessPiece::Pawn || piece.type == ChessPiece::Rook || piece.type == ChessPiece::Bishop || piece.type == ChessPiece::Queen || piece.type == ChessPiece::Knight) {
+							availableActions.insert(std::make_pair(
+								getLinearIndex(coords),
+								ChessAction{ ChessActionType::RocketAttack, coords }
+							));
+						}
+					}
+				}
+			}
+		}
+		break;
+		//Voyager 1
+		case 4: {
+			//TODO: Setup the win con for this as this does not need to destroy any
+			//pieces it should just win the game
+		}
+		break;
+		}
+	}
+
+
 
 	bool Scene::isValidCoords(ivec2 cellCoords)
 	{
@@ -388,9 +478,12 @@
 
 			try {
 				navigation = std::make_unique<Navigation>(
-					[this](ivec2 coords) { onCellClicked(coords); }
+					[this](ivec2 coords) { onCellClicked(coords); },
+				[this](int rocket) { onRocketClicked(rocket); }
 				);
 			} CATCH_PRINT();
+
+			missile.scene = this;
 		}
 		return END_ANYALL();
 	}
@@ -501,8 +594,6 @@
 				DO_ANYALL(SovietCurrency.render());
 				DO_ANYALL(UnitedStatesCurrency.render());
 			}
-
-
 
 			// render missile purchase buttons
 			{
@@ -629,3 +720,48 @@
 	}
 
 #pragma endregion ~Scene
+
+
+#pragma region missileStuffs
+
+
+
+	//chose where to launch the missile
+	ReturnCode Scene::MissilePosition() {
+
+		BEGIN_ANYALL();
+		{
+			//moves cursor back to the chessboard
+			navigation->gamePanel = FocusedPanel::ChessBoard();
+		}
+		return END_ANYALL();
+
+		/*TODO
+		player choses where to launch the missile
+		checks to see what piece is under it and passes that back to the
+		missile manager and the missile manager can determine whether
+		the piece is destroyed or not*/
+
+	}
+
+
+	//returns user to the chessboard after launching the missile
+	ReturnCode Scene::LaunchedMissile() {
+
+		BEGIN_ANYALL();
+		{
+			//resets the cursor back to the chessBoard
+			navigation->gamePanel = FocusedPanel::ChessBoard();
+
+			try { navigation->render(); } CATCH_PRINT();
+		}
+
+		return END_ANYALL();
+
+	}
+
+
+
+
+
+#pragma endregion missileStuffs
