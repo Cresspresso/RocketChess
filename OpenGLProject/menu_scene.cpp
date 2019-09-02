@@ -30,7 +30,7 @@
 #include "resource_warehouse.hpp"
 
 #include "debug_log.hpp"
-
+#include "MissileManager.h"
 #include "menu_scene.hpp"
 
 
@@ -487,7 +487,28 @@
 			DO_ANYALL(SovietCurrency.render());
 			DO_ANYALL(UnitedStatesCurrency.render());
 
+	//chose where to launch the missile
+	ReturnCode Scene::MissilePosition() {
 
+		BEGIN_ANYALL();
+		{
+			//moves cursor back to the chessboard
+			navigation->gamePanel = FocusedPanel::ChessBoard();
+		// switch statment on steroids
+		{
+			ReturnCode const r = this->navigation->visit(overload{
+				[&](FocusedPanel::ChessBoard const& panelData) // case MainMenu:
+			{
+				ivec2 cursor = panelData.getFocusedCellCoords();
+				return RC_SUCCESS;
+			},
+				[&](auto const& other) // default:
+			{
+				return RC_ERROR;
+			},
+				});
+			DO_ANYALL(r);
+		}
 
 			// render missile purchase buttons
 			{

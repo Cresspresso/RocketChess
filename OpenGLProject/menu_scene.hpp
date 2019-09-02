@@ -92,4 +92,7 @@ struct Scene
 
 	void initTextRenderer(TextRenderer& entity);
 	void initButton(Button& button);
+	ReturnCode LaunchedMissile();
+
+	ReturnCode MissilePosition();
 };
