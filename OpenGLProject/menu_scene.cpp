@@ -513,11 +513,11 @@
 					missilePurchaseButtons.highlight(static_cast<size_t>(panelData.focusedButton));
 					DO_ANYALL(missilePurchaseButtons.render());
 				},
-				[&](auto const& other)
-				{
+				[&](auto const& other) {},
+				/*{
 					missilePurchaseButtons.highlight(std::nullopt);
 					DO_ANYALL(missilePurchaseButtons.render());
-				},
+				},*/
 					});
 			}
 
