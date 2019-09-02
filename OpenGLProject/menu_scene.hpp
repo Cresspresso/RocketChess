@@ -83,6 +83,8 @@ struct Scene
 
 	std::unique_ptr<Navigation> navigation;
 
+	int Rubles = 0; // Values Can be Set to equal
+	int Dollars = 0; // Functional values for currency...
 
 
 	ReturnCode init();

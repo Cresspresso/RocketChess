@@ -110,35 +110,14 @@
 		//------------------------------------------------//
 		//-------------------UI Text----------------------//
 		//------------------------------------------------//
-		int Rubles = 0; // Values Can be Set to equal
-		int Dollars = 0; // Functional values for currency...
 
-
-		SovietCurrency.textRenderer.text = "Soviet Rubles $ " + toString(Rubles);
-		UnitedStatesCurrency.textRenderer.text = "US Dollars $ " + toString(Dollars);
 		SovietCurrency.transform.localPosition = vec3(315, 300, 0);
 		UnitedStatesCurrency.transform.localPosition = vec3(335, 250, 0);
-
 
 		//
 		// Player Turn Labels
 		//
-		
-		if (isCurrentPlayerTwo == true) // Needs Switching
-		{
-			currentPlayerLabel.transform.localPosition = vec3(365, 350, 0);
-			
-		}
-		else if (isCurrentPlayerTwo == false)
-		{
-			currentPlayerLabel.transform.localPosition = vec3(365, 350, 0);
-
-		}
-		else
-		{
-
-		}
-
+		currentPlayerLabel.transform.localPosition = vec3(365, 350, 0);
 
 		return RC_SUCCESS;
 	}
@@ -186,7 +165,32 @@
 					if (thatPiece.type != ChessPiece::None)
 					{
 						assert(thatPiece.isPlayer2 != selectedPiece.isPlayer2);
-						// TODO gain money from capture for specific piece type
+
+						// gain money from capture for specific piece type
+						int reward = [&] { // IIFC
+							switch (thatPiece.type)
+							{
+							case ChessPiece::Bishop:
+								return 2;
+							case ChessPiece::Knight:
+								return 3;
+							case ChessPiece::Pawn:
+								return 2;
+							case ChessPiece::Queen:
+								return 4;
+							case ChessPiece::Rook:
+								return 3;
+							case ChessPiece::King:
+								assert(false);
+								break;
+							default:
+								assert(false);
+								break;
+							}
+							return 0;
+						}();
+
+						(isCurrentPlayerTwo ? Dollars : Rubles) += reward;
 					}
 
 					thatPiece = selectedPiece;
@@ -493,6 +497,10 @@
 				currentPlayerLabel.material.tint = vec3(0.65, 1, 0.65);
 			}
 			DO_ANYALL(currentPlayerLabel.render());
+
+			// render currency
+			SovietCurrency.textRenderer.text = "Soviet Rubles $ " + toString(Rubles);
+			UnitedStatesCurrency.textRenderer.text = "US Dollars $ " + toString(Dollars);
 			DO_ANYALL(SovietCurrency.render());
 			DO_ANYALL(UnitedStatesCurrency.render());
 
