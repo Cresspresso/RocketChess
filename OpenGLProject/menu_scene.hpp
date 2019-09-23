@@ -58,6 +58,8 @@ struct Scene
 	SpriteEntity boardSprite;
 	SpriteEntity CallingCard;
 
+	std::unique_ptr<TextEntity> winnerLabel;
+
 	TextEntity currentPlayerLabel;
 	TextEntity SovietCurrency;
 	TextEntity UnitedStatesCurrency;
