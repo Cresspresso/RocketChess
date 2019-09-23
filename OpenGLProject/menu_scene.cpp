@@ -41,6 +41,10 @@
 
 	ReturnCode Scene::initEntities()
 	{
+
+		Rubles = 40;
+		Dollars = 40;
+
 		auto& resources = singleton::getResources();
 
 		// hud camera
@@ -184,11 +188,11 @@
 							case ChessPiece::Knight:
 								return 3;
 							case ChessPiece::Pawn:
-								return 2;
+								return 1;
 							case ChessPiece::Queen:
 								return 4;
 							case ChessPiece::Rook:
-								return 3;
+								return 2;
 							case ChessPiece::King:
 								assert(false);
 								break;
@@ -199,7 +203,7 @@
 							return 0;
 						}();
 
-						(isCurrentPlayerTwo ? Dollars : Rubles) += reward;
+						getCurrentPlayerMoney() += reward;
 					}
 
 					thatPiece = selectedPiece;
@@ -207,6 +211,7 @@
 				};
 
 				auto const& action = it->second;
+
 				switch (action.type)
 				{
 				case ChessActionType::RegularMove:
@@ -232,6 +237,9 @@
 					throw std::runtime_error("ChessActionType functionality not implemented");
 					break;
 				}
+
+				int& money = getCurrentPlayerMoney();
+				money -= action.cost;
 			}
 		}
 		
@@ -377,48 +385,60 @@
 	//destroy
 	void Scene::onRocketClicked(int rocket)
 	{
-		deselect();
-		isChoosingRocketTarget = true;
+		int& money = getCurrentPlayerMoney();
 		//based on what missile the user has chosen
 		switch (rocket)
 		{
-		//RPG
+			//RPG
 		case 1:
-			for (int y = 0; y < boardSize; y++)
-			{
-				for (int x = 0; x < boardSize; x++)
+		{
+			int cost = 3;
+			if (money >= cost) {
+				deselect();
+				isChoosingRocketTarget = true;
+				for (int y = 0; y < boardSize; y++)
 				{
-					ivec2 const coords = ivec2(x, y);
-					auto const& piece = boardPieces[getLinearIndex(coords)];
-					if (piece.type != ChessPiece::None
-						&& piece.isPlayer2 != this->isCurrentPlayerTwo)
-					{//checking to see what pieces can be taken
-						if (piece.type == ChessPiece::Pawn) {
-							availableActions.insert(std::make_pair(
-								getLinearIndex(coords),
-								ChessAction{ ChessActionType::RocketAttack, coords }
-							));
+					for (int x = 0; x < boardSize; x++)
+					{
+						ivec2 const coords = ivec2(x, y);
+						auto const& piece = boardPieces[getLinearIndex(coords)];
+						if (piece.type != ChessPiece::None
+							&& piece.isPlayer2 != this->isCurrentPlayerTwo)
+						{//checking to see what pieces can be taken
+							if (piece.type == ChessPiece::Pawn) {
+								availableActions.insert(std::make_pair(
+									getLinearIndex(coords),
+									ChessAction{ ChessActionType::RocketAttack, coords, cost }
+								));
+							}
 						}
 					}
 				}
 			}
+		}
 			break;
 		//Ballistic Missile
-		case 2: {
-			for (int y = 0; y < boardSize; y++)
-			{
-				for (int x = 0; x < boardSize; x++)
+		case 2:
+		{
+			int cost = 8;
+			if (money >= cost) {
+				deselect();
+				isChoosingRocketTarget = true;
+				for (int y = 0; y < boardSize; y++)
 				{
-					ivec2 const coords = ivec2(x, y);
-					auto const& piece = boardPieces[getLinearIndex(coords)];
-					if (piece.type != ChessPiece::None
-						&& piece.isPlayer2 != this->isCurrentPlayerTwo)
-					{//checking to see what pieces can be taken
-						if (piece.type == ChessPiece::Pawn || piece.type == ChessPiece::Rook || piece.type == ChessPiece::Bishop) {
-							availableActions.insert(std::make_pair(
-								getLinearIndex(coords),
-								ChessAction{ ChessActionType::RocketAttack, coords }
-							));
+					for (int x = 0; x < boardSize; x++)
+					{
+						ivec2 const coords = ivec2(x, y);
+						auto const& piece = boardPieces[getLinearIndex(coords)];
+						if (piece.type != ChessPiece::None
+							&& piece.isPlayer2 != this->isCurrentPlayerTwo)
+						{//checking to see what pieces can be taken
+							if (piece.type == ChessPiece::Pawn || piece.type == ChessPiece::Rook || piece.type == ChessPiece::Bishop) {
+								availableActions.insert(std::make_pair(
+									getLinearIndex(coords),
+									ChessAction{ ChessActionType::RocketAttack, coords, cost }
+								));
+							}
 						}
 					}
 				}
@@ -426,21 +446,27 @@
 		}
 		break;
 		//ICBM
-		case 3: {
-			for (int y = 0; y < boardSize; y++)
-			{
-				for (int x = 0; x < boardSize; x++)
+		case 3:
+		{
+			int cost = 13;
+			if (money >= cost) {
+				deselect();
+				isChoosingRocketTarget = true;
+				for (int y = 0; y < boardSize; y++)
 				{
-					ivec2 const coords = ivec2(x, y);
-					auto const& piece = boardPieces[getLinearIndex(coords)];
-					if (piece.type != ChessPiece::None
-						&& piece.isPlayer2 != this->isCurrentPlayerTwo)
-					{//checking to see what pieces can be taken
-						if (piece.type == ChessPiece::Pawn || piece.type == ChessPiece::Rook || piece.type == ChessPiece::Bishop || piece.type == ChessPiece::Queen || piece.type == ChessPiece::Knight) {
-							availableActions.insert(std::make_pair(
-								getLinearIndex(coords),
-								ChessAction{ ChessActionType::RocketAttack, coords }
-							));
+					for (int x = 0; x < boardSize; x++)
+					{
+						ivec2 const coords = ivec2(x, y);
+						auto const& piece = boardPieces[getLinearIndex(coords)];
+						if (piece.type != ChessPiece::None
+							&& piece.isPlayer2 != this->isCurrentPlayerTwo)
+						{//checking to see what pieces can be taken
+							if (piece.type == ChessPiece::Pawn || piece.type == ChessPiece::Rook || piece.type == ChessPiece::Bishop || piece.type == ChessPiece::Queen || piece.type == ChessPiece::Knight) {
+								availableActions.insert(std::make_pair(
+									getLinearIndex(coords),
+									ChessAction{ ChessActionType::RocketAttack, coords, cost }
+								));
+							}
 						}
 					}
 				}
@@ -472,6 +498,7 @@
 		}
 		return static_cast<size_t>(cellCoords.x) + static_cast<size_t>(cellCoords.y) * boardSize;
 	}
+
 
 
 

@@ -438,7 +438,6 @@ void Navigation::invokeAction()
 				onRocketPressed(1);
 				gamePanel = ChessBoard();
 				//purchase rpg
-				//missile.purchaseMissile(1);
 			}
 			break;
 
@@ -447,7 +446,6 @@ void Navigation::invokeAction()
 				onRocketPressed(2);
 				gamePanel = ChessBoard();
 				//purchase Ballistic missile
-				//missile.purchaseMissile(2);
 			}
 			break;
 
@@ -456,7 +454,6 @@ void Navigation::invokeAction()
 				onRocketPressed(3);
 				gamePanel = ChessBoard();
 				//purchase ICBM
-				//missile.purchaseMissile(3);
 			}
 			break;
 
@@ -465,7 +462,6 @@ void Navigation::invokeAction()
 				onRocketPressed(4);
 				gamePanel = ChessBoard();
 				//purchase Voyager
-				//missile.purchaseMissile(4);
 			}
 			break;
 
