@@ -81,7 +81,7 @@
 		};
 
 		TabHelp.textRenderer.text = "<- TAB ->";
-		TabHelp.transform.localPosition = vec3(335, 185, 0);
+		TabHelp.transform.localPosition = vec3(120, 0, 0);
 
 		TabExit.textRenderer.text = "<- EXIT ->";
 		TabExit.transform.localPosition = vec3(-485, 365, 0);
@@ -90,11 +90,11 @@
 			vec3(400, 100, 0),
 			vec3(0, -100, 0),
 			{
-			"     Cancel",
-			"       RPG",
-			"Cruise Missile",
-			"ICBM [NUKE]",
-			"   Voyager 1",
+			"Cancel",
+			"RPG",
+			"Conventional Missile",
+			"ICBM",
+			"Voyager 1",
 			},
 		};
 
@@ -135,13 +135,13 @@
 		//-------------------UI Text----------------------//
 		//------------------------------------------------//
 
-		SovietCurrency.transform.localPosition = vec3(265, 255, 0);
-		UnitedStatesCurrency.transform.localPosition = vec3(285, 235, 0);
+		SovietCurrency.transform.localPosition = vec3(315, 200, 0);
+		UnitedStatesCurrency.transform.localPosition = vec3(335, 150, 0);
 
 		//
 		// Player Turn Labels
 		//
-		currentPlayerLabel.transform.localPosition = vec3(335, 300, 0);
+		currentPlayerLabel.transform.localPosition = vec3(365, 350, 0);
 
 		return RC_SUCCESS;
 	}
@@ -178,11 +178,10 @@
 					deselect();
 
 					// next players's turn
-					if (isCurrentPlayerTwo = !isCurrentPlayerTwo)
-					{ CallingCard.setTexture(TextureIndexer::USFLAG); }
-					else { CallingCard.setTexture(TextureIndexer::USSRFLAG); }
+					isCurrentPlayerTwo = !isCurrentPlayerTwo;
 					DEBUG_LOG("Next player's turn");
-					
+					// HERE!
+					CallingCard.setTexture(TextureIndexer::USFLAG);
 				});
 
 				auto const regularMove = [&] {
@@ -207,7 +206,7 @@
 							case ChessPiece::Rook:
 								return 2;
 							case ChessPiece::King:
-								return 0;
+								assert(false);
 								break;
 							default:
 								assert(false);
@@ -219,14 +218,8 @@
 						getCurrentPlayerMoney() += reward;
 					}
 
-					bool const wasKing = thatPiece.type == ChessPiece::King;
-
 					thatPiece = selectedPiece;
 					selectedPiece = { ChessPiece::None };
-
-					if (wasKing) {
-						winGame();
-					}
 				};
 
 				auto const& action = it->second;
@@ -400,7 +393,6 @@
 
 					case ChessPiece::Rook:{
 						
-						std::vector<ivec2> neighboursCoords;
 						//horizontal
 						for (int i = 1; i < 8; i++) {
 							bool wasEmpty = doit(ivec2(i, 0));
@@ -423,41 +415,69 @@
 					break;
 					case ChessPiece::Bishop: {
 
-						std::vector<ivec2> neighboursCoords;
-
-						for (int i = 0; i < 8; i++) {
-							for (int e = 0; e < 8; e++) {
-								bool wasEmpty = doit(ivec2(i, e));
-								if (!wasEmpty) { break; }
-								i++;
-							}
+						for (int i = 1; i < 8; i++) {
+							bool wasEmpty = doit(ivec2(i, i));
+							if (!wasEmpty) { break; }
 						}
 
-						for (int i = 0; i < 8; i++) {
-							for (int e = 0; e < 8; e++) {
-								bool wasEmpty = doit(ivec2(-i, e));
-								if (!wasEmpty) { break; }
-								i++;
-							}
+						for (int i = 1; i < 8; i++) {
+							bool wasEmpty = doit(ivec2(i, -i));
+							if (!wasEmpty) { break; }
+						}
+						for (int i = 1; i < 8; i++) {
+							bool wasEmpty = doit(ivec2(-i, i));
+							if (!wasEmpty) { break; }
 						}
 
-						for (int i = 0; i < 8; i++) {
-							for (int e = 0; e < 8; e++) {
-								bool wasEmpty = doit(ivec2(i, -e));
-								if (!wasEmpty) { break; }
-								i++;
-							}
-						}
-
-						for (int i = 0; i < 8; i++) {
-							for (int e = 0; e < 8; e++) {
-								bool wasEmpty = doit(ivec2(-i, -e));
-								if (!wasEmpty) { break; }
-								i++;
-							}
+						for (int i = 1; i < 8; i++) {
+							bool wasEmpty = doit(ivec2(-i, -i));
+							if (!wasEmpty) { break; }
 						}
 					}
 					break;
+
+					case ChessPiece::Queen:{
+
+
+						//horizontal
+						for (int i = 1; i < 8; i++) {
+							bool wasEmpty = doit(ivec2(i, 0));
+							if (!wasEmpty) { break; }
+						}
+						for (int i = 1; i < 8; i++) {
+							bool wasEmpty = doit(ivec2(-i, 0));
+							if (!wasEmpty) { break; }
+						}
+						//vertical
+						for (int e = 1; e < 8; e++) {
+							bool wasEmpty = doit(ivec2(0, e));
+							if (!wasEmpty) { break; }
+						}
+						for (int e = 1; e < 8; e++) {
+							bool wasEmpty = doit(ivec2(0, -e));
+							if (!wasEmpty) { break; }
+						}
+					for (int i = 1; i < 8; i++) {
+							bool wasEmpty = doit(ivec2(i, i));
+							if (!wasEmpty) { break; }
+						}
+
+						for (int i = 1; i < 8; i++) {
+							bool wasEmpty = doit(ivec2(i, -i));
+							if (!wasEmpty) { break; }
+						}
+						for (int i = 1; i < 8; i++) {
+							bool wasEmpty = doit(ivec2(-i, i));
+							if (!wasEmpty) { break; }
+						}
+
+						for (int i = 1; i < 8; i++) {
+							bool wasEmpty = doit(ivec2(-i, -i));
+							if (!wasEmpty) { break; }
+						}
+					
+					
+					}
 
 					case ChessPiece::None:
 						throw std::runtime_error("should be unreachable code");
@@ -577,12 +597,8 @@
 		break;
 		//Voyager 1
 		case 4: {
-			int cost = 22;
-			if (money >= cost) {
-				deselect();
-				money -= cost;
-				winGame();
-			}
+			//TODO: Setup the win con for this as this does not need to destroy any
+			//pieces it should just win the game
 		}
 		break;
 		}
@@ -781,12 +797,6 @@
 			}
 
 
-			// render winner label
-			if (winnerLabel)
-			{
-				DO_ANYALL(winnerLabel->render());
-			}
-
 
 			// render pause menu buttons
 			if (navigation->pauseMenu)
@@ -875,13 +885,6 @@
 			default:
 			{	return 0; }
 		}
-	}
-
-	void Scene::winGame()
-	{
-		winnerLabel = std::make_unique<TextEntity>();
-		winnerLabel->textRenderer.text = std::string(isCurrentPlayerTwo ? "US" : "USSR") + " wins!";
-		winnerLabel->transform.localPosition = glm::vec3(100.0f, 100.0f, 0.0f);
 	}
 
 #pragma endregion ~Scene
