@@ -57,6 +57,10 @@ struct Scene
 	SpriteEntity actionSprite;
 	SpriteEntity boardSprite;
 	SpriteEntity CallingCard;
+	SpriteEntity Background;
+	SpriteEntity RPG;
+	SpriteEntity CruiseMissile;
+	SpriteEntity ICBM;
 
 	std::unique_ptr<TextEntity> winnerLabel;
 
@@ -64,6 +68,7 @@ struct Scene
 	TextEntity SovietCurrency;
 	TextEntity UnitedStatesCurrency;
 	TextEntity TabHelp;
+	TextEntity TabExit;
 
 
 	ReturnCode initEntities();

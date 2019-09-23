@@ -83,8 +83,11 @@
 		TabHelp.textRenderer.text = "<- TAB ->";
 		TabHelp.transform.localPosition = vec3(335, 185, 0);
 
+		TabExit.textRenderer.text = "<- EXIT ->";
+		TabExit.transform.localPosition = vec3(-485, 365, 0);
+
 		missilePurchaseButtons = MainMenuButtons{
-			vec3(360, 100, 0),
+			vec3(400, 100, 0),
 			vec3(0, -100, 0),
 			{
 			"     Cancel",
@@ -94,6 +97,11 @@
 			"   Voyager 1",
 			},
 		};
+
+		missilePurchaseButtons.buttons[1].buttonEntity.textEntity.material.tint = glm::vec3(0.0f, 0.85f, 0.0f);
+		missilePurchaseButtons.buttons[2].buttonEntity.textEntity.material.tint = glm::vec3(1.0f, 0.75f, 0.0f);
+		missilePurchaseButtons.buttons[3].buttonEntity.textEntity.material.tint = glm::vec3(0.85f, 0.0f, 0.0f);
+		missilePurchaseButtons.buttons[4].buttonEntity.textEntity.material.tint = glm::vec3(0.0f, 1.0f, 1.0f);
 
 		// Textures Init Here
 		selectionSprite.setTexture(TextureIndexer::Selection);
@@ -105,6 +113,10 @@
 		boardSprite.setTexture(TextureIndexer::ChessBoard);
 		boardSprite.transform.localScale = vec3(615, 610, 1);
 		boardSprite.transform.localPosition = vec3(-186.75, 45.5, 0);
+
+		Background.setTexture(TextureIndexer::MainMenu);
+		Background.transform.localScale = vec3(1065, 800, 1);
+		Background.transform.localPosition = vec3(0, 0, 0);
 
 		CallingCard.setTexture(TextureIndexer::USSRFLAG);
 		CallingCard.transform.localScale = vec3(256, 128, 1);
@@ -557,12 +569,21 @@
 		cameraHud.recalculate();
 		cameraHud.useForRendering();
 
+		// render Background
+		(Background.render());
+
 		BEGIN_ANYALL();
 		{
+
+
 			if (navigation->isGameSceneVisible())
 			{
+
 				// render help tab
 				DO_ANYALL(TabHelp.render());
+
+				// render help tab
+				DO_ANYALL(TabExit.render());
 
 				// render board
 				DO_ANYALL(boardSprite.render());
