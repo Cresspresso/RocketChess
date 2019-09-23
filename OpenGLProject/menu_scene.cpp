@@ -195,7 +195,7 @@
 							case ChessPiece::Rook:
 								return 2;
 							case ChessPiece::King:
-								assert(false);
+								return 0;
 								break;
 							default:
 								assert(false);
@@ -207,8 +207,16 @@
 						getCurrentPlayerMoney() += reward;
 					}
 
+					bool const wasKing = thatPiece.type == ChessPiece::King;
+
 					thatPiece = selectedPiece;
 					selectedPiece = { ChessPiece::None };
+
+					if (wasKing) {
+						winnerLabel = std::make_unique<TextEntity>();
+						winnerLabel->textRenderer.text = std::string(isCurrentPlayerTwo ? "US" : "USSR") + " wins!";
+						winnerLabel->transform.localPosition = glm::vec3(100.0f, 100.0f, 0.0f);
+					}
 				};
 
 				auto const& action = it->second;
@@ -666,6 +674,12 @@
 					});
 			}
 
+
+			// render winner label
+			if (winnerLabel)
+			{
+				DO_ANYALL(winnerLabel->render());
+			}
 
 
 			// render pause menu buttons
