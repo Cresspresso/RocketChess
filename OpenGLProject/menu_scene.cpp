@@ -42,9 +42,13 @@
 	ReturnCode Scene::initEntities()
 	{
 
+
+#ifdef _DEBUG
 		Rubles = 40;
 		Dollars = 40;
+#endif // _DEBUG
 
+		
 		auto& resources = singleton::getResources();
 
 		// hud camera
