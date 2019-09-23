@@ -81,17 +81,17 @@
 		};
 
 		TabHelp.textRenderer.text = "<- TAB ->";
-		TabHelp.transform.localPosition = vec3(120, 0, 0);
+		TabHelp.transform.localPosition = vec3(335, 185, 0);
 
 		missilePurchaseButtons = MainMenuButtons{
 			vec3(360, 100, 0),
 			vec3(0, -100, 0),
 			{
-			"Cancel",
-			"RPG",
-			"Conventional Missile",
-			"ICBM",
-			"Voyager 1",
+			"     Cancel",
+			"       RPG",
+			"Cruise Missile",
+			"ICBM [NUKE]",
+			"   Voyager 1",
 			},
 		};
 
@@ -123,13 +123,13 @@
 		//-------------------UI Text----------------------//
 		//------------------------------------------------//
 
-		SovietCurrency.transform.localPosition = vec3(315, 200, 0);
-		UnitedStatesCurrency.transform.localPosition = vec3(335, 150, 0);
+		SovietCurrency.transform.localPosition = vec3(265, 255, 0);
+		UnitedStatesCurrency.transform.localPosition = vec3(285, 235, 0);
 
 		//
 		// Player Turn Labels
 		//
-		currentPlayerLabel.transform.localPosition = vec3(365, 350, 0);
+		currentPlayerLabel.transform.localPosition = vec3(335, 300, 0);
 
 		return RC_SUCCESS;
 	}
@@ -166,10 +166,11 @@
 					deselect();
 
 					// next players's turn
-					isCurrentPlayerTwo = !isCurrentPlayerTwo;
+					if (isCurrentPlayerTwo = !isCurrentPlayerTwo)
+					{ CallingCard.setTexture(TextureIndexer::USFLAG); }
+					else { CallingCard.setTexture(TextureIndexer::USSRFLAG); }
 					DEBUG_LOG("Next player's turn");
-					// HERE!
-					CallingCard.setTexture(TextureIndexer::USFLAG);
+					
 				});
 
 				auto const regularMove = [&] {
