@@ -264,6 +264,9 @@
 		
 		// NOTE: no 'else'. If it was deselected, check for new selection.
 		// if no cell is currently selected, select the allied piece
+
+		// NOTE: no 'else'. If it was deselected, check for new selection.
+		// if no cell is currently selected, select the allied piece
 		{
 			if (thatPiece.type != ChessPiece::None)
 			{
@@ -274,7 +277,7 @@
 					availableActions.clear();
 
 					int const yForward = thatPiece.isPlayer2 ? -1 : 1;
-					
+
 					// returns true if destination is empty or invalid coords
 					auto const doit = [&](ivec2 const& neighbourCoords) -> bool {
 						ivec2 const actionCoords = cellCoords + neighbourCoords;
@@ -398,9 +401,8 @@
 					}
 					break;
 
-					case ChessPiece::Rook:{
-						
-						std::vector<ivec2> neighboursCoords;
+					case ChessPiece::Rook: {
+
 						//horizontal
 						for (int i = 1; i < 8; i++) {
 							bool wasEmpty = doit(ivec2(i, 0));
@@ -420,44 +422,72 @@
 							if (!wasEmpty) { break; }
 						}
 					}
-					break;
+										   break;
 					case ChessPiece::Bishop: {
 
-						std::vector<ivec2> neighboursCoords;
-
-						for (int i = 0; i < 8; i++) {
-							for (int e = 0; e < 8; e++) {
-								bool wasEmpty = doit(ivec2(i, e));
-								if (!wasEmpty) { break; }
-								i++;
-							}
+						for (int i = 1; i < 8; i++) {
+							bool wasEmpty = doit(ivec2(i, i));
+							if (!wasEmpty) { break; }
 						}
 
-						for (int i = 0; i < 8; i++) {
-							for (int e = 0; e < 8; e++) {
-								bool wasEmpty = doit(ivec2(-i, e));
-								if (!wasEmpty) { break; }
-								i++;
-							}
+						for (int i = 1; i < 8; i++) {
+							bool wasEmpty = doit(ivec2(i, -i));
+							if (!wasEmpty) { break; }
+						}
+						for (int i = 1; i < 8; i++) {
+							bool wasEmpty = doit(ivec2(-i, i));
+							if (!wasEmpty) { break; }
 						}
 
-						for (int i = 0; i < 8; i++) {
-							for (int e = 0; e < 8; e++) {
-								bool wasEmpty = doit(ivec2(i, -e));
-								if (!wasEmpty) { break; }
-								i++;
-							}
-						}
-
-						for (int i = 0; i < 8; i++) {
-							for (int e = 0; e < 8; e++) {
-								bool wasEmpty = doit(ivec2(-i, -e));
-								if (!wasEmpty) { break; }
-								i++;
-							}
+						for (int i = 1; i < 8; i++) {
+							bool wasEmpty = doit(ivec2(-i, -i));
+							if (!wasEmpty) { break; }
 						}
 					}
-					break;
+											 break;
+
+					case ChessPiece::Queen: {
+
+
+						//horizontal
+						for (int i = 1; i < 8; i++) {
+							bool wasEmpty = doit(ivec2(i, 0));
+							if (!wasEmpty) { break; }
+						}
+						for (int i = 1; i < 8; i++) {
+							bool wasEmpty = doit(ivec2(-i, 0));
+							if (!wasEmpty) { break; }
+						}
+						//vertical
+						for (int e = 1; e < 8; e++) {
+							bool wasEmpty = doit(ivec2(0, e));
+							if (!wasEmpty) { break; }
+						}
+						for (int e = 1; e < 8; e++) {
+							bool wasEmpty = doit(ivec2(0, -e));
+							if (!wasEmpty) { break; }
+						}
+						for (int i = 1; i < 8; i++) {
+							bool wasEmpty = doit(ivec2(i, i));
+							if (!wasEmpty) { break; }
+						}
+
+						for (int i = 1; i < 8; i++) {
+							bool wasEmpty = doit(ivec2(i, -i));
+							if (!wasEmpty) { break; }
+						}
+						for (int i = 1; i < 8; i++) {
+							bool wasEmpty = doit(ivec2(-i, i));
+							if (!wasEmpty) { break; }
+						}
+
+						for (int i = 1; i < 8; i++) {
+							bool wasEmpty = doit(ivec2(-i, -i));
+							if (!wasEmpty) { break; }
+						}
+
+
+					}
 
 					case ChessPiece::None:
 						throw std::runtime_error("should be unreachable code");
