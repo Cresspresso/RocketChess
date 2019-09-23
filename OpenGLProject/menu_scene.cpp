@@ -225,9 +225,7 @@
 					selectedPiece = { ChessPiece::None };
 
 					if (wasKing) {
-						winnerLabel = std::make_unique<TextEntity>();
-						winnerLabel->textRenderer.text = std::string(isCurrentPlayerTwo ? "US" : "USSR") + " wins!";
-						winnerLabel->transform.localPosition = glm::vec3(100.0f, 100.0f, 0.0f);
+						winGame();
 					}
 				};
 
@@ -277,6 +275,28 @@
 
 					int const yForward = thatPiece.isPlayer2 ? -1 : 1;
 					
+					// returns true if destination is empty or invalid coords
+					auto const doit = [&](ivec2 const& neighbourCoords) -> bool {
+						ivec2 const actionCoords = cellCoords + neighbourCoords;
+						if (isValidCoords(actionCoords))
+						{
+							size_t const actionLinearIndex = getLinearIndex(actionCoords);
+							// if the destination space is empty or has enemy piece
+							auto const& destPiece = boardPieces[actionLinearIndex];
+							if (destPiece.type == ChessPiece::None
+								|| destPiece.isPlayer2 != isCurrentPlayerTwo)
+							{
+								availableActions.insert(std::make_pair(
+									actionLinearIndex,
+									ChessAction{ ChessActionType::RegularMove, actionCoords }
+								));
+							}
+							return destPiece.type == ChessPiece::None;
+						}
+						return false;
+					};
+
+
 					// TODO test if king is in 'Check' before providing actions.
 					switch (thatPiece.type)
 					{
@@ -373,6 +393,67 @@
 										));
 									}
 								}
+							}
+						}
+					}
+					break;
+
+					case ChessPiece::Rook:{
+						
+						std::vector<ivec2> neighboursCoords;
+						//horizontal
+						for (int i = 1; i < 8; i++) {
+							bool wasEmpty = doit(ivec2(i, 0));
+							if (!wasEmpty) { break; }
+						}
+						for (int i = 1; i < 8; i++) {
+							bool wasEmpty = doit(ivec2(-i, 0));
+							if (!wasEmpty) { break; }
+						}
+						//vertical
+						for (int e = 1; e < 8; e++) {
+							bool wasEmpty = doit(ivec2(0, e));
+							if (!wasEmpty) { break; }
+						}
+						for (int e = 1; e < 8; e++) {
+							bool wasEmpty = doit(ivec2(0, -e));
+							if (!wasEmpty) { break; }
+						}
+					}
+					break;
+					case ChessPiece::Bishop: {
+
+						std::vector<ivec2> neighboursCoords;
+
+						for (int i = 0; i < 8; i++) {
+							for (int e = 0; e < 8; e++) {
+								bool wasEmpty = doit(ivec2(i, e));
+								if (!wasEmpty) { break; }
+								i++;
+							}
+						}
+
+						for (int i = 0; i < 8; i++) {
+							for (int e = 0; e < 8; e++) {
+								bool wasEmpty = doit(ivec2(-i, e));
+								if (!wasEmpty) { break; }
+								i++;
+							}
+						}
+
+						for (int i = 0; i < 8; i++) {
+							for (int e = 0; e < 8; e++) {
+								bool wasEmpty = doit(ivec2(i, -e));
+								if (!wasEmpty) { break; }
+								i++;
+							}
+						}
+
+						for (int i = 0; i < 8; i++) {
+							for (int e = 0; e < 8; e++) {
+								bool wasEmpty = doit(ivec2(-i, -e));
+								if (!wasEmpty) { break; }
+								i++;
 							}
 						}
 					}
@@ -496,8 +577,12 @@
 		break;
 		//Voyager 1
 		case 4: {
-			//TODO: Setup the win con for this as this does not need to destroy any
-			//pieces it should just win the game
+			int cost = 22;
+			if (money >= cost) {
+				deselect();
+				money -= cost;
+				winGame();
+			}
 		}
 		break;
 		}
@@ -790,6 +875,13 @@
 			default:
 			{	return 0; }
 		}
+	}
+
+	void Scene::winGame()
+	{
+		winnerLabel = std::make_unique<TextEntity>();
+		winnerLabel->textRenderer.text = std::string(isCurrentPlayerTwo ? "US" : "USSR") + " wins!";
+		winnerLabel->transform.localPosition = glm::vec3(100.0f, 100.0f, 0.0f);
 	}
 
 #pragma endregion ~Scene
