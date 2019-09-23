@@ -212,9 +212,7 @@
 					selectedPiece = { ChessPiece::None };
 
 					if (wasKing) {
-						winnerLabel = std::make_unique<TextEntity>();
-						winnerLabel->textRenderer.text = std::string(isCurrentPlayerTwo ? "US" : "USSR") + " wins!";
-						winnerLabel->transform.localPosition = glm::vec3(100.0f, 100.0f, 0.0f);
+						winGame();
 					}
 				};
 
@@ -483,6 +481,7 @@
 		break;
 		//Voyager 1
 		case 4: {
+			winGame();
 			//TODO: Setup the win con for this as this does not need to destroy any
 			//pieces it should just win the game
 		}
@@ -768,6 +767,13 @@
 			default:
 			{	return 0; }
 		}
+	}
+
+	void Scene::winGame()
+	{
+		winnerLabel = std::make_unique<TextEntity>();
+		winnerLabel->textRenderer.text = std::string(isCurrentPlayerTwo ? "US" : "USSR") + " wins!";
+		winnerLabel->transform.localPosition = glm::vec3(100.0f, 100.0f, 0.0f);
 	}
 
 #pragma endregion ~Scene

@@ -107,4 +107,6 @@ struct Scene
 	ReturnCode LaunchedMissile();
 
 	ReturnCode MissilePosition();
+
+	void winGame();
 };
