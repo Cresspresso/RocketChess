@@ -26,6 +26,7 @@ enum class FontIndexer : size_t
 	Arial,
 	SnackerComic,
 	WaltographUI,
+	BankGothicMedium,
 	END
 };
 constexpr size_t FontIndexerEND = static_cast<size_t>(FontIndexer::END);
@@ -44,10 +45,11 @@ struct FontManager : public ResourceManager<Font, FontIndexerEND, FontIndexer>
 		"arial",
 		"SnackerComic",
 		"waltographUI",
-		// "BankGothicMedium" // To Be Added
+		"BankGothicMedium" 
 	};
 	static constexpr std::array<int, FontIndexerEND> sizes =
 	{
+		24,
 		24,
 		24,
 		24,

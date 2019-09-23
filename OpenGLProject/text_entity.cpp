@@ -10,7 +10,7 @@ TextEntity::TextEntity()
 {
 	auto& resources = singleton::getResources();
 
-	textRenderer.font = &(resources.fonts[FontIndexer::Arial]);
+	textRenderer.font = &(resources.fonts[FontIndexer::BankGothicMedium]);
 	textRenderer.renderer.material = &material;
 	textRenderer.renderer.program = resources.programs.getProgram(ProgramIndexer::Text);
 	textRenderer.renderer.mesh = &(resources.meshes[MeshIndexer::Text]);
