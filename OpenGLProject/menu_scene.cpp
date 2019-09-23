@@ -482,9 +482,12 @@
 		break;
 		//Voyager 1
 		case 4: {
-			winGame();
-			//TODO: Setup the win con for this as this does not need to destroy any
-			//pieces it should just win the game
+			int cost = 22;
+			if (money >= cost) {
+				deselect();
+				money -= cost;
+				winGame();
+			}
 		}
 		break;
 		}
