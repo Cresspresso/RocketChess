@@ -1,4 +1,6 @@
 
+#include <stdexcept>
+
 #include "focused_panel.hpp"
 
 namespace FocusedPanel
