@@ -14,6 +14,7 @@ struct ChessAction
 {
 	ChessActionType type;
 	ivec2 coords;
+	int cost;
 
-	explicit ChessAction(ChessActionType type, ivec2 coords) : type(type), coords(coords) {}
+	explicit ChessAction(ChessActionType type, ivec2 coords, int cost = 0) : type(type), coords(coords), cost(cost) {}
 };

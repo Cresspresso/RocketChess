@@ -88,6 +88,8 @@ struct Scene
 
 	std::unique_ptr<Navigation> navigation;
 
+	int& getCurrentPlayerMoney() { return isCurrentPlayerTwo ? Dollars : Rubles; };
+
 	int Rubles = 0; // Values Can be Set to equal
 	int Dollars = 0; // Functional values for currency...
 

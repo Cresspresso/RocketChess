@@ -1,4 +1,6 @@
 
+#include <stdexcept>
+
 #include "network_serialization.hpp"
 
 
