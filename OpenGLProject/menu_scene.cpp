@@ -252,7 +252,8 @@
 				case ChessActionType::PawnPromotion:
 				{
 					regularMove();
-					throw std::runtime_error("PawnPromotion functionality not implemented");
+					//if a pawn gets to the end of the board then promote it into a queen
+					thatPiece.type = ChessPiece::Queen;
 				}
 				break;
 
