@@ -492,6 +492,36 @@
 
 
 					}
+					break;
+
+					case ChessPiece::Knight: {
+						// action: move 1 space in any direction
+						static std::array<ivec2, 8> const neighboursCoords{
+							ivec2(1, 2), ivec2(-1, 2), ivec2(2, -1),
+							ivec2(2, 1), ivec2(-2, -1),
+							ivec2(-2, 1), ivec2(1, -2), ivec2(-1, -2)
+						};
+
+						for (ivec2 const& neighbourCoords : neighboursCoords)
+						{
+							ivec2 const actionCoords = cellCoords + neighbourCoords;
+							if (isValidCoords(actionCoords))
+							{
+								size_t const actionLinearIndex = getLinearIndex(actionCoords);
+								// if the destination space is empty or has enemy piece
+								auto const& destPiece = boardPieces[actionLinearIndex];
+								if (destPiece.type == ChessPiece::None
+									|| destPiece.isPlayer2 != isCurrentPlayerTwo)
+								{
+										availableActions.insert(std::make_pair(
+											actionLinearIndex,
+											ChessAction{ ChessActionType::RegularMove, actionCoords }
+										));
+								}
+							}
+						}
+					}
+					break;
 
 					case ChessPiece::None:
 						throw std::runtime_error("should be unreachable code");
