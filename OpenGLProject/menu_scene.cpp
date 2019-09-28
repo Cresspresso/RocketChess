@@ -70,7 +70,7 @@
 			"New Game",
 			"Instructions",
 			"Options",
-			"Exit to Desktop",
+			"   Exit",
 			},
 		};
 
@@ -80,7 +80,7 @@
 			{
 			"Continue",
 			"Exit to Menu",
-			"Exit to Desktop",
+			"    Exit",
 			},
 		};
 
@@ -101,6 +101,8 @@
 			"   Voyager 1",
 			},
 		};
+
+
 
 		missilePurchaseButtons.buttons[1].buttonEntity.textEntity.material.tint = glm::vec3(0.0f, 0.85f, 0.0f);
 		missilePurchaseButtons.buttons[2].buttonEntity.textEntity.material.tint = glm::vec3(1.0f, 0.75f, 0.0f);
@@ -126,6 +128,11 @@
 		CallingCard.transform.localScale = vec3(256, 128, 1);
 		CallingCard.transform.localPosition = vec3(405, 337, 0);
 
+		// Audio Init Here
+		loadMusicTrack(&g_musicMenuBackground, "COAG - Taboo.mp3");
+		playMusic();
+		
+		initAudio();
 
 		// chess piece types
 		for (size_t i = 0; i < chessSprites.size(); i++)
@@ -696,10 +703,13 @@
 
 	ReturnCode Scene::update()
 	{
+		updateAudio();
+
 		BEGIN_ANYALL();
 		{
 			try
 			{
+
 				navigation->update();
 				DO_ANYALL(RC_SUCCESS);
 			}
@@ -772,6 +782,7 @@
 				{
 					selectionSprite.transform.localPosition = coordsToHudPosition(*selectedCoords);
 					DO_ANYALL(selectionSprite.render());
+					
 				}
 
 				// render available actions
@@ -978,6 +989,7 @@
 	//returns user to the chessboard after launching the missile
 	ReturnCode Scene::LaunchedMissile() {
 
+		
 		BEGIN_ANYALL();
 		{
 			//resets the cursor back to the chessBoard

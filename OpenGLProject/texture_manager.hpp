@@ -80,7 +80,7 @@ struct TextureManager : public ResourceManager<GLuint, TextureIndexerEND, Textur
 		"QueenUSSR.png",
 		"RookUS.png",
 		"RookUSSR.png",
-		"Chess-Board.jpg",
+		"Chess-BoardO.png",
 		"Selection.png",
 		"Action.png",
 		"Cursor.png",

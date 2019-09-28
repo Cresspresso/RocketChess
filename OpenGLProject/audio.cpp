@@ -27,10 +27,17 @@ FMOD::System* g_audio = nullptr;
 FMOD::Sound* g_soundThump = nullptr;
 FMOD::Sound* g_soundZap = nullptr;
 FMOD::Sound* g_soundDing = nullptr;
+// R
+FMOD::Sound* g_soundSelect = nullptr;
+FMOD::Sound* g_soundMovePiece = nullptr;
+FMOD::Sound* g_soundNavigate = nullptr;
+FMOD::Sound* g_soundCapture = nullptr;
+
 
 FMOD::Sound* g_musicBackground = nullptr;
-
-
+// R
+FMOD::Sound* g_musicMenuBackground = nullptr;
+FMOD::Sound* g_musicGameBackground = nullptr;
 
 namespace
 {
@@ -39,6 +46,11 @@ namespace
 		HANDLE_ALL(loadSoundEffect(&g_soundThump, "Thump.wav"));
 		HANDLE_ALL(loadSoundEffect(&g_soundZap, "420365__bolkmar__sfx-laser-shot-s.wav"));
 		HANDLE_ALL(loadSoundEffect(&g_soundDing, "366104__original-sound__confirmation-downward.wav"));
+		// R
+		HANDLE_ALL(loadSoundEffect(&g_soundSelect, "Select_SFX.wav"));
+		HANDLE_ALL(loadSoundEffect(&g_soundMovePiece, "Solid.wav"));
+		HANDLE_ALL(loadSoundEffect(&g_soundNavigate, "sndDoor.ogg"));
+		HANDLE_ALL(loadSoundEffect(&g_soundCapture, "sfx_death.ogg"));
 
 		return RC_SUCCESS;
 	}
@@ -46,6 +58,8 @@ namespace
 	ReturnCode loadMusicTracks()
 	{
 		HANDLE_ALL(loadMusicTrack(&g_musicBackground, "Cresspresso - Beyond Afar - 03 Slight Design.wav"));
+		HANDLE_ALL(loadMusicTrack(&g_musicMenuBackground, "COAG - Taboo.mp3"));
+		HANDLE_ALL(loadMusicTrack(&g_musicGameBackground, "COAG - The Lost.wav"));
 
 		return RC_SUCCESS;
 	}

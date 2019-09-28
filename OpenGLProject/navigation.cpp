@@ -20,6 +20,10 @@
 #include "input.hpp"
 #include "console.hpp"
 
+
+#include "audio.hpp"
+#include "toggle_music.hpp"
+
 #include "navigation.hpp"
 #include "MissileManager.h"
 
@@ -189,12 +193,14 @@ void Navigation::render()
 			{
 			case ButtonID::EndTurn:
 			{
+
 				spriteEntity.transform.localPosition = vec3(300, -100, 0);
 			}
 			break;
 
 			case ButtonID::Undo:
 			{
+
 				spriteEntity.transform.localPosition = vec3(300, -200, 0);
 			}
 			break;
@@ -314,10 +320,12 @@ void Navigation::update()
 #ifdef _DEBUG
 		console::log("SPACE pressed.");
 #endif
+//		playSoundEffect(g_soundCapture);
 		invokeAction();
 	}
 	else
 	{
+
 		handleMoveInput();
 	}
 }
@@ -336,6 +344,7 @@ void Navigation::invokeAction()
 		{
 		case ButtonID::Continue:
 		{
+
 			pauseMenu = std::nullopt;
 		}
 		break;
@@ -374,6 +383,8 @@ void Navigation::invokeAction()
 			{
 			case ButtonID::NewGame:
 			{
+				// Audio
+				playSoundEffect(g_soundCapture);
 				gamePanel = ChessBoard();
 			}
 			break;
@@ -414,10 +425,12 @@ void Navigation::invokeAction()
 			ivec2 const coords = focusedPanelData.getFocusedCellCoords();
 			if (onChessBoardCellPressed != nullptr)
 			{
+				
 				onChessBoardCellPressed(coords);
 			}
 			else
 			{
+				
 				console::error("Action is not provided for when board cell pressed.");
 			}
 		},
@@ -436,6 +449,7 @@ void Navigation::invokeAction()
 			case ButtonID::RPG:
 			{
 				onRocketPressed(1);
+				playSoundEffect(g_soundSelect);
 				gamePanel = ChessBoard();
 				//purchase rpg
 			}
@@ -484,6 +498,7 @@ void Navigation::invokeAction()
 			case ButtonID::EndTurn:
 			{
 				// DEBUG
+
 				gamePanel = MainMenu();
 				// TODO
 			}
@@ -559,6 +574,8 @@ void Navigation::handleMoveInput()
 
 			if (moveUp)
 			{
+				// Menu Sounds (Testing)
+				playSoundEffect(g_soundSelect);
 				cycleFocusedButton(-1);
 			}
 			if (moveDown)

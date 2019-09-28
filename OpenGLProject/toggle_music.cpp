@@ -59,9 +59,10 @@ ReturnCode playMusic()
 	ASSERT0(g_isMusicPlaying);
 
 	ASSERT1(g_audio);
-	ASSERT1(g_musicBackground);
-
-	FMOD_RESULT r = g_audio->playSound(g_musicBackground, nullptr, true, &g_musicChannel);
+	ASSERT1(g_musicMenuBackground);
+	// Changed from g_musicBackground to g_musicGameBackground...
+	// Currently Need a way to change the music based on if your at the main menu or in game...
+	FMOD_RESULT r = g_audio->playSound(g_musicGameBackground, nullptr, true, &g_musicChannel);
 	if (r)
 	{
 		setReasonFmod(r, "FMOD::System::playSound failed");

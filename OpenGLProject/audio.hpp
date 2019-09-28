@@ -34,7 +34,13 @@ extern FMOD::Sound* g_soundZap;
 extern FMOD::Sound* g_soundDing;
 
 extern FMOD::Sound* g_musicBackground;
-
+// R
+extern FMOD::Sound* g_musicMenuBackground;
+extern FMOD::Sound* g_musicGameBackground;
+extern FMOD::Sound* g_soundNavigate;
+extern FMOD::Sound* g_soundSelect;
+extern FMOD::Sound* g_soundMovePiece;
+extern FMOD::Sound* g_soundCapture;
 
 
 // functions
