@@ -507,7 +507,9 @@ void Navigation::invokeAction()
 			case ButtonID::Undo:
 			{
 				// TODO
+				
 				console::error("Undo button not implemented.");
+
 			}
 			break;
 
@@ -516,6 +518,7 @@ void Navigation::invokeAction()
 #ifdef _DEBUG
 				console::error("focusedPanelData has an invalid focusedButton value.");
 #endif
+
 				focusedPanelData.focusedButton = ButtonID::EndTurn;
 			}
 			break;
@@ -574,12 +577,12 @@ void Navigation::handleMoveInput()
 
 			if (moveUp)
 			{
-				// Menu Sounds (Testing)
-				playSoundEffect(g_soundSelect);
+
 				cycleFocusedButton(-1);
 			}
 			if (moveDown)
 			{
+
 				cycleFocusedButton(1);
 			}
 		},
@@ -596,15 +599,19 @@ void Navigation::handleMoveInput()
 		{
 			auto const cycleFocusedButton = [&](int delta)
 			{
+								
 				cycleEnumInPlace(focusedPanelData.focusedButton, delta);
 			};
 
 			if (moveUp)
 			{
+				playSoundEffect(g_soundNavigate);
 				cycleFocusedButton(-1);
 			}
 			if (moveDown)
 			{
+				// Menu Sounds (Testing)
+				playSoundEffect(g_soundNavigate);
 				cycleFocusedButton(1);
 			}
 		},
@@ -641,7 +648,7 @@ void Navigation::handleMoveInput()
 			{
 				cycleFocusedButton(1);
 			}
-		}
+		}		
 			}, gamePanel);
 	}
 	//~ end visit
