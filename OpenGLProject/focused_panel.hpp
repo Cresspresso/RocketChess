@@ -41,7 +41,19 @@ namespace FocusedPanel
 		ButtonID focusedButton{ ButtonID::NewGame };
 	};
 
-
+	class PawnPromotion {
+	public:
+		enum class ButtonID
+		{
+			Rook,
+			Knight,
+			Bishop,
+			Queen,
+			MAX = Queen
+		};
+		ButtonID focusedButton{};
+	
+	};
 
 	class ChessBoard
 	{
