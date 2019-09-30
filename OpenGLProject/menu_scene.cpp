@@ -934,6 +934,19 @@ ivec2 globalPosition;
 			}
 
 
+
+			// render instructions
+			{
+				this->navigation->visit(overload{
+					[&](FocusedPanel::InstructionsMenu const& panelData)
+				{
+					DO_ANYALL(instructions.render());
+				},
+					[&](auto const& other) {}
+				});
+			}
+
+
 			// render winner label
 			if (winnerLabel)
 			{
@@ -948,9 +961,6 @@ ivec2 globalPosition;
 				DO_ANYALL(pauseMenuButtons.render());
 			}
 
-
-
-			DO_ANYALL(instructions.render());
 
 
 			try { navigation->render(); } CATCH_PRINT();
