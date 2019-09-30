@@ -26,6 +26,7 @@
 #include "audio.hpp"
 #include "toggle_music.hpp"
 #include "input.hpp"
+#include "time.hpp"
 
 #include "resource_warehouse.hpp"
 
@@ -77,6 +78,11 @@ ivec2 globalPosition;
 			},
 		};
 
+		mainMenuButtons.buttons[0].buttonEntity.textEntity.material.tint = glm::vec3(1.0f, 1.0f, 1.0f);
+		mainMenuButtons.buttons[1].buttonEntity.textEntity.material.tint = glm::vec3(1.0f, 1.0f, 1.0f);
+		mainMenuButtons.buttons[2].buttonEntity.textEntity.material.tint = glm::vec3(1.0f, 1.0f, 1.0f);
+		mainMenuButtons.buttons[3].buttonEntity.textEntity.material.tint = glm::vec3(1.0f, 1.0f, 1.0f);
+
 		pauseMenuButtons = MainMenuButtons{
 			vec3(-200, 100, 0),
 			vec3(0, -100, 0),
@@ -86,6 +92,11 @@ ivec2 globalPosition;
 			"    Exit",
 			},
 		};
+
+		pauseMenuButtons.buttons[0].buttonEntity.textEntity.material.tint = glm::vec3(1.0f, 1.0f, 1.0f);
+		pauseMenuButtons.buttons[1].buttonEntity.textEntity.material.tint = glm::vec3(1.0f, 1.0f, 1.0f);
+		pauseMenuButtons.buttons[2].buttonEntity.textEntity.material.tint = glm::vec3(1.0f, 1.0f, 1.0f);
+
 
 		TabHelp.textRenderer.text = "<- TAB ->";
 		TabHelp.transform.localPosition = vec3(335, 185, 0);
@@ -98,15 +109,15 @@ ivec2 globalPosition;
 			vec3(0, -100, 0),
 			{
 			"     Cancel",
-			"       RPG",
-			"Cruise Missile",
-			"ICBM [NUKE]",
-			"   Voyager 1",
+			"   $3  RPG",
+			"$8 Cruise Missile",
+			"$13 S8TAN [NUKE]",
+			"$22  Voyager 1",
 			},
 		};
 
 
-
+		missilePurchaseButtons.buttons[0].buttonEntity.textEntity.material.tint = glm::vec3(1.0f, 1.0f, 1.0f);
 		missilePurchaseButtons.buttons[1].buttonEntity.textEntity.material.tint = glm::vec3(0.0f, 0.85f, 0.0f);
 		missilePurchaseButtons.buttons[2].buttonEntity.textEntity.material.tint = glm::vec3(1.0f, 0.75f, 0.0f);
 		missilePurchaseButtons.buttons[3].buttonEntity.textEntity.material.tint = glm::vec3(0.85f, 0.0f, 0.0f);
@@ -752,11 +763,19 @@ ivec2 globalPosition;
 	{
 		updateAudio();
 
+		if (isRestarting())
+		{
+			if (m_restartDelay->updateClampedFinished(Time::getDeltaTime()))
+			{
+				postRestartGameMessage();
+				return RC_SUCCESS;
+			}
+		}
+
 		BEGIN_ANYALL();
 		{
 			try
 			{
-
 				navigation->update();
 				DO_ANYALL(RC_SUCCESS);
 			}
@@ -1006,11 +1025,33 @@ ivec2 globalPosition;
 		}
 	}
 
+	bool Scene::isGameOver() const
+	{
+		return this->winnerLabel != nullptr;
+	}
+
 	void Scene::winGame()
 	{
 		winnerLabel = std::make_unique<TextEntity>();
 		winnerLabel->textRenderer.text = std::string(isCurrentPlayerTwo ? "US" : "USSR") + " wins!";
 		winnerLabel->transform.localPosition = glm::vec3(100.0f, 100.0f, 0.0f);
+
+		postRestartGameMessage(2.0f);
+	}
+
+	bool Scene::isRestarting() const
+	{
+		return m_restartDelay.has_value();
+	}
+
+	void Scene::postRestartGameMessage(float delay)
+	{
+		m_restartDelay.emplace(delay);
+	}
+
+	void Scene::postRestartGameMessage()
+	{
+		singleton::postRestartMessage();
 	}
 
 #pragma endregion ~Scene

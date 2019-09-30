@@ -31,7 +31,7 @@ ButtonEntity::ButtonEntity()
 	textEntity.transform.parentModelMatrix = parent;
 
 
-	backgroundEntity.transform.localScale = vec3(200, 80, 1);
+	backgroundEntity.transform.localScale = vec3(275, 80, 1);
 	textEntity.transform.localPosition = vec3(-backgroundEntity.transform.localScale.x / 2 + 10, 0, 0);
 	textEntity.material.tint = vec3(0);
 

@@ -43,7 +43,20 @@ void Application::destroy() noexcept
 
 ReturnCode Application::update()
 {
-	return scene->update();
+	if (m_restart)
+	{
+		m_restart = false;
+		scene->destroy();
+		scene.emplace();
+		BEGIN_ANYALL();
+		DO_ANYALL(scene->init());
+		DO_ANYALL(scene->update());
+		return END_ANYALL();
+	}
+	else
+	{
+		return scene->update();
+	}
 }
 
 ReturnCode Application::render()
