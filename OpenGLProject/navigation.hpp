@@ -42,15 +42,18 @@ public:
 		FocusedPanel::MainMenu,
 		FocusedPanel::ChessBoard,
 		FocusedPanel::RocketPurchase,
+		FocusedPanel::PawnPromotion,
 		FocusedPanel::EndTurn
 	> gamePanel;
 
 	std::optional<FocusedPanel::PauseMenu> pauseMenu;
+	//std::optional < FocusedPanel::PawnPromotion > pawnPromotion;
 
 	SpriteEntity spriteEntity;
 
 	std::function<void(ivec2)> onChessBoardCellPressed = nullptr;
 	std::function<void(int)> onRocketPressed = nullptr;
+	std::function<void(int)> onPawnPromotion = nullptr;
 
 	bool isGameSceneVisible() const;
 	bool isPauseMenuVisible() const;
