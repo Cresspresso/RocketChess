@@ -74,6 +74,11 @@
 			},
 		};
 
+		mainMenuButtons.buttons[0].buttonEntity.textEntity.material.tint = glm::vec3(1.0f, 1.0f, 1.0f);
+		mainMenuButtons.buttons[1].buttonEntity.textEntity.material.tint = glm::vec3(1.0f, 1.0f, 1.0f);
+		mainMenuButtons.buttons[2].buttonEntity.textEntity.material.tint = glm::vec3(1.0f, 1.0f, 1.0f);
+		mainMenuButtons.buttons[3].buttonEntity.textEntity.material.tint = glm::vec3(1.0f, 1.0f, 1.0f);
+
 		pauseMenuButtons = MainMenuButtons{
 			vec3(-200, 100, 0),
 			vec3(0, -100, 0),
@@ -83,6 +88,11 @@
 			"    Exit",
 			},
 		};
+
+		pauseMenuButtons.buttons[0].buttonEntity.textEntity.material.tint = glm::vec3(1.0f, 1.0f, 1.0f);
+		pauseMenuButtons.buttons[1].buttonEntity.textEntity.material.tint = glm::vec3(1.0f, 1.0f, 1.0f);
+		pauseMenuButtons.buttons[2].buttonEntity.textEntity.material.tint = glm::vec3(1.0f, 1.0f, 1.0f);
+
 
 		TabHelp.textRenderer.text = "<- TAB ->";
 		TabHelp.transform.localPosition = vec3(335, 185, 0);
@@ -95,15 +105,15 @@
 			vec3(0, -100, 0),
 			{
 			"     Cancel",
-			"       RPG",
-			"Cruise Missile",
-			"ICBM [NUKE]",
-			"   Voyager 1",
+			"   $3  RPG",
+			"$8 Cruise Missile",
+			"$13 S8TAN [NUKE]",
+			"$22  Voyager 1",
 			},
 		};
 
 
-
+		missilePurchaseButtons.buttons[0].buttonEntity.textEntity.material.tint = glm::vec3(1.0f, 1.0f, 1.0f);
 		missilePurchaseButtons.buttons[1].buttonEntity.textEntity.material.tint = glm::vec3(0.0f, 0.85f, 0.0f);
 		missilePurchaseButtons.buttons[2].buttonEntity.textEntity.material.tint = glm::vec3(1.0f, 0.75f, 0.0f);
 		missilePurchaseButtons.buttons[3].buttonEntity.textEntity.material.tint = glm::vec3(0.85f, 0.0f, 0.0f);
