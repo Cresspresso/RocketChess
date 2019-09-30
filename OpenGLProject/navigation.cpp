@@ -197,13 +197,13 @@ void Navigation::render()
 		}
 		break;
 
-		case ButtonID::Bishop:
+		case ButtonID::Knight:
 		{
 			spriteEntity.transform.localPosition = vec3(200, 100, 0);
 		}
 		break;
 
-		case ButtonID::Knight:
+		case ButtonID::Bishop:
 		{
 			spriteEntity.transform.localPosition = vec3(200, 000, 0);
 		}
