@@ -201,6 +201,7 @@
     <ClCompile Include="fog_material.cpp" />
     <ClCompile Include="main_menu_buttons.cpp" />
     <ClCompile Include="main_menu_button_entity.cpp" />
+    <ClCompile Include="multiline_text_entity.cpp" />
     <ClCompile Include="navigation.cpp" />
     <ClCompile Include="HistoryEventLog.cpp" />
     <ClCompile Include="menuSwap.cpp" />
@@ -296,8 +297,10 @@
     <ClInclude Include="compatibility_threading.hpp" />
     <ClInclude Include="fog_material.hpp" />
     <ClInclude Include="focused_panel.hpp" />
+    <ClInclude Include="instructions.hpp" />
     <ClInclude Include="main_menu_button_entity.hpp" />
     <ClInclude Include="main_menu_buttons.hpp" />
+    <ClInclude Include="multiline_text_entity.hpp" />
     <ClInclude Include="navigation.hpp" />
     <ClInclude Include="HistoryEventLog.h" />
     <ClInclude Include="menuSwap.h" />

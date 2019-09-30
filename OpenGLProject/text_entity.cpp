@@ -14,6 +14,8 @@ TextEntity::TextEntity()
 	textRenderer.renderer.material = &material;
 	textRenderer.renderer.program = resources.programs.getProgram(ProgramIndexer::Text);
 	textRenderer.renderer.mesh = &(resources.meshes[MeshIndexer::Text]);
+
+	material.tint = vec3(1);
 }
 
 

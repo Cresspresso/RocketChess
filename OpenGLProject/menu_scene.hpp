@@ -39,6 +39,7 @@
 #include "ChessPiece.hpp"
 #include "ChessAction.hpp"
 #include "main_menu_buttons.hpp"
+#include "multiline_text_entity.hpp"
 
 #include "navigation.hpp"
 
@@ -71,6 +72,8 @@ struct Scene
 	TextEntity UnitedStatesCurrency;
 	TextEntity TabHelp;
 	TextEntity TabExit;
+
+	MultilineTextEntity multilineExample;
 
 
 	ReturnCode initEntities();

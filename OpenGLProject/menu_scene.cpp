@@ -165,6 +165,12 @@
 		//
 		currentPlayerLabel.transform.localPosition = vec3(335, 300, 0);
 
+#ifdef _DEBUG
+		multilineExample.text = "howdy\npartner\nyou've got a\nfriend in me.";
+		multilineExample.textEntity.material.tint = vec3(1);
+		multilineExample.textEntity.transform.localPosition = vec3(335, 300, 0);
+#endif
+
 		return RC_SUCCESS;
 	}
 
@@ -753,7 +759,6 @@
 			// render Background
 			DO_ANYALL(Background.render());
 
-
 			if (navigation->isGameSceneVisible())
 			{
 
@@ -888,6 +893,10 @@
 				pauseMenuButtons.highlight(static_cast<size_t>(navigation->pauseMenu->focusedButton));
 				DO_ANYALL(pauseMenuButtons.render());
 			}
+
+#ifdef _DEBUG
+			DO_ANYALL(multilineExample.render());
+#endif
 
 
 
