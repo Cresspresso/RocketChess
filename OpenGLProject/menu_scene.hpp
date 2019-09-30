@@ -52,6 +52,7 @@ struct Scene
 	MainMenuButtons mainMenuButtons;
 	MainMenuButtons pauseMenuButtons;
 	MainMenuButtons missilePurchaseButtons;
+	MainMenuButtons pawnPromotionButtons;
 	std::array<SpriteEntity, 12> chessSprites;
 	SpriteEntity selectionSprite;
 	SpriteEntity actionSprite;
@@ -88,6 +89,7 @@ struct Scene
 	int GetPieceType(int x, int y);
 	void onCellClicked(ivec2 cellCoords);
 	void onRocketClicked(int rocket);
+	void onPawnPromotion(int piece);
 
 	static constexpr size_t const boardSize = 8;
 	static bool isValidCoords(ivec2 cellCoords);

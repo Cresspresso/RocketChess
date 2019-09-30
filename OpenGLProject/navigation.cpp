@@ -186,6 +186,43 @@ void Navigation::render()
 			}
 		},
 			// else if
+		[&](PawnPromotion& focusedPanelData)
+	{
+		using ButtonID = PawnPromotion::ButtonID;
+		switch (focusedPanelData.focusedButton)
+		{
+		case ButtonID::Rook:
+		{
+			spriteEntity.transform.localPosition = vec3(200, 200, 0);
+		}
+		break;
+
+		case ButtonID::Bishop:
+		{
+			spriteEntity.transform.localPosition = vec3(200, 100, 0);
+		}
+		break;
+
+		case ButtonID::Knight:
+		{
+			spriteEntity.transform.localPosition = vec3(200, 000, 0);
+		}
+		break;
+
+		case ButtonID::Queen:
+		{
+			spriteEntity.transform.localPosition = vec3(200, -100, 0);
+		}
+		break;
+
+		default:
+		{
+			doRender = false;
+		}
+		break;
+		}
+	},
+			// else if
 			[&](EndTurn& focusedPanelData)
 		{
 			using ButtonID = EndTurn::ButtonID;
@@ -309,6 +346,9 @@ void Navigation::update()
 					gamePanel = RocketPurchase();
 				},
 				[&](RocketPurchase const&) {
+					gamePanel = ChessBoard();
+				},
+				[&](PawnPromotion const&) {
 					gamePanel = ChessBoard();
 				},
 				[&](auto const&) {}
@@ -490,6 +530,54 @@ void Navigation::invokeAction()
 			}
 		},
 			// else if
+			[&](PawnPromotion& focusedPanelData)
+		{
+			using ButtonID = PawnPromotion::ButtonID;
+			switch (focusedPanelData.focusedButton)
+			{
+			case ButtonID::Rook:
+			{
+				onPawnPromotion(1);
+				gamePanel = ChessBoard();
+			}
+			break;
+
+			case ButtonID::Knight:
+			{
+				onPawnPromotion(2);
+				playSoundEffect(g_soundSelect);
+				gamePanel = ChessBoard();
+				//purchase rpg
+			}
+			break;
+
+			case ButtonID::Bishop:
+			{
+				onPawnPromotion(3);
+				gamePanel = ChessBoard();
+				//purchase Ballistic missile
+			}
+			break;
+
+			case ButtonID::Queen:
+			{
+				onPawnPromotion(4);
+				gamePanel = ChessBoard();
+				//purchase ICBM
+			}
+			break;
+
+			default:
+			{
+#ifdef _DEBUG
+				console::error("focusedPanelData has an invalid focusedButton value.");
+#endif
+				focusedPanelData.focusedButton = ButtonID::Queen;
+			}
+			break;
+			}
+		},
+			// else if
 			[&](EndTurn& focusedPanelData)
 		{
 			using ButtonID = EndTurn::ButtonID;
@@ -598,8 +686,27 @@ void Navigation::handleMoveInput()
 			[&](RocketPurchase& focusedPanelData)
 		{
 			auto const cycleFocusedButton = [&](int delta)
+			{	
+				cycleEnumInPlace(focusedPanelData.focusedButton, delta);
+			};
+
+			if (moveUp)
 			{
-								
+				playSoundEffect(g_soundNavigate);
+				cycleFocusedButton(-1);
+			}
+			if (moveDown)
+			{
+				// Menu Sounds (Testing)
+				playSoundEffect(g_soundNavigate);
+				cycleFocusedButton(1);
+			}
+		},
+			// else if
+			[&](PawnPromotion& focusedPanelData)
+		{
+			auto const cycleFocusedButton = [&](int delta)
+			{
 				cycleEnumInPlace(focusedPanelData.focusedButton, delta);
 			};
 
