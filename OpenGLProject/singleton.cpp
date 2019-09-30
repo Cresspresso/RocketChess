@@ -32,4 +32,9 @@ namespace singleton
 	{
 		return instance->resources;
 	}
+
+	void postRestartMessage()
+	{
+		instance->postRestartMessage();
+	}
 }

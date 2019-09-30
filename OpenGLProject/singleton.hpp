@@ -18,9 +18,7 @@
 
 #pragma once
 
-#include "errors.hpp"
 #include "unique_init_ptr.hpp"
-#include "scene_indexer.hpp"
 #include "network_state.hpp"
 
 
@@ -38,16 +36,5 @@ namespace singleton
 
 	ResourceWarehouse& getResources();
 
-	void postLoadSceneEvent(SceneIndexer i);
-
-	bool isNetworkOpen();
-
-	ReturnCode openClient();
-	ReturnCode openHost();
-	void closeNetwork();
-
-	NetworkState getNetworkState();
-
-	std::string getUsername();
-	std::string getServername();
+	void postRestartMessage();
 }
