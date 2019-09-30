@@ -748,11 +748,10 @@
 		cameraHud.recalculate();
 		cameraHud.useForRendering();
 
-		// render Background
-		(Background.render());
-
 		BEGIN_ANYALL();
 		{
+			// render Background
+			DO_ANYALL(Background.render());
 
 
 			if (navigation->isGameSceneVisible())
