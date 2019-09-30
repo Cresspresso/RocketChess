@@ -134,6 +134,12 @@ ivec2 globalPosition;
 	},
 		};
 
+
+		pawnPromotionButtons.buttons[0].buttonEntity.textEntity.material.tint = glm::vec3(1.0f, 1.0f, 1.0f);
+		pawnPromotionButtons.buttons[1].buttonEntity.textEntity.material.tint = glm::vec3(0.0f, 0.85f, 0.0f);
+		pawnPromotionButtons.buttons[2].buttonEntity.textEntity.material.tint = glm::vec3(1.0f, 0.75f, 0.0f);
+		pawnPromotionButtons.buttons[3].buttonEntity.textEntity.material.tint = glm::vec3(0.85f, 0.0f, 0.0f);
+
 		// Textures Init Here
 		selectionSprite.setTexture(TextureIndexer::Selection);
 		selectionSprite.transform.localScale = vec3(64, 64, 1);
