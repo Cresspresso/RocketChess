@@ -34,9 +34,9 @@ struct Application
 {
 	ResourceWarehouse resources;
 	std::optional<Scene> scene;
+	bool m_restart = false;
 
-
-
+	void postRestartMessage() { m_restart = true; }
 	ReturnCode init();
 	void destroy() noexcept;
 

@@ -26,6 +26,7 @@
 #include "audio.hpp"
 #include "toggle_music.hpp"
 #include "input.hpp"
+#include "time.hpp"
 
 #include "resource_warehouse.hpp"
 
@@ -715,11 +716,19 @@
 	{
 		updateAudio();
 
+		if (isRestarting())
+		{
+			if (m_restartDelay->updateClampedFinished(Time::getDeltaTime()))
+			{
+				postRestartGameMessage();
+				return RC_SUCCESS;
+			}
+		}
+
 		BEGIN_ANYALL();
 		{
 			try
 			{
-
 				navigation->update();
 				DO_ANYALL(RC_SUCCESS);
 			}
@@ -963,11 +972,33 @@
 		}
 	}
 
+	bool Scene::isGameOver() const
+	{
+		return this->winnerLabel != nullptr;
+	}
+
 	void Scene::winGame()
 	{
 		winnerLabel = std::make_unique<TextEntity>();
 		winnerLabel->textRenderer.text = std::string(isCurrentPlayerTwo ? "US" : "USSR") + " wins!";
 		winnerLabel->transform.localPosition = glm::vec3(100.0f, 100.0f, 0.0f);
+
+		postRestartGameMessage(2.0f);
+	}
+
+	bool Scene::isRestarting() const
+	{
+		return m_restartDelay.has_value();
+	}
+
+	void Scene::postRestartGameMessage(float delay)
+	{
+		m_restartDelay.emplace(delay);
+	}
+
+	void Scene::postRestartGameMessage()
+	{
+		singleton::postRestartMessage();
 	}
 
 #pragma endregion ~Scene

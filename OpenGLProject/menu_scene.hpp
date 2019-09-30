@@ -42,6 +42,8 @@
 
 #include "navigation.hpp"
 
+#include <cress/moo/once_timer.hpp>
+
 
 
 struct Scene
@@ -107,11 +109,15 @@ struct Scene
 	ReturnCode update();
 	ReturnCode render();
 
-	void initTextRenderer(TextRenderer& entity);
-	void initButton(Button& button);
 	ReturnCode LaunchedMissile();
 
 	ReturnCode MissilePosition();
 
+	bool isGameOver() const;
 	void winGame();
+
+	std::optional<cress::moo::OnceTimer<float>> m_restartDelay;
+	bool isRestarting() const;
+	void postRestartGameMessage(float delay);
+	void postRestartGameMessage();
 };
