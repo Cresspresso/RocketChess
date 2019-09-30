@@ -36,6 +36,9 @@
 
 
 
+ivec2 globalPosition;
+
+
 #pragma region Scene::Builder
 
 
@@ -120,6 +123,23 @@
 		missilePurchaseButtons.buttons[3].buttonEntity.textEntity.material.tint = glm::vec3(0.85f, 0.0f, 0.0f);
 		missilePurchaseButtons.buttons[4].buttonEntity.textEntity.material.tint = glm::vec3(0.0f, 1.0f, 1.0f);
 
+		pawnPromotionButtons = MainMenuButtons{
+	vec3(400, 100, 0),
+	vec3(0, -100, 0),
+	{
+	"  Rook",
+	"Knight",
+	"Bishop",
+	" Queen",
+	},
+		};
+
+
+		pawnPromotionButtons.buttons[0].buttonEntity.textEntity.material.tint = glm::vec3(1.0f, 1.0f, 1.0f);
+		pawnPromotionButtons.buttons[1].buttonEntity.textEntity.material.tint = glm::vec3(0.0f, 0.85f, 0.0f);
+		pawnPromotionButtons.buttons[2].buttonEntity.textEntity.material.tint = glm::vec3(1.0f, 0.75f, 0.0f);
+		pawnPromotionButtons.buttons[3].buttonEntity.textEntity.material.tint = glm::vec3(0.85f, 0.0f, 0.0f);
+
 		// Textures Init Here
 		selectionSprite.setTexture(TextureIndexer::Selection);
 		selectionSprite.transform.localScale = vec3(64, 64, 1);
@@ -187,6 +207,8 @@
 
 	void Scene::onCellClicked(ivec2 cellCoords)
 	{
+
+		globalPosition = cellCoords;
 		size_t const thatLinearIndex = getLinearIndex(cellCoords);
 		auto& thatPiece = boardPieces[thatLinearIndex];
 
@@ -275,8 +297,9 @@
 				case ChessActionType::PawnPromotion:
 				{
 					regularMove();
-					//if a pawn gets to the end of the board then promote it into a queen
-					thatPiece.type = ChessPiece::Queen;
+					navigation->gamePanel = FocusedPanel::PawnPromotion();
+					
+					
 				}
 				break;
 
@@ -675,6 +698,35 @@
 		break;
 		}
 	}
+	//determines what piece the promoted unit is to become
+	void Scene::onPawnPromotion(int piece)
+	{
+		size_t const thatLinearIndex = getLinearIndex(globalPosition);
+		auto& thatPiece = boardPieces[thatLinearIndex];
+
+		switch (piece) {
+		case 1: {
+			thatPiece.type = ChessPiece::Rook;
+		}
+				break;
+		case 2: {
+			thatPiece.type = ChessPiece::Knight;
+		}
+				break;
+		case 3: {
+			thatPiece.type = ChessPiece::Bishop;
+		}
+				break;
+		case 4: {
+			thatPiece.type = ChessPiece::Queen;
+		}
+				break;
+		
+		}
+
+
+
+	}
 
 
 
@@ -708,6 +760,7 @@
 					[this](ivec2 coords) { onCellClicked(coords); },
 				[this](int rocket) { onRocketClicked(rocket); }
 				);
+				navigation->onPawnPromotion = [this](int i) { onPawnPromotion(i); };
 			} CATCH_PRINT();
 
 			missile.scene = this;
@@ -853,6 +906,12 @@
 				{
 					missilePurchaseButtons.highlight(static_cast<size_t>(panelData.focusedButton));
 					DO_ANYALL(missilePurchaseButtons.render());
+				},
+					[&](FocusedPanel::PawnPromotion const& panelData)
+				{
+					// TODO
+					pawnPromotionButtons.highlight(static_cast<size_t>(panelData.focusedButton));
+					DO_ANYALL(pawnPromotionButtons.render());
 				},
 				[&](auto const& other) {},
 				/*{
