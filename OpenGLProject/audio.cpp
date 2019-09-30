@@ -49,7 +49,7 @@ namespace
 		// R
 		HANDLE_ALL(loadSoundEffect(&g_soundSelect, "Select_SFX.wav"));
 		HANDLE_ALL(loadSoundEffect(&g_soundMovePiece, "Solid.wav"));
-		HANDLE_ALL(loadSoundEffect(&g_soundNavigate, "sndDoor.ogg"));
+		HANDLE_ALL(loadSoundEffect(&g_soundNavigate, "bleep.wav"));
 		HANDLE_ALL(loadSoundEffect(&g_soundCapture, "sfx_death.ogg"));
 
 		return RC_SUCCESS;
@@ -58,6 +58,7 @@ namespace
 	ReturnCode loadMusicTracks()
 	{
 		HANDLE_ALL(loadMusicTrack(&g_musicBackground, "Cresspresso - Beyond Afar - 03 Slight Design.wav"));
+		// R
 		HANDLE_ALL(loadMusicTrack(&g_musicMenuBackground, "COAG - Taboo.mp3"));
 		HANDLE_ALL(loadMusicTrack(&g_musicGameBackground, "COAG - The Lost.wav"));
 

@@ -54,15 +54,17 @@ ReturnCode setMusicPaused(bool paused)
 }
 
 // starts the background music
-ReturnCode playMusic()
+ReturnCode playMusic()//FMOD_RESULT r)//= g_audio->playSound(FMOD::Sound **,nullptr, true,FMOD::Channel**))
 {
 	ASSERT0(g_isMusicPlaying);
 
 	ASSERT1(g_audio);
 	ASSERT1(g_musicMenuBackground);
+	ASSERT1(g_musicGameBackground);
 	// Changed from g_musicBackground to g_musicGameBackground...
 	// Currently Need a way to change the music based on if your at the main menu or in game...
-	FMOD_RESULT r = g_audio->playSound(g_musicGameBackground, nullptr, true, &g_musicChannel);
+	FMOD_RESULT r = g_audio->playSound(g_musicMenuBackground, nullptr, true, &g_musicChannel);
+	
 	if (r)
 	{
 		setReasonFmod(r, "FMOD::System::playSound failed");

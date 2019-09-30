@@ -201,13 +201,13 @@ void Navigation::render()
 		}
 		break;
 
-		case ButtonID::Bishop:
+		case ButtonID::Knight:
 		{
 			spriteEntity.transform.localPosition = vec3(200, 100, 0);
 		}
 		break;
 
-		case ButtonID::Knight:
+		case ButtonID::Bishop:
 		{
 			spriteEntity.transform.localPosition = vec3(200, 000, 0);
 		}
@@ -431,9 +431,15 @@ void Navigation::invokeAction()
 			using ButtonID = MainMenu::ButtonID;
 			switch (focusedPanelData.focusedButton)
 			{
+
 			case ButtonID::NewGame:
 			{
 				// Audio
+				stopMusic();
+
+				playSoundEffect(g_musicGameBackground);
+				FMOD::Channel* g_musicChannel = nullptr;
+				FMOD_RESULT nr = g_audio->playSound(g_musicGameBackground, nullptr, true, &g_musicChannel);
 				playSoundEffect(g_soundCapture);
 				gamePanel = ChessBoard();
 			}
@@ -441,6 +447,7 @@ void Navigation::invokeAction()
 
 			case ButtonID::Instructions:
 			{
+				playSoundEffect(g_soundNavigate);
 				gamePanel = InstructionsMenu();
 			}
 			break;
@@ -448,12 +455,14 @@ void Navigation::invokeAction()
 			case ButtonID::Options:
 			{
 				// TODO
+				playSoundEffect(g_soundSelect);
 				console::error("Options button not implemented.");
 			}
 			break;
 
 			case ButtonID::ExitToDesktop:
 			{
+				playSoundEffect(g_soundMovePiece);
 				glutLeaveMainLoop();
 			}
 			break;
@@ -474,7 +483,7 @@ void Navigation::invokeAction()
 			ivec2 const coords = focusedPanelData.getFocusedCellCoords();
 			if (onChessBoardCellPressed != nullptr)
 			{
-				
+
 				onChessBoardCellPressed(coords);
 			}
 			else
@@ -491,6 +500,7 @@ void Navigation::invokeAction()
 			{
 			case ButtonID::BackToBoard:
 			{
+				
 				gamePanel = ChessBoard();
 			}
 			break;
@@ -498,7 +508,7 @@ void Navigation::invokeAction()
 			case ButtonID::RPG:
 			{
 				onRocketPressed(1);
-				playSoundEffect(g_soundSelect);
+				//playSoundEffect(g_sound);
 				gamePanel = ChessBoard();
 				//purchase rpg
 			}
