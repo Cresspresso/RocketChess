@@ -199,6 +199,7 @@
     <ClCompile Include="client.cpp" />
     <ClCompile Include="focused_panel.cpp" />
     <ClCompile Include="fog_material.cpp" />
+    <ClCompile Include="instructions.cpp" />
     <ClCompile Include="main_menu_buttons.cpp" />
     <ClCompile Include="main_menu_button_entity.cpp" />
     <ClCompile Include="multiline_text_entity.cpp" />

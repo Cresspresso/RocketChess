@@ -472,6 +472,9 @@
     <ClCompile Include="multiline_text_entity.cpp">
       <Filter>Source Files\rocket_chess</Filter>
     </ClCompile>
+    <ClCompile Include="instructions.cpp">
+      <Filter>Source Files\rocket_chess</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cubemap_material.hpp">

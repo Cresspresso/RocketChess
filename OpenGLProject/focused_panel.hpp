@@ -100,6 +100,10 @@ namespace FocusedPanel
 		};
 		ButtonID focusedButton{};
 	};
+
+	class InstructionsMenu
+	{
+	};
 }
 
 

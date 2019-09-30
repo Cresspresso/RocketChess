@@ -165,10 +165,6 @@
 		//
 		currentPlayerLabel.transform.localPosition = vec3(335, 300, 0);
 
-#ifdef _DEBUG
-		multilineExample.text = "howdy\npartner\nyou've got a\nfriend in me.";
-		multilineExample.textEntity.transform.localPosition = vec3(335, 300, 0);
-#endif
 
 		return RC_SUCCESS;
 	}
@@ -893,10 +889,9 @@
 				DO_ANYALL(pauseMenuButtons.render());
 			}
 
-#ifdef _DEBUG
-			DO_ANYALL(multilineExample.render());
-#endif
 
+
+			DO_ANYALL(instructions.render());
 
 
 			try { navigation->render(); } CATCH_PRINT();
