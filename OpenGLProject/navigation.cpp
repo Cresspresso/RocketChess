@@ -19,6 +19,7 @@
 #include "math_utils.hpp"
 #include "input.hpp"
 #include "console.hpp"
+#include "singleton.hpp"
 
 
 #include "audio.hpp"
@@ -351,8 +352,9 @@ void Navigation::invokeAction()
 
 		case ButtonID::ExitToMainMenu:
 		{
-			gamePanel = MainMenu();
-			pauseMenu = std::nullopt;
+			singleton::postRestartMessage();
+			//gamePanel = MainMenu();
+			//pauseMenu = std::nullopt;
 		}
 		break;
 
