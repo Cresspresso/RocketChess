@@ -391,6 +391,8 @@ void Navigation::invokeAction()
 
 		case ButtonID::ExitToMainMenu:
 		{
+			stopMusicG();
+			playMusic();
 			gamePanel = MainMenu();
 			pauseMenu = std::nullopt;
 		}
@@ -427,9 +429,12 @@ void Navigation::invokeAction()
 				// Audio
 				stopMusic();
 
+				playMusicG();
 				playSoundEffect(g_musicGameBackground);
+				//playSoundEffect(g_musicGameBackground);
 				FMOD::Channel* g_musicChannel = nullptr;
-				FMOD_RESULT nr = g_audio->playSound(g_musicGameBackground, nullptr, true, &g_musicChannel);
+				
+				//FMOD_RESULT nr = g_audio->playSound(g_musicGameBackground, nullptr, true, &g_musicChannel);
 				playSoundEffect(g_soundCapture);
 				gamePanel = ChessBoard();
 			}

@@ -23,7 +23,9 @@
 bool isMusicPaused();
 ReturnCode setMusicPaused(bool paused);
 ReturnCode playMusic();
+ReturnCode playMusicG();
 ReturnCode stopMusic();
+ReturnCode stopMusicG();
 ReturnCode toggleMusicPaused();
 bool isMusicPlaying();
 

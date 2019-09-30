@@ -25,6 +25,7 @@
 namespace
 {
 	FMOD::Channel* g_musicChannel = nullptr;
+	FMOD::Channel* g_musicChannelG = nullptr;
 	bool g_isMusicPlaying = false;
 }
 
@@ -87,6 +88,41 @@ ReturnCode playMusic()//FMOD_RESULT r)//= g_audio->playSound(FMOD::Sound **,null
 	return RC_SUCCESS;
 }
 
+
+// starts the background music
+ReturnCode playMusicG()//FMOD_RESULT r)//= g_audio->playSound(FMOD::Sound **,nullptr, true,FMOD::Channel**))
+{
+	ASSERT0(g_isMusicPlaying);
+
+	ASSERT1(g_audio);
+	ASSERT1(g_musicMenuBackground);
+	ASSERT1(g_musicGameBackground);
+	// Changed from g_musicBackground to g_musicGameBackground...
+	// Currently Need a way to change the music based on if your at the main menu or in game...
+	FMOD_RESULT r = g_audio->playSound(g_musicGameBackground, nullptr, true, &g_musicChannelG);
+
+	if (r)
+	{
+		setReasonFmod(r, "FMOD::System::playSound failed");
+		return RC_ERROR;
+	}
+
+	g_isMusicPlaying = true;
+
+	ASSERT1(g_musicChannelG);
+
+	r = g_musicChannel->setVolume(0.5f);
+	if (r)
+	{
+		setReasonFmod(r, "FMOD::Channel::setVolume failed");
+		return RC_ERROR;
+	}
+
+	ASSERT0(setMusicPaused(false));
+
+	return RC_SUCCESS;
+}
+
 // stops the background music
 ReturnCode stopMusic()
 {
@@ -104,6 +140,25 @@ ReturnCode stopMusic()
 
 	return RC_SUCCESS;
 }
+
+// stops the background music
+ReturnCode stopMusicG()
+{
+	ASSERT1(g_isMusicPlaying);
+	ASSERT1(g_musicChannelG);
+
+	FMOD_RESULT const r = g_musicChannelG->stop();
+	if (r)
+	{
+		setReasonFmod(r, "FMOD::Channel::stop failed");
+		return RC_ERROR;
+	}
+
+	g_isMusicPlaying = false;
+
+	return RC_SUCCESS;
+}
+
 
 ReturnCode toggleMusicPaused()
 {
@@ -148,3 +203,5 @@ ReturnCode playSoundEffect(FMOD::Sound* sound)
 	}
 	return RC_SUCCESS;
 }
+
+
