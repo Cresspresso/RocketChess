@@ -167,7 +167,6 @@
 
 #ifdef _DEBUG
 		multilineExample.text = "howdy\npartner\nyou've got a\nfriend in me.";
-		multilineExample.textEntity.material.tint = vec3(1);
 		multilineExample.textEntity.transform.localPosition = vec3(335, 300, 0);
 #endif
 
