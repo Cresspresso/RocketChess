@@ -34,7 +34,7 @@ namespace FocusedPanel
 		{
 			NewGame,
 			Instructions,
-			Options,
+			Credits,
 			ExitToDesktop,
 			MAX = ExitToDesktop
 		};
@@ -114,6 +114,10 @@ namespace FocusedPanel
 	};
 
 	class InstructionsMenu
+	{
+	};
+
+	class CreditsMenu
 	{
 	};
 }

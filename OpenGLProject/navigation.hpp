@@ -44,6 +44,7 @@ public:
 		FocusedPanel::RocketPurchase,
 		FocusedPanel::PawnPromotion,
 		FocusedPanel::InstructionsMenu,
+		FocusedPanel::CreditsMenu,
 		FocusedPanel::EndTurn
 	> gamePanel;
 

@@ -43,6 +43,7 @@
 
 #include "navigation.hpp"
 #include "instructions.hpp"
+#include "credits.hpp"
 
 #include <cress/moo/once_timer.hpp>
 
@@ -77,6 +78,7 @@ struct Scene
 	MultilineTextEntity Credits;
 
 	Instructions instructions;
+	Credits credits;
 
 
 	ReturnCode initEntities();

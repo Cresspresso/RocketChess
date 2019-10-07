@@ -197,6 +197,7 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="camera_orbit_entity.cpp" />
     <ClCompile Include="client.cpp" />
+    <ClCompile Include="credits.cpp" />
     <ClCompile Include="focused_panel.cpp" />
     <ClCompile Include="fog_material.cpp" />
     <ClCompile Include="instructions.cpp" />
@@ -296,6 +297,7 @@
     <ClInclude Include="client.hpp" />
     <ClInclude Include="compatibility.hpp" />
     <ClInclude Include="compatibility_threading.hpp" />
+    <ClInclude Include="credits.hpp" />
     <ClInclude Include="fog_material.hpp" />
     <ClInclude Include="focused_panel.hpp" />
     <ClInclude Include="instructions.hpp" />
