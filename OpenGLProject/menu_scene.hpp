@@ -74,6 +74,7 @@ struct Scene
 	TextEntity UnitedStatesCurrency;
 	TextEntity TabHelp;
 	TextEntity TabExit;
+	MultilineTextEntity Credits;
 
 	Instructions instructions;
 

@@ -400,6 +400,8 @@ void Navigation::invokeAction()
 
 		case ButtonID::ExitToMainMenu:
 		{
+
+			// FIXING GAME MUSIC TO STOP
 			stopMusicG();
 			playMusic();
 			gamePanel = MainMenu();
@@ -464,7 +466,8 @@ void Navigation::invokeAction()
 			case ButtonID::Options:
 			{
 				// TODO
-				playSoundEffect(g_soundSelect);
+				//playSoundEffect(g_soundSelect);
+				playSoundEffect(g_soundNavigate);
 				console::error("Options button not implemented.");
 			}
 			break;
@@ -492,7 +495,9 @@ void Navigation::invokeAction()
 			ivec2 const coords = focusedPanelData.getFocusedCellCoords();
 			if (onChessBoardCellPressed != nullptr)
 			{
-
+				// was playing everytime on space soltion was found
+				// in "menu_scene.cpp"for specific actions...
+				//playSoundEffect(g_soundMovePiece);
 				onChessBoardCellPressed(coords);
 			}
 			else
@@ -516,7 +521,9 @@ void Navigation::invokeAction()
 
 			case ButtonID::RPG:
 			{
+				// Pushing Rocket Button (Not Targetting cell)
 				onRocketPressed(1);
+				playSoundEffect(g_soundRumble);
 				//playSoundEffect(g_sound);
 				gamePanel = ChessBoard();
 				//purchase rpg
@@ -710,6 +717,7 @@ void Navigation::handleMoveInput()
 			// else if it is a ChessBoardPanel
 			[&](ChessBoard& focusedPanelData)
 		{
+			// Navigating board
 			ivec2 current = focusedPanelData.getFocusedCellCoords();
 			current.x = cycle<int>(current.x + dir.x, 8);
 			current.y = cycle<int>(current.y + dir.y, 8);
