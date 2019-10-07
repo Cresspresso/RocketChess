@@ -24,7 +24,6 @@
 
 FMOD::System* g_audio = nullptr;
 
-FMOD::Sound* g_soundRumble = nullptr;
 FMOD::Sound* g_soundThump = nullptr;
 FMOD::Sound* g_soundZap = nullptr;
 FMOD::Sound* g_soundDing = nullptr;
@@ -45,7 +44,6 @@ namespace
 	ReturnCode loadSoundEffects()
 	{
 		HANDLE_ALL(loadSoundEffect(&g_soundThump, "Thump.wav"));
-		HANDLE_ALL(loadSoundEffect(&g_soundRumble, "Explosion_Rumble.wav"));
 		HANDLE_ALL(loadSoundEffect(&g_soundZap, "420365__bolkmar__sfx-laser-shot-s.wav"));
 		HANDLE_ALL(loadSoundEffect(&g_soundDing, "366104__original-sound__confirmation-downward.wav"));
 		// R
@@ -112,7 +110,7 @@ ReturnCode initAudio()
 void destroyAudio()
 {
 	destroyFmodPointer(&g_musicBackground);
-	destroyFmodPointer(&g_soundRumble);
+	destroyFmodPointer(&g_soundThump);
 
 	destroyFmodPointer(&g_audio);
 }

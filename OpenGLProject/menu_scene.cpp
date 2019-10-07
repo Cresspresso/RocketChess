@@ -185,9 +185,6 @@ ivec2 globalPosition;
 		//
 		currentPlayerLabel.transform.localPosition = vec3(335, 300, 0);
 
-		Credits.text = "example\nmultiline\nthing";
-		Credits.textEntity.transform.localPosition = vec3(100, 100, 0);
-
 
 		return RC_SUCCESS;
 	}
@@ -283,7 +280,6 @@ ivec2 globalPosition;
 				{
 				case ChessActionType::RegularMove:
 				{
-					playSoundEffect(g_soundMovePiece);
 					regularMove();
 				}
 				break;
@@ -921,6 +917,8 @@ ivec2 globalPosition;
 					});
 			}
 
+
+
 			// render main menu buttons
 			{
 				this->navigation->visit(overload{
@@ -934,6 +932,8 @@ ivec2 globalPosition;
 				},
 					});
 			}
+
+
 
 			// render instructions
 			{
@@ -950,11 +950,13 @@ ivec2 globalPosition;
 				});
 			}
 
+
 			// render winner label
 			if (winnerLabel)
 			{
 				DO_ANYALL(winnerLabel->render());
 			}
+
 
 			// render pause menu buttons
 			if (navigation->pauseMenu)
@@ -963,7 +965,7 @@ ivec2 globalPosition;
 				DO_ANYALL(pauseMenuButtons.render());
 			}
 
-			DO_ANYALL(Credits.render());
+
 
 			try { navigation->render(); } CATCH_PRINT();
 		}

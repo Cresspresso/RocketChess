@@ -29,7 +29,6 @@ constexpr int const numAudioChannels = 32;
 extern FMOD::System* g_audio;
 
 // sounds
-extern FMOD::Sound* g_soundRumble;
 extern FMOD::Sound* g_soundThump;
 extern FMOD::Sound* g_soundZap;
 extern FMOD::Sound* g_soundDing;
