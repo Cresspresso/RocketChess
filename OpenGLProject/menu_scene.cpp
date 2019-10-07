@@ -942,6 +942,10 @@ ivec2 globalPosition;
 				{
 					DO_ANYALL(instructions.render());
 				},
+					[&](FocusedPanel::CreditsMenu const& panelData)
+				{
+					DO_ANYALL(credits.render());
+				},
 					[&](auto const& other) {}
 				});
 			}

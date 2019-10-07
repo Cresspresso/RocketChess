@@ -75,19 +75,19 @@ void Navigation::render()
 		{
 		case ButtonID::Continue:
 		{
-			spriteEntity.transform.localPosition = vec3(-200, 100, 0);
+			spriteEntity.transform.localPosition = vec3(-450, 100, 0);
 		}
 		break;
 
 		case ButtonID::ExitToMainMenu:
 		{
-			spriteEntity.transform.localPosition = vec3(-200, 000, 0);
+			spriteEntity.transform.localPosition = vec3(-450, 000, 0);
 		}
 		break;
 
 		case ButtonID::ExitToDesktop:
 		{
-			spriteEntity.transform.localPosition = vec3(-200, -100, 0);
+			spriteEntity.transform.localPosition = vec3(-450, -100, 0);
 		}
 		break;
 
@@ -109,25 +109,25 @@ void Navigation::render()
 			{
 			case ButtonID::NewGame:
 			{
-				spriteEntity.transform.localPosition = vec3(0, 200, 0);
+				spriteEntity.transform.localPosition = vec3(-200, 200, 0);
 			}
 			break;
 
 			case ButtonID::Instructions:
 			{
-				spriteEntity.transform.localPosition = vec3(0, 100, 0);
+				spriteEntity.transform.localPosition = vec3(-200, 100, 0);
 			}
 			break;
 
-			case ButtonID::Options:
+			case ButtonID::Credits:
 			{
-				spriteEntity.transform.localPosition = vec3(0, 0, 0);
+				spriteEntity.transform.localPosition = vec3(-200, 0, 0);
 			}
 			break;
 
 			case ButtonID::ExitToDesktop:
 			{
-				spriteEntity.transform.localPosition = vec3(0, -100, 0);
+				spriteEntity.transform.localPosition = vec3(-200, -100, 0);
 			}
 			break;
 
@@ -228,6 +228,11 @@ void Navigation::render()
 	},
 			// else if
 		[&](InstructionsMenu& focusedPanelData)
+	{
+		spriteEntity.transform.localPosition = vec3(-200, -300, 0);
+	},
+		// else if
+		[&](CreditsMenu& focusedPanelData)
 	{
 		spriteEntity.transform.localPosition = vec3(-200, -300, 0);
 	},
@@ -461,11 +466,10 @@ void Navigation::invokeAction()
 			}
 			break;
 
-			case ButtonID::Options:
+			case ButtonID::Credits:
 			{
-				// TODO
 				playSoundEffect(g_soundSelect);
-				console::error("Options button not implemented.");
+				gamePanel = CreditsMenu();
 			}
 			break;
 
@@ -607,6 +611,11 @@ void Navigation::invokeAction()
 		},
 			// else if
 			[&](InstructionsMenu& focusedPanelData)
+		{
+			gamePanel = MainMenu();
+		},
+			// else if
+			[&](CreditsMenu& focusedPanelData)
 		{
 			gamePanel = MainMenu();
 		},
@@ -774,6 +783,10 @@ void Navigation::handleMoveInput()
 		},
 			// else if
 			[&](InstructionsMenu& focusedPanelData)
+		{
+		},
+			// else if
+			[&](CreditsMenu& focusedPanelData)
 		{
 		},
 			// else if
