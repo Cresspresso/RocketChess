@@ -19,6 +19,7 @@
 #include "math_utils.hpp"
 #include "input.hpp"
 #include "console.hpp"
+#include "singleton.hpp"
 
 
 #include "audio.hpp"
@@ -42,8 +43,11 @@ Navigation::Navigation(std::function<void(ivec2)> onChessBoardCellPressed, std::
 bool Navigation::isGameSceneVisible() const
 {
 	return std::visit(overload{
-		[](FocusedPanel::MainMenu const&) { return false; },
-		[](auto const&) { return true; },
+		[](FocusedPanel::EndTurn const&) { return true; },
+		[](FocusedPanel::ChessBoard const&) { return true; },
+		[](FocusedPanel::RocketPurchase const&) { return true; },
+		[](FocusedPanel::PawnPromotion const&) { return true; },
+		[](auto const&) { return false; },
 		}, gamePanel);
 }
 
@@ -197,13 +201,13 @@ void Navigation::render()
 		}
 		break;
 
-		case ButtonID::Bishop:
+		case ButtonID::Knight:
 		{
 			spriteEntity.transform.localPosition = vec3(200, 100, 0);
 		}
 		break;
 
-		case ButtonID::Knight:
+		case ButtonID::Bishop:
 		{
 			spriteEntity.transform.localPosition = vec3(200, 000, 0);
 		}
@@ -221,6 +225,11 @@ void Navigation::render()
 		}
 		break;
 		}
+	},
+			// else if
+		[&](InstructionsMenu& focusedPanelData)
+	{
+		spriteEntity.transform.localPosition = vec3(-200, -300, 0);
 	},
 			// else if
 			[&](EndTurn& focusedPanelData)
@@ -395,6 +404,11 @@ void Navigation::invokeAction()
 			playMusic();
 			gamePanel = MainMenu();
 			pauseMenu = std::nullopt;
+
+			singleton::postRestartMessage();
+			//gamePanel = MainMenu();
+			//pauseMenu = std::nullopt;
+
 		}
 		break;
 
@@ -442,9 +456,8 @@ void Navigation::invokeAction()
 
 			case ButtonID::Instructions:
 			{
-				// TODO
 				playSoundEffect(g_soundNavigate);
-				console::error("Instructions button not implemented.");
+				gamePanel = InstructionsMenu();
 			}
 			break;
 
@@ -591,6 +604,11 @@ void Navigation::invokeAction()
 			}
 			break;
 			}
+		},
+			// else if
+			[&](InstructionsMenu& focusedPanelData)
+		{
+			gamePanel = MainMenu();
 		},
 			// else if
 			[&](EndTurn& focusedPanelData)
@@ -753,6 +771,10 @@ void Navigation::handleMoveInput()
 			{
 				cycleFocusedButton(1);
 			}
+		},
+			// else if
+			[&](InstructionsMenu& focusedPanelData)
+		{
 		},
 			// else if
 			[&](PauseMenu& focusedPanelData)

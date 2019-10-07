@@ -43,6 +43,7 @@ public:
 		FocusedPanel::ChessBoard,
 		FocusedPanel::RocketPurchase,
 		FocusedPanel::PawnPromotion,
+		FocusedPanel::InstructionsMenu,
 		FocusedPanel::EndTurn
 	> gamePanel;
 

@@ -33,7 +33,6 @@ ButtonEntity::ButtonEntity()
 
 	backgroundEntity.transform.localScale = vec3(275, 80, 1);
 	textEntity.transform.localPosition = vec3(-backgroundEntity.transform.localScale.x / 2 + 10, 0, 0);
-	textEntity.material.tint = vec3(0);
 
 	backgroundEntity.setTexture(TextureIndexer::Button);
 }

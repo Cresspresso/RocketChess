@@ -185,10 +185,6 @@ ivec2 globalPosition;
 		//
 		currentPlayerLabel.transform.localPosition = vec3(335, 300, 0);
 
-#ifdef _DEBUG
-		multilineExample.text = "howdy\npartner\nyou've got a\nfriend in me.";
-		multilineExample.textEntity.transform.localPosition = vec3(335, 300, 0);
-#endif
 
 		return RC_SUCCESS;
 	}
@@ -938,6 +934,19 @@ ivec2 globalPosition;
 			}
 
 
+
+			// render instructions
+			{
+				this->navigation->visit(overload{
+					[&](FocusedPanel::InstructionsMenu const& panelData)
+				{
+					DO_ANYALL(instructions.render());
+				},
+					[&](auto const& other) {}
+				});
+			}
+
+
 			// render winner label
 			if (winnerLabel)
 			{
@@ -951,10 +960,6 @@ ivec2 globalPosition;
 				pauseMenuButtons.highlight(static_cast<size_t>(navigation->pauseMenu->focusedButton));
 				DO_ANYALL(pauseMenuButtons.render());
 			}
-
-#ifdef _DEBUG
-			DO_ANYALL(multilineExample.render());
-#endif
 
 
 

@@ -42,6 +42,7 @@
 #include "multiline_text_entity.hpp"
 
 #include "navigation.hpp"
+#include "instructions.hpp"
 
 #include <cress/moo/once_timer.hpp>
 
@@ -74,7 +75,7 @@ struct Scene
 	TextEntity TabHelp;
 	TextEntity TabExit;
 
-	MultilineTextEntity multilineExample;
+	Instructions instructions;
 
 
 	ReturnCode initEntities();

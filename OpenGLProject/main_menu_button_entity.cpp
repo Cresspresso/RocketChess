@@ -5,7 +5,6 @@
 
 MainMenuButtonEntity::MainMenuButtonEntity()
 {
-	buttonEntity.textEntity.material.tint = vec3(0);
 }
 
 
