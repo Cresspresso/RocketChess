@@ -236,6 +236,11 @@ void Navigation::render()
 	{
 		spriteEntity.transform.localPosition = vec3(-200, -300, 0);
 	},
+		// else if
+		[&](OutcomeScreen& focusedPanelData)
+	{
+		spriteEntity.transform.localPosition = vec3(-200, -300, 0);
+	},
 			// else if
 			[&](EndTurn& focusedPanelData)
 		{
@@ -626,6 +631,12 @@ void Navigation::invokeAction()
 			gamePanel = MainMenu();
 		},
 			// else if
+			[&](OutcomeScreen& focusedPanelData)
+		{
+			singleton::postRestartMessage();
+			//gamePanel = MainMenu();
+		},
+			// else if
 			[&](EndTurn& focusedPanelData)
 		{
 			using ButtonID = EndTurn::ButtonID;
@@ -793,6 +804,10 @@ void Navigation::handleMoveInput()
 		},
 			// else if
 			[&](CreditsMenu& focusedPanelData)
+		{
+		},
+			// else if
+			[&](OutcomeScreen& focusedPanelData)
 		{
 		},
 			// else if

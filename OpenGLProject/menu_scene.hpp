@@ -44,6 +44,7 @@
 #include "navigation.hpp"
 #include "instructions.hpp"
 #include "credits.hpp"
+#include "outcome_screen.hpp"
 
 #include <cress/moo/once_timer.hpp>
 
@@ -68,8 +69,6 @@ struct Scene
 	SpriteEntity CruiseMissile;
 	SpriteEntity ICBM;
 
-	std::unique_ptr<TextEntity> winnerLabel;
-
 	TextEntity currentPlayerLabel;
 	TextEntity SovietCurrency;
 	TextEntity UnitedStatesCurrency;
@@ -78,6 +77,7 @@ struct Scene
 
 	Instructions instructions;
 	Credits credits;
+	OutcomeScreen outcomeScreen;
 
 
 	ReturnCode initEntities();
@@ -104,6 +104,7 @@ struct Scene
 	static size_t getLinearIndex(ivec2 cellCoords);
 
 	std::unique_ptr<Navigation> navigation;
+	bool doGameOverEvent = false;
 
 	int& getCurrentPlayerMoney() { return isCurrentPlayerTwo ? Dollars : Rubles; };
 
@@ -121,8 +122,7 @@ struct Scene
 
 	ReturnCode MissilePosition();
 
-	bool isGameOver() const;
-	void winGame();
+	void winGame(bool winByVoyager);
 
 	std::optional<cress::moo::OnceTimer<float>> m_restartDelay;
 	bool isRestarting() const;

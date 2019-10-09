@@ -45,7 +45,8 @@ public:
 		FocusedPanel::PawnPromotion,
 		FocusedPanel::InstructionsMenu,
 		FocusedPanel::CreditsMenu,
-		FocusedPanel::EndTurn
+		FocusedPanel::OutcomeScreen//,
+		//FocusedPanel::EndTurn
 	> gamePanel;
 
 	std::optional<FocusedPanel::PauseMenu> pauseMenu;

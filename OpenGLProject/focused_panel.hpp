@@ -120,6 +120,8 @@ namespace FocusedPanel
 	class CreditsMenu
 	{
 	};
+
+	class OutcomeScreen {};
 }
 
 

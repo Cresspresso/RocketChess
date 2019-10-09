@@ -270,7 +270,7 @@ ivec2 globalPosition;
 					selectedPiece = { ChessPiece::None };
 
 					if (wasKing) {
-						winGame();
+						winGame(false);
 					}
 				};
 
@@ -688,7 +688,7 @@ ivec2 globalPosition;
 			if (money >= cost) {
 				deselect();
 				money -= cost;
-				winGame();
+				winGame(true);
 			}
 		}
 		break;
@@ -768,6 +768,12 @@ ivec2 globalPosition;
 
 	ReturnCode Scene::update()
 	{
+		if (doGameOverEvent)
+		{
+			navigation->gamePanel.emplace<FocusedPanel::OutcomeScreen>();
+			doGameOverEvent = false;
+		}
+
 		updateAudio();
 
 		if (isRestarting())
@@ -935,7 +941,7 @@ ivec2 globalPosition;
 
 
 
-			// render instructions
+			// render other screens
 			{
 				this->navigation->visit(overload{
 					[&](FocusedPanel::InstructionsMenu const& panelData)
@@ -946,19 +952,16 @@ ivec2 globalPosition;
 				{
 					DO_ANYALL(credits.render());
 				},
+					[&](FocusedPanel::OutcomeScreen const& panelData)
+				{
+					DO_ANYALL(outcomeScreen.render());
+				},
 					[&](auto const& other) {}
 				});
 			}
 
 
-			// render winner label
-			if (winnerLabel)
-			{
-				DO_ANYALL(winnerLabel->render());
-			}
-
-
-			// render pause menu buttons
+			// render pause menu
 			if (navigation->pauseMenu)
 			{
 				pauseMenuButtons.highlight(static_cast<size_t>(navigation->pauseMenu->focusedButton));
@@ -1047,18 +1050,11 @@ ivec2 globalPosition;
 		}
 	}
 
-	bool Scene::isGameOver() const
+	void Scene::winGame(bool winByVoyager)
 	{
-		return this->winnerLabel != nullptr;
-	}
-
-	void Scene::winGame()
-	{
-		winnerLabel = std::make_unique<TextEntity>();
-		winnerLabel->textRenderer.text = std::string(isCurrentPlayerTwo ? "US" : "USSR") + " wins!";
-		winnerLabel->transform.localPosition = glm::vec3(100.0f, 100.0f, 0.0f);
-
-		postRestartGameMessage(2.0f);
+		outcomeScreen.UpdateWinner(isCurrentPlayerTwo, winByVoyager);
+		doGameOverEvent = true;
+		//postRestartGameMessage(2.0f);
 	}
 
 	bool Scene::isRestarting() const

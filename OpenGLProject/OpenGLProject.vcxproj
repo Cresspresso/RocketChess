@@ -235,6 +235,7 @@
     <ClCompile Include="network.cpp" />
     <ClCompile Include="old_network_entity.cpp" />
     <ClCompile Include="network_entity.cpp" />
+    <ClCompile Include="outcome_screen.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="random.cpp" />
     <ClCompile Include="seeker_enemy.cpp" />
@@ -335,6 +336,7 @@
     <ClInclude Include="map_container.hpp" />
     <ClInclude Include="mouse_mover.hpp" />
     <ClInclude Include="network_entity.hpp" />
+    <ClInclude Include="outcome_screen.hpp" />
     <ClInclude Include="port_constants.hpp" />
     <ClInclude Include="random.hpp" />
     <ClInclude Include="scene_indexer.hpp" />

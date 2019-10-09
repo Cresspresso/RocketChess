@@ -478,6 +478,9 @@
     <ClCompile Include="credits.cpp">
       <Filter>Source Files\rocket_chess</Filter>
     </ClCompile>
+    <ClCompile Include="outcome_screen.cpp">
+      <Filter>Source Files\rocket_chess</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cubemap_material.hpp">
@@ -847,6 +850,9 @@
       <Filter>Source Files\rocket_chess</Filter>
     </ClInclude>
     <ClInclude Include="credits.hpp">
+      <Filter>Source Files\rocket_chess</Filter>
+    </ClInclude>
+    <ClInclude Include="outcome_screen.hpp">
       <Filter>Source Files\rocket_chess</Filter>
     </ClInclude>
   </ItemGroup>
