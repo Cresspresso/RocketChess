@@ -235,6 +235,7 @@ ivec2 globalPosition;
 					auto& selectedPiece = boardPieces[getLinearIndex(*selectedCoords)];
 					if (thatPiece.type != ChessPiece::None)
 					{
+						playSoundEffect(g_soundCapture);
 						assert(thatPiece.isPlayer2 != selectedPiece.isPlayer2);
 
 						// gain money from capture for specific piece type
@@ -263,7 +264,10 @@ ivec2 globalPosition;
 
 						getCurrentPlayerMoney() += reward;
 					}
-
+					if (thatPiece.type == ChessPiece::None)
+					{
+						playSoundEffect(g_soundMovePiece);
+					}
 					bool const wasKing = thatPiece.type == ChessPiece::King;
 
 					thatPiece = selectedPiece;
@@ -280,18 +284,22 @@ ivec2 globalPosition;
 				{
 				case ChessActionType::RegularMove:
 				{
+					// Sounds Stored in
+					// Regular Move func
 					regularMove();
 				}
 				break;
 
 				case ChessActionType::RocketAttack:
 				{
+					playSoundEffect(g_soundCapture);
 					thatPiece = { ChessPiece::None };
 				}
 				break;
 
 				case ChessActionType::PawnPromotion:
 				{
+					playSoundEffect(g_soundSelect);
 					regularMove();
 					navigation->gamePanel = FocusedPanel::PawnPromotion();
 					

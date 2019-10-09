@@ -12,10 +12,15 @@ Credits::Credits()
 	m_title.transform.localPosition = vec3(0, 300, 0);
 	m_title.textRenderer.text = "Credits";
 
-	m_credits.textEntity.transform.localPosition = vec3(-100, 0, 0);
-	m_credits.text = R"__(Ryan Wilkinson
+	m_credits.textEntity.transform.localPosition = vec3(-100, 200, 0);
+	m_credits.text = R"__(Programming & Design
+Ryan Wilkinson
 Elijah Shadbolt
-Harrison Orsbourne)__";
+Harrison Orsbourne
+
+Music & Sound
+COAG Music
+)__";
 }
 
 ReturnCode Credits::render()
