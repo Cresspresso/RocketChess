@@ -18,9 +18,9 @@
 
 #include "cubemap_manager.hpp"
 
-ReturnCode CubeMapManager::load(Resource& out, size_t i)
+void CubeMapManager::load(Resource& out, size_t i)
 {
-	return loadCubeMap(&out, names[i], ".jpg", true);
+	out = loadCubeMap(names[i], ".jpg", true);
 }
 
 void CubeMapManager::destroyResource(Resource& resource) noexcept

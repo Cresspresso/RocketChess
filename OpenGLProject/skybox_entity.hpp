@@ -24,9 +24,9 @@
 
 struct SkyboxEntity
 {
-	ReturnCode render();
+	void render();
 	//SkyboxEntity();
-	//ReturnCode init();
+	//void init();
 	//void destroy() noexcept;
 
 

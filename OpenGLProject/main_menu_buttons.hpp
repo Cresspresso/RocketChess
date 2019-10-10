@@ -16,5 +16,5 @@ struct MainMenuButtons
 	explicit MainMenuButtons(vec3 const& position, vec3 const& offset, std::vector<std::string> const& texts);
 	void highlight(std::optional<size_t> index);
 
-	ReturnCode render();
+	void render();
 };

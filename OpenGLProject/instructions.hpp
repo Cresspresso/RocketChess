@@ -13,5 +13,5 @@ struct Instructions
 
 	Instructions();
 
-	ReturnCode render();
+	void render();
 };

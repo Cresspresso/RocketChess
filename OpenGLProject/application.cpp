@@ -16,8 +16,6 @@
 **	Date Edited	:	10/06/2019
 */
 
-#include "socket.hpp"
-
 #include "console.hpp"
 #include "to_string.hpp"
 
@@ -25,13 +23,27 @@
 
 
 
-ReturnCode Application::init()
+void Application::init()
 {
-	BEGIN_ANYALL();
-	DO_ANYALL(resources.init());
-	scene.emplace();
-	DO_ANYALL(scene->init());
-	return END_ANYALL();
+	try
+	{
+		resources.init();
+	}
+	catch (...)
+	{
+		printException();
+	}
+
+	try
+	{
+		scene.emplace();
+		scene->init();
+	}
+	catch (...)
+	{
+		throw;
+		//printException();
+	}
 }
 
 void Application::destroy() noexcept
@@ -41,17 +53,23 @@ void Application::destroy() noexcept
 	resources.destroy();
 }
 
-ReturnCode Application::update()
+void Application::update()
 {
 	if (m_restart)
 	{
 		m_restart = false;
 		scene->destroy();
-		scene.emplace();
-		BEGIN_ANYALL();
-		DO_ANYALL(scene->init());
-		DO_ANYALL(scene->update());
-		return END_ANYALL();
+
+		try
+		{
+			scene.emplace();
+			scene->init();
+		}
+		catch (...)
+		{
+			throw;
+			//printException();
+		}
 	}
 	else
 	{
@@ -59,7 +77,7 @@ ReturnCode Application::update()
 	}
 }
 
-ReturnCode Application::render()
+void Application::render()
 {
 	return scene->render();
 }

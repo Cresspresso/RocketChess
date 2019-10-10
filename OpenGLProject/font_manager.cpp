@@ -18,9 +18,9 @@
 
 #include "font_manager.hpp"
 
-ReturnCode FontManager::load(Resource& out, size_t i)
+void FontManager::load(Resource& out, size_t i)
 {
-	return loadFont(&out, names[i], sizes[i]);
+	out = loadFont(names[i], sizes[i]);
 }
 
 void FontManager::destroyResource(Resource& resource) noexcept

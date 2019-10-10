@@ -48,12 +48,13 @@ void ButtonEntity::recalculate()
 
 
 
-ReturnCode ButtonEntity::render()
+void ButtonEntity::render()
 {
 	recalculate();
 
-	BEGIN_ANYALL();
-	DO_ANYALL(backgroundEntity.render());
-	DO_ANYALL(textEntity.render());
-	return END_ANYALL();
+	try { backgroundEntity.render(); }
+	catch (...) { printException(); }
+
+	try { textEntity.render(); }
+	catch (...) { printException(); }
 }

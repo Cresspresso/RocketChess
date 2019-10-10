@@ -39,10 +39,10 @@ struct Button
 	struct ClickEvent
 	{
 		std::vector<unsigned char> hotkeys; // can be empty
-		std::function<ReturnCode()> action = nullptr;
+		std::function<void()> action = nullptr;
 
-		ReturnCode update(); // checks input for the hotkey
-		ReturnCode operator()(); // invokes the action
+		void update(); // checks input for the hotkey
+		void operator()(); // invokes the action
 	};
 
 	ClickEvent onClickLeft;
@@ -56,10 +56,10 @@ struct Button
 	void recalculate();
 
 	// must be called after recalculate.
-	ReturnCode update();
+	void update();
 
 	// must be called after recalculate.
-	ReturnCode render();
+	void render();
 
 	// must be called after recalculate.
 	// returns true if mouse ray intersects button collider quad.

@@ -22,27 +22,21 @@
 
 #include "quad4_material.hpp"
 
-ReturnCode Quad4Material::prepare()
+void Quad4Material::prepare()
 {
 	mvp = g_cameraVPMatrix * g_modelMatrix;
-
-	return RC_SUCCESS;
 }
 
-ReturnCode Quad4Material::apply(GLuint program)
+void Quad4Material::apply(GLuint program)
 {
 	glUniformMatrix4fv(glGetUniformLocation(program, "mvp"), 1, GL_FALSE, glm::value_ptr(mvp));
 
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, tex1);
 	glUniform1i(glGetUniformLocation(program, "tex1"), 1);
-
-	return RC_SUCCESS;
 }
 
-ReturnCode Quad4Material::unapply(GLuint program)
+void Quad4Material::unapply(GLuint program)
 {
 	glBindTexture(GL_TEXTURE_2D, 0);
-
-	return RC_SUCCESS;
 }

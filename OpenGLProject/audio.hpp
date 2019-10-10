@@ -20,6 +20,7 @@
 
 #include <string>
 #include <fmod/fmod.hpp>
+#include <cress/moo/final_act.hpp>
 
 #include "common.hpp"
 
@@ -45,27 +46,20 @@ extern FMOD::Sound* g_soundCapture;
 
 // functions
 
-void setReasonFmod(FMOD_RESULT r, std::string const& message);
-
-ReturnCode initAudio();
+void initAudio();
 void destroyAudio();
-ReturnCode updateAudio();
+void updateAudio();
 
 template<class T>
-void destroyFmodPointer(T**const p)
+void destroyFmodPointer(T*& p)
 {
-	if (p && *p)
+	CRESS_MOO_FINAL_ACT_SINGLE(fa, p = nullptr);
+	if (p)
 	{
-		FMOD_RESULT const r = (**p).release();
-		if (r)
-		{
-			*g_reason = "FMOD pointer release failed";
-			printError(r);
-		}
-
-		*p = nullptr;
+		FMOD_RESULT const r = p->release();
+		if (r) { throw std::runtime_error("FMOD pointer release failed: " + std::to_string(r)); }
 	}
 }
 
-ReturnCode loadSoundEffect(FMOD::Sound** out, std::string const& fileName);
-ReturnCode loadMusicTrack(FMOD::Sound** out, std::string const& fileName);
+FMOD::Sound* loadSoundEffect(std::string const& fileName);
+FMOD::Sound* loadMusicTrack(std::string const& fileName);

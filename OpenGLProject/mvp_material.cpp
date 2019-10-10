@@ -20,21 +20,16 @@
 
 #include "mvp_material.hpp"
 
-ReturnCode MvpMaterial::prepare()
+void MvpMaterial::prepare()
 {
 	mvp = g_cameraVPMatrix * g_modelMatrix;
-
-	return RC_SUCCESS;
 }
 
-ReturnCode MvpMaterial::apply(GLuint program)
+void MvpMaterial::apply(GLuint program)
 {
 	glUniformMatrix4fv(glGetUniformLocation(program, "mvp"), 1, GL_FALSE, glm::value_ptr(mvp));
-
-	return RC_SUCCESS;
 }
 
-ReturnCode MvpMaterial::unapply(GLuint program)
+void MvpMaterial::unapply(GLuint program)
 {
-	return RC_SUCCESS;
 }

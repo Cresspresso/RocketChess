@@ -26,10 +26,6 @@
 #include "resource_warehouse.hpp"
 #include "menu_scene.hpp"
 
-#include "config.hpp"
-
-#include "network_manager.hpp"
-
 struct Application
 {
 	ResourceWarehouse resources;
@@ -37,9 +33,9 @@ struct Application
 	bool m_restart = false;
 
 	void postRestartMessage() { m_restart = true; }
-	ReturnCode init();
+	void init();
 	void destroy() noexcept;
 
-	ReturnCode update();
-	ReturnCode render();
+	void update();
+	void render();
 };

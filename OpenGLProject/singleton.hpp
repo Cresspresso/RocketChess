@@ -19,7 +19,6 @@
 #pragma once
 
 #include "unique_init_ptr.hpp"
-#include "network_state.hpp"
 
 
 

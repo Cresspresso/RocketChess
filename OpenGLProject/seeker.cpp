@@ -16,6 +16,8 @@
 **	Date Edited	:	10/06/2019
 */
 
+#include <cress/moo/final_act.hpp>
+
 #include "world_math.hpp"
 #include "time.hpp"
 
@@ -23,24 +25,23 @@
 
 
 
-ReturnCode Seeker::update()
+void Seeker::update()
 {
-	BEGIN_ANYALL();
-
 	simple.rigidbody.localVelocity = calculateNewVelocity();
-	DO_ANYALL(simple.update()); // Update position with velocity.
 
+	CRESS_MOO_FINAL_ACT_BEGIN(fa);
 	// if velocity is non-zero
 	if (!toleranceZero2(simple.rigidbody.localVelocity))
 	{
 		// rotate instantly to look towards the velocity direction.
 		simple.transform.localRotation = lookDir(simple.rigidbody.localVelocity, constants::up);
 	}
+	CRESS_MOO_FINAL_ACT_END(fa);
 
-	return END_ANYALL();
+	simple.update(); // Update position with velocity.
 }
 
-ReturnCode Seeker::render()
+void Seeker::render()
 {
 	return simple.render();
 }

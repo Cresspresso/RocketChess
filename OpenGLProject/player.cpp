@@ -23,23 +23,29 @@
 
 
 
-ReturnCode Player::update()
+void Player::update()
 {
-	BEGIN_ANYALL();
-
 	seeker.targetPosition = calculateTargetPosition();
-	DO_ANYALL(seeker.update());
+	try {
+		seeker.update();
 
-	// clamp position
-	vec3& pos = seeker.simple.transform.localPosition;
-	pos = positionLimits.clamp(pos);
+		// clamp position
+		vec3& pos = seeker.simple.transform.localPosition;
+		pos = positionLimits.clamp(pos);
+	}
+	catch (...)
+	{
+		// clamp position
+		vec3& pos = seeker.simple.transform.localPosition;
+		pos = positionLimits.clamp(pos);
 
-	return END_ANYALL();
+		throw;
+	}
 }
 
 
 
-ReturnCode Player::render()
+void Player::render()
 {
 	return seeker.render();
 }

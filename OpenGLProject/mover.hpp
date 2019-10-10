@@ -40,8 +40,8 @@ struct Mover
 
 
 
-	ReturnCode update();
-	ReturnCode render();
+	void update();
+	void render();
 
 	vec3 const& getTargetPosition();
 	vec3 getVelocity();

@@ -18,7 +18,7 @@
 
 #include "program_manager.hpp"
 
-ReturnCode ProgramManager::load(Resource& out, size_t i)
+void ProgramManager::load(Resource& out, size_t i)
 {
 	return loadProgram(out, names[i]);
 }

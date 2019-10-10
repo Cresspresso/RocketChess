@@ -20,17 +20,17 @@
 
 #include "rigidbody.hpp"
 
-ReturnCode Rigidbody::update()
+void Rigidbody::update()
 {
-	ASSERT1(transform);
+	assert(transform);
+	if (!transform) { throw std::runtime_error("transform is null"); }
+
 	float const dt = Time::getDeltaTime();
 	transform->localPosition += localVelocity * dt;
 	transform->localRotation = quat(localAngularVelocity * dt) * transform->localRotation;
-
-	return RC_SUCCESS;
 }
 
-//ReturnCode Rigidbody::addForce(vec3 const& force)
+//void Rigidbody::addForce(vec3 const& force)
 //{
 //	// calculate acceleration vector.
 //	ASSERT1(!toleranceZero(mass));

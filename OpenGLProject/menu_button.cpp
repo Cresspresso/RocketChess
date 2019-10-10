@@ -18,7 +18,7 @@
 
 #include "menu_button.hpp"
 
-ReturnCode MenuButtonEntity::update()
+void MenuButtonEntity::update()
 {
 	button.recalculate();
 	bool const hovered = button.isMouseInsideQuad();
@@ -28,7 +28,7 @@ ReturnCode MenuButtonEntity::update()
 	return button.update();
 }
 
-ReturnCode MenuButtonEntity::render()
+void MenuButtonEntity::render()
 {
 	button.recalculate();
 	return button.render();

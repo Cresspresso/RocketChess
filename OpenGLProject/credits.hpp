@@ -12,5 +12,5 @@ struct Credits
 
 	Credits();
 
-	ReturnCode render();
+	void render();
 };

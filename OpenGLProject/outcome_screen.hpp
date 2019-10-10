@@ -16,5 +16,5 @@ struct OutcomeScreen
 
 	void UpdateWinner(bool winnerIsUS, bool victoryByVoyager);
 
-	ReturnCode render();
+	void render();
 };

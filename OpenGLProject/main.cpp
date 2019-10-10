@@ -37,10 +37,6 @@
 #include "audio.hpp"
 #include "toggle_music.hpp"
 
-#include "network.hpp"
-#include "socket.hpp"
-#include "config.hpp"
-
 #include "closing_state.hpp"
 #include "console.hpp"
 
@@ -54,47 +50,55 @@
 
 
 
-ReturnCode innerUpdate()
+void innerUpdate()
 {
 	Time::update();
 	screen::update();
 
-	HANDLE_ALL(singleton::instance->update());
+	try
+	{
+		singleton::instance->update();
+	}
+	catch (...) { printException(); }
 
 	updateInput();
-
-	return RC_SUCCESS;
 }
 void update() noexcept
 {
-	HANDLE_ALL(innerUpdate());
+	try
+	{
+		innerUpdate();
+	}
+	catch (...) { printException(); }
 
 	glutPostRedisplay();
 }
 
 
 
-ReturnCode innerRender()
+void innerRender()
 {
-	HANDLE_ALL(singleton::instance->render());
-
-	return RC_SUCCESS;
+	singleton::instance->render();
 }
 void render() noexcept
 {
 	glStencilMask(~0U);
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-	HANDLE_ALL(innerRender());
+	try
+	{
+		innerRender();
+	}
+	catch (...) { printException(); }
 
 	glutSwapBuffers();
 }
 
 
 
-ReturnCode innerClose()
+void innerClose()
 {
-	if (ClosingState::Finished == g_closing) { return RC_SUCCESS; }
+	if (ClosingState::Finished == g_closing) { return; }
 
 	g_closing = ClosingState::Closing;
 
@@ -106,32 +110,26 @@ ReturnCode innerClose()
 	// audio
 	destroyAudio();
 
-	// error message
-	g_reason.reset();
-
 	// console thread
 	console::destroy();
 	
 
 
 	g_closing = ClosingState::Finished;
-
-	return RC_SUCCESS;
 }
 void close() noexcept
 {
 	try
 	{
-		ReturnCode const e = innerClose();
-		if (e)
-		{
-			console::printCriticalError(stringError(e));
-			std::terminate();
-		}
+		innerClose();
 	}
 	catch (...)
 	{
-		console::printCriticalError(stringException());
+		std::string const msg = stringException();
+		console::printCriticalError(msg);
+#ifdef _DEBUG
+		assert(0);
+#endif
 		std::terminate();
 	}
 }
@@ -178,13 +176,10 @@ BOOL WINAPI onConsoleClose(DWORD ctrl)
 
 
 
-ReturnCode innerMain(int argc, char** argv)
+void innerMain(int argc, char** argv)
 {
 	// console thread
 	console::init();
-
-	// error message
-	g_reason = std::make_unique<std::string>();
 
 	// glut and glew
 	glutInit(&argc, argv);
@@ -193,7 +188,7 @@ ReturnCode innerMain(int argc, char** argv)
 	glutInitWindowSize(screen::getWidth(), screen::getHeight());
 	glutCreateWindow("Rocket Chess");
 
-	ASSERT0(glewInit());
+	if (glewInit()) { throw std::runtime_error("glewInit() failed."); }
 
 	// initial GL properties
 	glClearColor(0.0625, 0.0625, 0.0625, 1);
@@ -207,10 +202,18 @@ ReturnCode innerMain(int argc, char** argv)
 	Time::init();
 
 	// audio
-	HANDLE_ALL(initAudio());
+	try
+	{
+		initAudio();
+	}
+	catch (...) { printException(); }
 
 	// application
-	HANDLE_ALL(singleton::instance.initPtr()); // must be dot operator
+	try
+	{
+		singleton::instance.initPtr();
+	}
+	catch (...) { printException(); }
 
 	// first update
 	update();
@@ -232,24 +235,22 @@ ReturnCode innerMain(int argc, char** argv)
 	
 	glutMainLoop();
 	close();
-	return RC_SUCCESS;
 }
 
 int main(int argc, char** argv)
 {
 	try
 	{
-		auto const e = (innerMain(argc, argv));
-		if (e)
-		{
-			console::printCriticalError(stringError(e));
-			return EXIT_FAILURE;
-		}
+		innerMain(argc, argv);
 		return EXIT_SUCCESS;
 	}
 	catch (...)
 	{
-		console::printCriticalError(stringException());
+		std::string const msg = stringException();
+		console::printCriticalError(msg);
+#ifdef _DEBUG
+		assert(0);
+#endif
 		return EXIT_FAILURE;
 	}
 }

@@ -41,8 +41,8 @@ struct Seeker
 
 
 
-	ReturnCode update();
-	ReturnCode render();
+	void update();
+	void render();
 private:
 	vec3 calculateNewVelocity() const;
 };

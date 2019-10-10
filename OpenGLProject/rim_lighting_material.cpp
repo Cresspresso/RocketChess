@@ -20,12 +20,10 @@
 
 #include "rim_lighting_material.hpp"
 
-ReturnCode RimLightingMaterial::apply(GLuint program)
+void RimLightingMaterial::apply(GLuint program)
 {
-	ReturnCode const r = Super::apply(program);
+	Super::apply(program);
 
 	glUniform1f(glGetUniformLocation(program, "rimExponent"), rimExponent);
 	glUniform3f(glGetUniformLocation(program, "rimColor"), rimColor.x, rimColor.y, rimColor.z);
-
-	return r;
 }

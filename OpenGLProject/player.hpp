@@ -36,8 +36,8 @@ struct Player
 
 
 
-	ReturnCode update();
-	ReturnCode render();
+	void update();
+	void render();
 private:
 	vec3 calculateTargetPosition() const;
 };

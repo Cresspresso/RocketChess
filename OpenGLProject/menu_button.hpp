@@ -26,6 +26,6 @@ struct MenuButtonEntity
 	vec3 scaleNormal = vec3(1);
 	vec3 scaleHovered = vec3(1.2f);
 
-	ReturnCode update();
-	ReturnCode render();
+	void update();
+	void render();
 };

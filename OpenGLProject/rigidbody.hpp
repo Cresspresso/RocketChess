@@ -27,6 +27,6 @@ struct Rigidbody
 	vec3 localAngularVelocity = vec3();
 	float mass = 1;
 
-	ReturnCode update();
-	//ReturnCode addForce(vec3 const& force);
+	void update();
+	//void addForce(vec3 const& force);
 };

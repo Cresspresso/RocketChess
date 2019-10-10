@@ -24,7 +24,7 @@ struct IMaterial
 {
 	virtual ~IMaterial() = default;
 
-	virtual ReturnCode prepare(/* TODO render event args */) = 0;
-	virtual ReturnCode apply(GLuint program) = 0;
-	virtual ReturnCode unapply(GLuint program) = 0;
+	virtual void prepare(/* TODO render event args */) = 0;
+	virtual void apply(GLuint program) = 0;
+	virtual void unapply(GLuint program) = 0;
 };

@@ -21,19 +21,19 @@
 #include "common.hpp"
 
 template<class T>
-ReturnCode updateOne(T& p)
+void updateOne(T& p)
 {
 	return p ? p->update() : RC_ERROR;
 }
 
 template<class T>
-ReturnCode renderOne(T& p)
+void renderOne(T& p)
 {
 	return p ? p->render() : RC_ERROR;
 }
 
 template<class C>
-ReturnCode updateAll(C& v)
+void updateAll(C& v)
 {
 	for (auto* p : v)
 	{
@@ -47,7 +47,7 @@ ReturnCode updateAll(C& v)
 }
 
 template<class C>
-ReturnCode renderAll(C& v)
+void renderAll(C& v)
 {
 	for (auto* p : v)
 	{

@@ -22,14 +22,12 @@
 
 
 
-ReturnCode SkyboxMaterial::prepare()
+void SkyboxMaterial::prepare()
 {
 	mvp = g_cameraVPMatrix * g_modelMatrix;
-
-	return RC_SUCCESS;
 }
 
-ReturnCode SkyboxMaterial::apply(GLuint program)
+void SkyboxMaterial::apply(GLuint program)
 {
 	glUniformMatrix4fv(glGetUniformLocation(program, "mvp"), 1, GL_FALSE, glm::value_ptr(mvp));
 
@@ -38,15 +36,11 @@ ReturnCode SkyboxMaterial::apply(GLuint program)
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, cubemap); // IMPORTANT
 	glUniform1i(glGetUniformLocation(program, "cubemap"), 1);
-
-	return RC_SUCCESS;
 }
 
-ReturnCode SkyboxMaterial::unapply(GLuint program)
+void SkyboxMaterial::unapply(GLuint program)
 {
 	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
 	glDisable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
-
-	return RC_SUCCESS;
 }

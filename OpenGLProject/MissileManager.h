@@ -11,7 +11,6 @@ class missileManager {
 public:
 
 	int launchableMissile;
-	int missilePos;
 	Scene* scene{};
 
 	//to purchase missiles if the player has enough currency
@@ -22,7 +21,7 @@ public:
 	
 	//checks to see if the position the 
 	//missile was fired in destroys a piece
-	void destroyPiece(int missilePos);
+	void destroyPiece();
 
 
 private:

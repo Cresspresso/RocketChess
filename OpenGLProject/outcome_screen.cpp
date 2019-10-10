@@ -36,13 +36,11 @@ void OutcomeScreen::UpdateWinner(bool winnerIsUS, bool victoryByVoyager)
 	m_winnerFlag.setTexture(winnerIsUS ? TextureIndexer::USFLAG : TextureIndexer::USSRFLAG);
 }
 
-ReturnCode OutcomeScreen::render()
+void OutcomeScreen::render()
 {
-	BEGIN_ANYALL();
-	DO_ANYALL(m_winnerFlag.render());
-	DO_ANYALL(m_buttons.render());
-	DO_ANYALL(m_title.render());
-	DO_ANYALL(m_winnerNation.render());
-	DO_ANYALL(m_methodOfVictory.render());
-	return END_ANYALL();
+	m_winnerFlag.render();
+	m_buttons.render();
+	m_title.render();
+	m_winnerNation.render();
+	m_methodOfVictory.render();
 }

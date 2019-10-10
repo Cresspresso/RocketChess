@@ -30,5 +30,5 @@ struct TextRenderer
 	vec2 position = vec2();
 	vec2 scale = vec2(1);
 
-	ReturnCode render();
+	void render();
 };

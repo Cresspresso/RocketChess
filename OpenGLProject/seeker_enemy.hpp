@@ -28,6 +28,6 @@ struct SeekerEnemy
 	Seeker seeker;
 	BoxRange positionLimits = { vec3(-10, 0, -10), vec3(10, 0, 10) };
 
-	ReturnCode update();
-	ReturnCode render();
+	void update();
+	void render();
 };

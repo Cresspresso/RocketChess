@@ -1,26 +1,31 @@
 
+#include "exceptions.hpp"
+
 #include "multiline_text_entity.hpp"
 
-ReturnCode MultilineTextEntity::render()
+void MultilineTextEntity::render()
 {
-	BEGIN_ANYALL();
 	size_t current = 0;
 	size_t next = text.find('\n');
 	size_t i = 0;
 	while (next != std::string::npos)
 	{
-		textEntity.textRenderer.text = text.substr(current, next - current);
-		textEntity.textRenderer.position = static_cast<float>(i) * lineOffset;
-		DO_ANYALL(textEntity.render());
+		try {
+			textEntity.textRenderer.text = text.substr(current, next - current);
+			textEntity.textRenderer.position = static_cast<float>(i) * lineOffset;
+			textEntity.render();
+		}
+		catch (...) { printException(); }
 
 		current = next + 1;
 		next = text.find('\n', current);
 		++i;
 	}
 
-	textEntity.textRenderer.text = text.substr(current);
-	textEntity.textRenderer.position = static_cast<float>(i) * lineOffset;
-	DO_ANYALL(textEntity.render());
-
-	return END_ANYALL();
+	try {
+		textEntity.textRenderer.text = text.substr(current);
+		textEntity.textRenderer.position = static_cast<float>(i) * lineOffset;
+		textEntity.render();
+	}
+	catch (...) { printException(); }
 }

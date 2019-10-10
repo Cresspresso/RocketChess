@@ -29,7 +29,7 @@ public:
 	GLuint indicesCount = 0;
 	GLenum drawMode = GL_TRIANGLES;
 
-	ReturnCode draw() override;
+	void draw() override;
 	void destroy() noexcept;
 
 

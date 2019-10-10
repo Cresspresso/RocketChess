@@ -18,21 +18,37 @@
 
 #include "resource_warehouse.hpp"
 
-ReturnCode ResourceWarehouse::init()
+void ResourceWarehouse::init()
 {
-	BEGIN_ANYALL();
+	try {
+		programs.init();
+	}
+	catch (...) { printException(); }
 
-	DO_ANYALL(programs.init());
-	DO_ANYALL(fonts.init());
-	DO_ANYALL(textures.init());
-	DO_ANYALL(cubemaps.init());
-	DO_ANYALL(meshes.init());
+	try {
+		fonts.init();
+	}
+	catch (...) { printException(); }
 
-	return END_ANYALL();
+	try {
+		textures.init();
+	}
+	catch (...) { printException(); }
+
+	try {
+		cubemaps.init();
+	}
+	catch (...) { printException(); }
+
+	try {
+		meshes.init();
+	}
+	catch (...) { printException(); }
 }
 
 void ResourceWarehouse::destroy() noexcept
 {
+	meshes.destroy();
 	cubemaps.destroy();
 	textures.destroy();
 	fonts.destroy();

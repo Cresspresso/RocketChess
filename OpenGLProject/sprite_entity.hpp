@@ -19,5 +19,5 @@ struct SpriteEntity
 	void setTexture(TextureIndexer id);
 
 	void recalculate() { transform.recalculate(); }
-	ReturnCode render();
+	void render();
 };

@@ -26,21 +26,19 @@
 
 #include "phong_material.hpp"
 
-ReturnCode PhongMaterial::prepare()
+void PhongMaterial::prepare()
 {
-	ReturnCode const r = Super::prepare();
+	Super::prepare();
 
 	eye = g_cameraEye;
 	lightPos = g_lightPos;
-
-	return r;
 }
 
-ReturnCode PhongMaterial::apply(GLuint program)
+void PhongMaterial::apply(GLuint program)
 {
 	nvtxRangePush(__FUNCTIONW__);
 
-	ReturnCode const r = Super::apply(program);
+	Super::apply(program);
 
 	glUniform3f(glGetUniformLocation(program, "eye"), eye.x, eye.y, eye.z);
 
@@ -56,13 +54,9 @@ ReturnCode PhongMaterial::apply(GLuint program)
 	glUniform1f(glGetUniformLocation(program, "shininess"), shininess);
 
 	nvtxRangePop();
-
-	return r;
 }
 
-ReturnCode PhongMaterial::unapply(GLuint program)
+void PhongMaterial::unapply(GLuint program)
 {
 	glBindTexture(GL_TEXTURE_2D, 0);
-
-	return RC_SUCCESS;
 }

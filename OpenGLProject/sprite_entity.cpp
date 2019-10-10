@@ -28,7 +28,7 @@ void SpriteEntity::setTexture(TextureIndexer id)
 
 
 
-ReturnCode SpriteEntity::render()
+void SpriteEntity::render()
 {
 	transform.recalculate();
 	renderer.modelMatrix = transform.modelMatrix;

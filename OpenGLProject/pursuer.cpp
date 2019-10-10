@@ -23,13 +23,13 @@
 
 
 
-ReturnCode Pursuer::update()
+void Pursuer::update()
 {
 	seeker.targetPosition = calculateTargetFuturePosition();
 	return seeker.update();
 }
 
-ReturnCode Pursuer::render()
+void Pursuer::render()
 {
 	return seeker.render();
 }

@@ -60,15 +60,6 @@
     <Filter Include="Source Files\entities\robotron">
       <UniqueIdentifier>{21f99b02-c770-4b7d-9814-f8352bf14783}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\networking">
-      <UniqueIdentifier>{3adeae7c-a3e5-435a-af7e-5c2b5c9db422}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\networking\new">
-      <UniqueIdentifier>{b527006d-6603-408b-8a42-382b7686be59}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\networking\old">
-      <UniqueIdentifier>{a5e784e1-388b-4949-b2ed-59286fcb72b6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\utilities\container">
       <UniqueIdentifier>{bf0ee46e-65c5-4122-b51e-077b251873b4}</UniqueIdentifier>
     </Filter>
@@ -226,9 +217,6 @@
     <ClCompile Include="quad.cpp">
       <Filter>Source Files\meshes</Filter>
     </ClCompile>
-    <ClCompile Include="errors.cpp">
-      <Filter>Source Files\common</Filter>
-    </ClCompile>
     <ClCompile Include="textures.cpp">
       <Filter>Source Files\resources</Filter>
     </ClCompile>
@@ -334,21 +322,6 @@
     <ClCompile Include="player.cpp">
       <Filter>Source Files\entities\robotron</Filter>
     </ClCompile>
-    <ClCompile Include="address.cpp">
-      <Filter>Source Files\networking</Filter>
-    </ClCompile>
-    <ClCompile Include="socket.cpp">
-      <Filter>Source Files\networking</Filter>
-    </ClCompile>
-    <ClCompile Include="network.cpp">
-      <Filter>Source Files\networking</Filter>
-    </ClCompile>
-    <ClCompile Include="wsa_error.cpp">
-      <Filter>Source Files\networking</Filter>
-    </ClCompile>
-    <ClCompile Include="handle_exception.cpp">
-      <Filter>Source Files\networking</Filter>
-    </ClCompile>
     <ClCompile Include="seeker_enemy.cpp">
       <Filter>Source Files\entities\robotron</Filter>
     </ClCompile>
@@ -390,45 +363,6 @@
     </ClCompile>
     <ClCompile Include="random.cpp">
       <Filter>Source Files\utilities\math</Filter>
-    </ClCompile>
-    <ClCompile Include="game.cpp">
-      <Filter>Source Files\misc</Filter>
-    </ClCompile>
-    <ClCompile Include="old_network_entity.cpp">
-      <Filter>Source Files\networking\old</Filter>
-    </ClCompile>
-    <ClCompile Include="old_server.cpp">
-      <Filter>Source Files\networking\old</Filter>
-    </ClCompile>
-    <ClCompile Include="old_client.cpp">
-      <Filter>Source Files\networking\old</Filter>
-    </ClCompile>
-    <ClCompile Include="old_console_tools.cpp">
-      <Filter>Source Files\networking\old</Filter>
-    </ClCompile>
-    <ClCompile Include="old_main_network.cpp">
-      <Filter>Source Files\networking\old</Filter>
-    </ClCompile>
-    <ClCompile Include="network_entity.cpp">
-      <Filter>Source Files\networking\new</Filter>
-    </ClCompile>
-    <ClCompile Include="client.cpp">
-      <Filter>Source Files\networking\new</Filter>
-    </ClCompile>
-    <ClCompile Include="server.cpp">
-      <Filter>Source Files\networking\new</Filter>
-    </ClCompile>
-    <ClCompile Include="network_serialization.cpp">
-      <Filter>Source Files\networking\new</Filter>
-    </ClCompile>
-    <ClCompile Include="network_message_type.cpp">
-      <Filter>Source Files\networking\new</Filter>
-    </ClCompile>
-    <ClCompile Include="network_manager.cpp">
-      <Filter>Source Files\networking\new</Filter>
-    </ClCompile>
-    <ClCompile Include="network_entity_threads.cpp">
-      <Filter>Source Files\networking\new</Filter>
     </ClCompile>
     <ClCompile Include="fog_material.cpp">
       <Filter>Source Files\materials</Filter>
@@ -481,6 +415,12 @@
     <ClCompile Include="outcome_screen.cpp">
       <Filter>Source Files\rocket_chess</Filter>
     </ClCompile>
+    <ClCompile Include="deprecated_errors.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="exceptions.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cubemap_material.hpp">
@@ -514,9 +454,6 @@
       <Filter>Source Files\meshes</Filter>
     </ClInclude>
     <ClInclude Include="common.hpp">
-      <Filter>Source Files\common</Filter>
-    </ClInclude>
-    <ClInclude Include="errors.hpp">
       <Filter>Source Files\common</Filter>
     </ClInclude>
     <ClInclude Include="textures.hpp">
@@ -636,36 +573,6 @@
     <ClInclude Include="player.hpp">
       <Filter>Source Files\entities\robotron</Filter>
     </ClInclude>
-    <ClInclude Include="address.hpp">
-      <Filter>Source Files\networking</Filter>
-    </ClInclude>
-    <ClInclude Include="socket.hpp">
-      <Filter>Source Files\networking</Filter>
-    </ClInclude>
-    <ClInclude Include="network.hpp">
-      <Filter>Source Files\networking</Filter>
-    </ClInclude>
-    <ClInclude Include="wsa_error.hpp">
-      <Filter>Source Files\networking</Filter>
-    </ClInclude>
-    <ClInclude Include="packet.hpp">
-      <Filter>Source Files\networking</Filter>
-    </ClInclude>
-    <ClInclude Include="info.hpp">
-      <Filter>Source Files\networking</Filter>
-    </ClInclude>
-    <ClInclude Include="stc_message_type.hpp">
-      <Filter>Source Files\networking</Filter>
-    </ClInclude>
-    <ClInclude Include="cts_message_type.hpp">
-      <Filter>Source Files\networking</Filter>
-    </ClInclude>
-    <ClInclude Include="message.hpp">
-      <Filter>Source Files\networking</Filter>
-    </ClInclude>
-    <ClInclude Include="handle_exception.hpp">
-      <Filter>Source Files\networking</Filter>
-    </ClInclude>
     <ClInclude Include="seeker_enemy.hpp">
       <Filter>Source Files\entities\robotron</Filter>
     </ClInclude>
@@ -741,41 +648,8 @@
     <ClInclude Include="ModelMesh.h">
       <Filter>Source Files\misc</Filter>
     </ClInclude>
-    <ClInclude Include="game.hpp">
-      <Filter>Source Files\misc</Filter>
-    </ClInclude>
     <ClInclude Include="Model.h">
       <Filter>Source Files\misc</Filter>
-    </ClInclude>
-    <ClInclude Include="old_network_entity.hpp">
-      <Filter>Source Files\networking\old</Filter>
-    </ClInclude>
-    <ClInclude Include="old_server.hpp">
-      <Filter>Source Files\networking\old</Filter>
-    </ClInclude>
-    <ClInclude Include="old_client.hpp">
-      <Filter>Source Files\networking\old</Filter>
-    </ClInclude>
-    <ClInclude Include="old_console_tools.hpp">
-      <Filter>Source Files\networking\old</Filter>
-    </ClInclude>
-    <ClInclude Include="network_entity.hpp">
-      <Filter>Source Files\networking\new</Filter>
-    </ClInclude>
-    <ClInclude Include="network_message_type.hpp">
-      <Filter>Source Files\networking\new</Filter>
-    </ClInclude>
-    <ClInclude Include="client.hpp">
-      <Filter>Source Files\networking\new</Filter>
-    </ClInclude>
-    <ClInclude Include="server.hpp">
-      <Filter>Source Files\networking\new</Filter>
-    </ClInclude>
-    <ClInclude Include="network_serialization.hpp">
-      <Filter>Source Files\networking\new</Filter>
-    </ClInclude>
-    <ClInclude Include="port_constants.hpp">
-      <Filter>Source Files\networking\new</Filter>
     </ClInclude>
     <ClInclude Include="compatibility_threading.hpp">
       <Filter>Source Files\utilities</Filter>
@@ -785,15 +659,6 @@
     </ClInclude>
     <ClInclude Include="scene_indexer.hpp">
       <Filter>Source Files\application</Filter>
-    </ClInclude>
-    <ClInclude Include="network_manager.hpp">
-      <Filter>Source Files\networking\new</Filter>
-    </ClInclude>
-    <ClInclude Include="network_entity_threads.hpp">
-      <Filter>Source Files\networking\new</Filter>
-    </ClInclude>
-    <ClInclude Include="network_state.hpp">
-      <Filter>Source Files\networking\new</Filter>
     </ClInclude>
     <ClInclude Include="debug_log.hpp">
       <Filter>Source Files\console</Filter>
@@ -854,6 +719,12 @@
     </ClInclude>
     <ClInclude Include="outcome_screen.hpp">
       <Filter>Source Files\rocket_chess</Filter>
+    </ClInclude>
+    <ClInclude Include="z_deprecated_errors.hpp">
+      <Filter>Source Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="exceptions.hpp">
+      <Filter>Source Files\common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

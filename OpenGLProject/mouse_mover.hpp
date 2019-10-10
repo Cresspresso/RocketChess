@@ -27,8 +27,8 @@ struct MouseMover
 {
 	SimpleEntity simple;
 
-	ReturnCode update(); // requires g_cameraVPMatrix
-	ReturnCode render();
+	void update(); // requires g_cameraVPMatrix
+	void render();
 private:
 	vec3 calculatePosition() const;
 };

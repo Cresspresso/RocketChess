@@ -80,7 +80,7 @@ struct Scene
 	OutcomeScreen outcomeScreen;
 
 
-	ReturnCode initEntities();
+	void initEntities();
 
 
 
@@ -92,7 +92,7 @@ struct Scene
 	bool isChoosingRocketTarget = false;
 	void deselect();
 
-	ReturnCode initBehaviour();
+	void initBehaviour();
 
 	int GetPieceType(int x, int y);
 	void onCellClicked(ivec2 cellCoords);
@@ -112,15 +112,15 @@ struct Scene
 	int Dollars = 0; // Functional values for currency...
 
 
-	ReturnCode init();
-	void destroy() noexcept { navigation.reset(); }
+	void init();
+	void destroy() noexcept;
 
-	ReturnCode update();
-	ReturnCode render();
+	void update();
+	void render();
 
-	ReturnCode LaunchedMissile();
+	void LaunchedMissile();
 
-	ReturnCode MissilePosition();
+	void MissilePosition();
 
 	void winGame(bool winByVoyager);
 

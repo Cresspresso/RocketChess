@@ -32,6 +32,6 @@ struct ResourceWarehouse
 	CubeMapManager cubemaps;
 	MeshManager meshes;
 
-	ReturnCode init();
+	void init();
 	void destroy() noexcept;
 };

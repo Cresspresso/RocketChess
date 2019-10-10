@@ -26,8 +26,8 @@ struct FixNormalsMaterial : public MvpMaterial
 	using Super = MvpMaterial;
 	virtual ~FixNormalsMaterial() = default;
 
-	ReturnCode prepare() override;
-	ReturnCode apply(GLuint program) override;
+	void prepare() override;
+	void apply(GLuint program) override;
 
 
 

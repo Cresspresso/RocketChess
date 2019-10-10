@@ -28,7 +28,7 @@ struct FogMaterial : public PhongMaterial
 	using Super = PhongMaterial;
 	virtual ~FogMaterial() = default;
 
-	ReturnCode apply(GLuint program) override;
+	void apply(GLuint program) override;
 
 	float fogStart = 5.0f;
 	float fogRange = 10.0f;

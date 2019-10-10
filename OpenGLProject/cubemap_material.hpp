@@ -25,12 +25,13 @@ struct SkyboxMaterial : public IMaterial
 {
 	virtual ~SkyboxMaterial() = default;
 
-	ReturnCode prepare() override;
-	ReturnCode apply(GLuint program) override;
-	ReturnCode unapply(GLuint program) override;
+	void prepare() override;
+	void apply(GLuint program) override;
+	void unapply(GLuint program) override;
 
 
-
+private:
 	mat4 mvp = {};
+public:
 	GLuint cubemap = 0; // texture ID
 };

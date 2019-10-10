@@ -24,17 +24,15 @@
 
 #include "fog_material.hpp"
 
-ReturnCode FogMaterial::apply(GLuint program)
+void FogMaterial::apply(GLuint program)
 {
 	nvtxRangePush(__FUNCTIONW__);
 
-	ReturnCode const r = Super::apply(program);
+	Super::apply(program);
 
 	glUniform1f(glGetUniformLocation(program, "fogStart"), fogStart);
 	glUniform1f(glGetUniformLocation(program, "fogRange"), fogRange);
 	glUniform4f(glGetUniformLocation(program, "fogColor"), fogColor.x, fogColor.y, fogColor.z, fogColor.w);
 
 	nvtxRangePop();
-
-	return r;
 }

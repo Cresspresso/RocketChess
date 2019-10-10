@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <cassert>
 
 #include "console_color.hpp"
 #include "to_string.hpp"

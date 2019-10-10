@@ -22,12 +22,9 @@
 #include <glew/glew.h>
 #include <freeglut/freeglut.h>
 
-#include "errors.hpp"
+GLuint loadTexture(std::string const& fileName);
 
-ReturnCode loadTexture(GLuint* p, std::string const& fileName);
-
-ReturnCode loadCubeMap(
-	GLuint* p,
+GLuint loadCubeMap(
 	std::string const& folderName,
 	std::string const& extension = ".jpg",
 	bool continueOnError = false // if true, will continue creating the cubemap regardless of unloaded faces

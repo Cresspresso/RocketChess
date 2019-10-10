@@ -31,12 +31,13 @@ void MainMenuButtons::highlight(std::optional<size_t> index)
 
 
 
-ReturnCode MainMenuButtons::render()
+void MainMenuButtons::render()
 {
-	BEGIN_ANYALL();
 	for (auto& button : buttons)
 	{
-		DO_ANYALL(button.render());
+		try {
+			button.render();
+		}
+		catch (...) { printException(); }
 	}
-	return END_ANYALL();
 }

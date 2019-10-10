@@ -18,11 +18,13 @@
 #include <vector>
 #include <sstream>
 
+#include <cress/moo/final_act.hpp>
+
 #include "shader.hpp"
 
 
 
-ReturnCode makeShader(GLuint* out, GLenum type, char const* const sourceCode)
+GLuint makeShader(GLenum type, char const* const sourceCode)
 {
 	GLuint v = glCreateShader(type);
 	glShaderSource(v, 1, &sourceCode, nullptr);
@@ -32,77 +34,69 @@ ReturnCode makeShader(GLuint* out, GLenum type, char const* const sourceCode)
 	glGetShaderiv(v, GL_COMPILE_STATUS, &success);
 	if (!success)
 	{
+		CRESS_MOO_FINAL_ACT_SINGLE(fa, glDeleteShader(v));
+
 		GLint maxLength;
 		glGetShaderiv(v, GL_INFO_LOG_LENGTH, &maxLength);
 		std::vector<GLchar> errorLog(maxLength);
 		glGetShaderInfoLog(v, maxLength, &maxLength, errorLog.data());
-		*g_reason = std::string("Error compiling shader: ") + errorLog.data();
-
-		errorLog.clear();
-		glDeleteShader(v);
-		//v = 0;
-		return RC_ERROR;
+		throw std::runtime_error(std::string("Error compiling shader: ") + errorLog.data());
 	}
-	*out = v;
-	return RC_SUCCESS;
+	return v;
 }
 
-ReturnCode makeProgram(GLuint* out, GLuint v, GLuint f)
+GLuint makeProgram(GLuint v, GLuint f)
 {
 	GLuint p = glCreateProgram();
+
 	glAttachShader(p, v);
 	glAttachShader(p, f);
+
+	CRESS_MOO_FINAL_ACT_BEGIN(fa);
+	glDetachShader(p, f);
+	glDetachShader(p, v);
+	CRESS_MOO_FINAL_ACT_END(fa);
+
 	glLinkProgram(p);
 
 	GLint success = 0;
 	glGetProgramiv(p, GL_LINK_STATUS, &success);
 	if (!success)
 	{
+		CRESS_MOO_FINAL_ACT_BEGIN(fa);
+		glDeleteProgram(p);
+		CRESS_MOO_FINAL_ACT_END(fa);
+
 		GLint maxLength;
 		glGetProgramiv(p, GL_INFO_LOG_LENGTH, &maxLength);
 		std::vector<GLchar> errorLog(maxLength);
 		glGetProgramInfoLog(p, maxLength, &maxLength, errorLog.data());
-		*g_reason = std::string("Error linking program: ") + errorLog.data();
-
-		errorLog.clear();
-		glDetachShader(p, f);
-		glDetachShader(p, v);
-		glDeleteProgram(p);
-		//p = 0;
-		return RC_ERROR;
+		throw std::runtime_error(std::string("Error linking program: ") + errorLog.data());
 	}
-	glDetachShader(p, f);
-	glDetachShader(p, v);
-	*out = p;
-	return RC_SUCCESS;
+
+	return p;
 }
 
-ReturnCode loadProgram(GLuint* p, GLuint* v, GLuint* f, std::string const& name)
+GLuint loadProgram(GLuint* v, GLuint* f, std::string const& name)
 {
-	try
-	{
-		static char const* const dir = "Resources/Shaders/";
-		std::string vsrc = readEntireFile(dir + name + ".verts");
-		std::string fsrc = readEntireFile(dir + name + ".frags");
-		if (makeShader(v, GL_VERTEX_SHADER, vsrc.data()))
-		{
-			return RC_ERROR;
-		}
-		if (makeShader(f, GL_FRAGMENT_SHADER, fsrc.data()))
-		{
-			glDeleteShader(*v);
-			v = 0;
-			return RC_ERROR;
-		}
-		if (makeProgram(p, *v, *f))
-		{
-			glDeleteShader(*v);
-			v = 0;
-			glDeleteShader(*f);
-			f = 0;
-			return RC_ERROR;
-		}
-		return RC_SUCCESS;
-	}
-	CATCH_RE();
+	static char const* const dir = "Resources/Shaders/";
+	std::string vsrc = readEntireFile(dir + name + ".verts");
+	std::string fsrc = readEntireFile(dir + name + ".frags");
+
+	bool failure = true;
+
+	*v = makeShader(GL_VERTEX_SHADER, vsrc.data());
+	CRESS_MOO_FINAL_ACT_BEGIN(fav);
+	if (failure) { glDeleteShader(*v); }
+	CRESS_MOO_FINAL_ACT_END(fav);
+
+	*f = makeShader(GL_FRAGMENT_SHADER, fsrc.data());
+	CRESS_MOO_FINAL_ACT_BEGIN(faf);
+	if (failure) { glDeleteShader(*f); }
+	CRESS_MOO_FINAL_ACT_END(faf);
+
+	GLuint p = makeProgram(*v, *f);
+
+	failure = false;
+	return p;
 }

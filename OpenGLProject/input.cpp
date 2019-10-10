@@ -21,6 +21,7 @@
 #include "common.hpp"
 #include "screen.hpp"
 #include "world_math.hpp" // for screenToWorldPoint
+#include "exceptions.hpp"
 
 #include "input.hpp"
 
@@ -56,15 +57,14 @@ namespace
 
 
 
-	ReturnCode innerKeyboardDown(unsigned char key, int mouseX, int mouseY)
+	void innerKeyboardDown(unsigned char key, int mouseX, int mouseY)
 	{
 		setMousePos(mouseX, mouseY);
 
 		auto& states = g_keyboardStates;
 		if (key < 0 || key >= states.size())
 		{
-			*g_reason = "Keyboard key out of range";
-			return RC_ERROR;
+			throw std::runtime_error("Keyboard key out of range: " + std::to_string(key));
 		}
 
 		InputState& state = states[key];
@@ -76,18 +76,16 @@ namespace
 		{
 			state = InputState::DownFirst;
 		}
-		return RC_SUCCESS;
 	}
 
-	ReturnCode innerKeyboardUp(unsigned char key, int mouseX, int mouseY)
+	void innerKeyboardUp(unsigned char key, int mouseX, int mouseY)
 	{
 		setMousePos(mouseX, mouseY);
 
 		auto& states = g_keyboardStates;
 		if (key < 0 || key >= states.size())
 		{
-			*g_reason = "Keyboard key out of range";
-			return RC_ERROR;
+			throw std::runtime_error("Keyboard key out of range: " + std::to_string(key));
 		}
 
 		InputState& state = states[key];
@@ -99,7 +97,6 @@ namespace
 		{
 			state = InputState::UpFirst;
 		}
-		return RC_SUCCESS;
 	}
 
 
@@ -113,15 +110,14 @@ namespace
 		}
 	}*/
 
-	ReturnCode innerKeyboardSpecialDown(int key, int mouseX, int mouseY)
+	void innerKeyboardSpecialDown(int key, int mouseX, int mouseY)
 	{
 		setMousePos(mouseX, mouseY);
 
 		auto& states = g_specialStates;
 		if (key < 0 || static_cast<size_t>(key) >= states.size())
 		{
-			*g_reason = "Special key out of range";
-			return RC_ERROR;
+			throw std::runtime_error("Special key out of range: " + std::to_string(key));
 		}
 
 		InputState& state = states[key];
@@ -133,18 +129,16 @@ namespace
 		{
 			state = InputState::DownFirst;
 		}
-		return RC_SUCCESS;
 	}
 
-	ReturnCode innerKeyboardSpecialUp(int key, int mouseX, int mouseY)
+	void innerKeyboardSpecialUp(int key, int mouseX, int mouseY)
 	{
 		setMousePos(mouseX, mouseY);
 
 		auto& states = g_specialStates;
 		if (key < 0 || static_cast<size_t>(key) >= states.size())
 		{
-			*g_reason = "Special key out of range";
-			return RC_ERROR;
+			throw std::runtime_error("Special key out of range: " + std::to_string(key));
 		}
 
 		InputState& state = states[key];
@@ -156,18 +150,16 @@ namespace
 		{
 			state = InputState::UpFirst;
 		}
-		return RC_SUCCESS;
 	}
 
-	ReturnCode innerMouse(int button, int state, int mouseX, int mouseY)
+	void innerMouse(int button, int state, int mouseX, int mouseY)
 	{
 		setMousePos(mouseX, mouseY);
 
 		auto& states = g_mouseButtonStates;
 		if (button < 0 || static_cast<size_t>(button) >= states.size())
 		{
-			*g_reason = "Mouse button out of range";
-			return RC_ERROR;
+			throw std::runtime_error("Mouse button out of range: " + std::to_string(button));
 		}
 
 		auto& st = states[button];
@@ -186,21 +178,16 @@ namespace
 		{
 			st = InputState::UpFirst;
 		}
-		return RC_SUCCESS;
 	}
 
-	ReturnCode innerMouseMove(int mouseX, int mouseY)
+	void innerMouseMove(int mouseX, int mouseY)
 	{
 		setMousePos(mouseX, mouseY);
-
-		return RC_SUCCESS;
 	}
 
-	ReturnCode innerMouseDrag(int mouseX, int mouseY)
+	void innerMouseDrag(int mouseX, int mouseY)
 	{
 		setMousePos(mouseX, mouseY);
-
-		return RC_SUCCESS;
 	}
 
 	template<size_t N>
@@ -252,37 +239,58 @@ bool isInputStateDown(InputState state) noexcept
 
 void onKeyboardDown(unsigned char key, int mouseX, int mouseY) noexcept
 {
-	HANDLE_ALL(innerKeyboardDown(key, mouseX, mouseY));
+	try {
+		innerKeyboardDown(key, mouseX, mouseY);
+	}
+	catch (...) { printException(); }
 }
 
 void onKeyboardUp(unsigned char key, int mouseX, int mouseY) noexcept
 {
-	HANDLE_ALL(innerKeyboardUp(key, mouseX, mouseY));
+	try {
+		innerKeyboardUp(key, mouseX, mouseY);
+	}
+	catch (...) { printException(); }
 }
 
 void onKeyboardSpecialDown(int key, int mouseX, int mouseY) noexcept
 {
-	HANDLE_ALL(innerKeyboardSpecialDown(key, mouseX, mouseY));
+	try {
+		innerKeyboardSpecialDown(key, mouseX, mouseY);
+	}
+	catch (...) { printException(); }
 }
 
 void onKeyboardSpecialUp(int key, int mouseX, int mouseY) noexcept
 {
-	HANDLE_ALL(innerKeyboardSpecialUp(key, mouseX, mouseY));
+	try {
+		innerKeyboardSpecialUp(key, mouseX, mouseY);
+	}
+	catch (...) { printException(); }
 }
 
 void onMouse(int button, int state, int mouseX, int mouseY) noexcept
 {
-	HANDLE_ALL(innerMouse(button, state, mouseX, mouseY));
+	try {
+		innerMouse(button, state, mouseX, mouseY);
+	}
+	catch (...) { printException(); }
 }
 
 void onMouseMove(int mouseX, int mouseY) noexcept
 {
-	HANDLE_ALL(innerMouseMove(mouseX, mouseY));
+	try {
+		innerMouseMove(mouseX, mouseY);
+	}
+	catch (...) { printException(); }
 }
 
 void onMouseDrag(int mouseX, int mouseY) noexcept
 {
-	HANDLE_ALL(innerMouseDrag(mouseX, mouseY));
+	try {
+		innerMouseDrag(mouseX, mouseY);
+	}
+	catch (...) { printException(); }
 }
 
 
@@ -300,76 +308,32 @@ vec2 const& getMouseViewPos() noexcept
 	return g_mouseViewPos;
 }
 
-ReturnCode getKeyboardState(InputState* out, unsigned char key) noexcept
-{
-	ASSERT1(out);
-	auto& states = g_keyboardStates;
-	if (key < 0 || static_cast<size_t>(key) >= states.size())
-	{
-		*g_reason = "Keyboard key out of range";
-		return RC_ERROR;
-	}
-	*out = states[key];
-	return RC_SUCCESS;
-}
-
-ReturnCode getSpecialState(InputState* out, int key) noexcept
-{
-	ASSERT1(out);
-	auto& states = g_specialStates;
-	if (key < 0 || static_cast<size_t>(key) >= states.size())
-	{
-		*g_reason = "Special key out of range";
-		return RC_ERROR;
-	}
-	*out = states[key];
-	return RC_SUCCESS;
-}
-
-ReturnCode getMouseButtonState(InputState* out, int button) noexcept
-{
-	ASSERT1(out);
-	auto& states = g_mouseButtonStates;
-	if (button < 0 || static_cast<size_t>(button) >= states.size())
-	{
-		*g_reason = "Special key out of range";
-		return RC_ERROR;
-	}
-	*out = states[button];
-	return RC_SUCCESS;
-}
-
-
-
-InputState getKeyboardState(unsigned char key) noexcept
+InputState getKeyboardState(unsigned char key)
 {
 	auto& states = g_keyboardStates;
 	if (key < 0 || static_cast<size_t>(key) >= states.size())
 	{
-		assert(0); // for debugging
-		return InputState::Up;
+		throw std::runtime_error("Keyboard key out of range: " + std::to_string(key));
 	}
 	return states[key];
 }
 
-InputState getSpecialState(int key) noexcept
+InputState getSpecialState(int key)
 {
 	auto& states = g_specialStates;
 	if (key < 0 || static_cast<size_t>(key) >= states.size())
 	{
-		assert(0); // for debugging
-		return InputState::Up;
+		throw std::runtime_error("Special key out of range: " + std::to_string(key));
 	}
 	return states[key];
 }
 
-InputState getMouseButtonState(int button) noexcept
+InputState getMouseButtonState(int button)
 {
 	auto& states = g_mouseButtonStates;
 	if (button < 0 || static_cast<size_t>(button) >= states.size())
 	{
-		assert(0); // for debugging
-		return InputState::Up;
+		throw std::runtime_error("Mouse button out of range: " + std::to_string(button));
 	}
 	return states[button];
 }

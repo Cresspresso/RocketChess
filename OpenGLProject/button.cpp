@@ -22,6 +22,8 @@
 #include "input.hpp"
 #include "globals.hpp"
 
+#include "exceptions.hpp"
+
 #include "button.hpp"
 
 
@@ -47,30 +49,32 @@ void Button::recalculate()
 
 
 
-ReturnCode Button::update()
+void Button::update()
 {
-	BEGIN_ANYALL();
+	try { onClickLeft.update(); }
+	catch (...) { printException(); }
 
-	DO_ANYALL(onClickLeft.update());
-	DO_ANYALL(onClickRight.update());
+	try { onClickRight.update(); }
+	catch (...) { printException(); }
+
 	updatePointerCheck();
-
-	return END_ANYALL();
 }
 
 
 
-ReturnCode Button::render()
+void Button::render()
 {
-	BEGIN_ANYALL();
+	try {
+		background.modelMatrix = backgroundTransform.modelMatrix;
+		background.render();
+	}
+	catch (...) { printException(); }
 
-	background.modelMatrix = backgroundTransform.modelMatrix;
-	DO_ANYALL(background.render());
-
-	text.renderer.modelMatrix = textTransform.modelMatrix;
-	DO_ANYALL(text.render());
-
-	return END_ANYALL();
+	try {
+		text.renderer.modelMatrix = textTransform.modelMatrix;
+		text.render();
+	}
+	catch (...) { printException(); }
 }
 
 
@@ -171,19 +175,21 @@ void Button::updatePointerCheck()
 	// invoke the button clicked event.
 	if (left)
 	{
-		HANDLE_ALL(onClickLeft());
+		try { onClickLeft.update(); }
+		catch (...) { printException(); }
 	}
 	if (right)
 	{
-		HANDLE_ALL(onClickRight());
+		try { onClickRight.update(); }
+		catch (...) { printException(); }
 	}
 }
 
 
 
-ReturnCode Button::ClickEvent::update()
+void Button::ClickEvent::update()
 {
-	if (hotkeys.empty()) { return RC_SUCCESS; }
+	if (hotkeys.empty()) { return; }
 
 	auto const pred = [](unsigned char key)
 	{
@@ -197,17 +203,12 @@ ReturnCode Button::ClickEvent::update()
 		// invoke the action.
 		return operator()();
 	}
-	else
-	{
-		// no hotkey was pressed.
-		return RC_SUCCESS;
-	}
+	// else no hotkey was pressed.
 }
 
 
 
-ReturnCode Button::ClickEvent::operator()()
+void Button::ClickEvent::operator()()
 {
-	if (!action) { return RC_SUCCESS; }
-	return action();
+	if (action) { action(); }
 }

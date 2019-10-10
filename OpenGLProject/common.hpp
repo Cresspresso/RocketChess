@@ -28,8 +28,6 @@
 #include <glm/gtx/string_cast.hpp>
 #include <glm/gtx/quaternion.hpp>
 
-#include "errors.hpp"
-
 using glm::vec2;
 using glm::vec3;
 using glm::vec4;

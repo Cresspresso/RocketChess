@@ -24,7 +24,7 @@ void Program::destroy() noexcept
 	if (verts) { glDeleteShader(verts); verts = 0; }
 }
 
-ReturnCode loadProgram(Program& p, std::string const& name)
+void loadProgram(Program& p, std::string const& name)
 {
-	return loadProgram(&p.program, &p.verts, &p.frags, name);
+	p.program = loadProgram(&p.verts, &p.frags, name);
 }

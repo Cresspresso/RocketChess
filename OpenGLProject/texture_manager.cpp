@@ -18,9 +18,9 @@
 
 #include "texture_manager.hpp"
 
-ReturnCode TextureManager::load(Resource& out, size_t i)
+void TextureManager::load(Resource& out, size_t i)
 {
-	return loadTexture(&out, names[i]);
+	out = loadTexture(names[i]);
 }
 
 void TextureManager::destroyResource(Resource& resource) noexcept

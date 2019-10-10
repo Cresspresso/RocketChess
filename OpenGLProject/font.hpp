@@ -44,13 +44,12 @@ struct Font
 	void destroy() noexcept;
 };
 
-ReturnCode loadFont(
-	Font* font,
+Font loadFont(
 	std::string const& fileName,
 	unsigned int glyphWidth = 48,
 	unsigned int glyphHeight = 0
 );
-//ReturnCode loadFont(
+//void loadFont(
 //	std::unique_ptr<Font>& font,
 //	std::string const& fileName,
 //	unsigned int glyphWidth = 48,
@@ -68,8 +67,8 @@ struct TextMaterial : public MvpMaterial
 	using Super = MvpMaterial;
 	~TextMaterial() = default;
 
-	ReturnCode apply(GLuint program) override;
-	ReturnCode unapply(GLuint program) override;
+	void apply(GLuint program) override;
+	void unapply(GLuint program) override;
 
 
 

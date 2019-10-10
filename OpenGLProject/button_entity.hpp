@@ -38,5 +38,5 @@ struct ButtonEntity
 	void recalculate();
 
 	// calls recalculate
-	ReturnCode render();
+	void render();
 };

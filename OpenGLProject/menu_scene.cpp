@@ -43,7 +43,7 @@ ivec2 globalPosition;
 
 
 
-	ReturnCode Scene::initEntities()
+	void Scene::initEntities()
 	{
 
 
@@ -160,11 +160,8 @@ ivec2 globalPosition;
 		CallingCard.transform.localPosition = vec3(405, 337, 0);
 
 		// Audio Init Here
-		loadMusicTrack(&g_musicMenuBackground, "COAG - Taboo.mp3");
 		playMusic();
 		
-		initAudio();
-
 		// chess piece types
 		for (size_t i = 0; i < chessSprites.size(); i++)
 		{
@@ -184,9 +181,6 @@ ivec2 globalPosition;
 		// Player Turn Labels
 		//
 		currentPlayerLabel.transform.localPosition = vec3(335, 300, 0);
-
-
-		return RC_SUCCESS;
 	}
 
 
@@ -752,29 +746,30 @@ ivec2 globalPosition;
 
 
 
-	ReturnCode Scene::init()
+	void Scene::init()
 	{
-		BEGIN_ANYALL();
-		{
-			DO_ANYALL(initEntities());
-			DO_ANYALL(initBehaviour());
+		initEntities();
+		initBehaviour();
 
-			try {
-				navigation = std::make_unique<Navigation>(
-					[this](ivec2 coords) { onCellClicked(coords); },
-				[this](int rocket) { onRocketClicked(rocket); }
-				);
-				navigation->onPawnPromotion = [this](int i) { onPawnPromotion(i); };
-			} CATCH_PRINT();
+		navigation = std::make_unique<Navigation>(
+			[this](ivec2 coords) { onCellClicked(coords); },
+		[this](int rocket) { onRocketClicked(rocket); }
+		);
+		navigation->onPawnPromotion = [this](int i) { onPawnPromotion(i); };
 
-			missile.scene = this;
-		}
-		return END_ANYALL();
+		missile.scene = this;
+	}
+
+	void Scene::destroy() noexcept
+	{
+		stopMusic();
+		stopMusicG();
+		navigation.reset();
 	}
 
 
 
-	ReturnCode Scene::update()
+	void Scene::update()
 	{
 		if (doGameOverEvent)
 		{
@@ -789,201 +784,233 @@ ivec2 globalPosition;
 			if (m_restartDelay->updateClampedFinished(Time::getDeltaTime()))
 			{
 				postRestartGameMessage();
-				return RC_SUCCESS;
+				return;
 			}
 		}
 
-		BEGIN_ANYALL();
-		{
-			try
-			{
-				navigation->update();
-				DO_ANYALL(RC_SUCCESS);
-			}
-			catch (...)
-			{
-				*g_reason = "navigation->update() failed: " + stringException();
-				DO_ANYALL(RC_ERROR);
-			}
-		}
-		return END_ANYALL();
+		navigation->update();
 	}
 
 
 
-	ReturnCode Scene::render()
+	void Scene::render()
 	{
 		cameraHud.recalculate();
 		cameraHud.useForRendering();
 
-		BEGIN_ANYALL();
+		// render Background
+		try { Background.render(); }
+		catch (...) { printException(); }
+
+		if (navigation->isGameSceneVisible())
 		{
-			// render Background
-			DO_ANYALL(Background.render());
 
-			if (navigation->isGameSceneVisible())
+			// render help tab
+			try {
+				TabHelp.render();
+			}
+			catch (...) { printException(); }
+
+			// render help tab
+			try {
+				TabExit.render();
+			}
+			catch (...) { printException(); }
+
+			// render board
+			try {
+				boardSprite.render();
+			}
+			catch (...) { printException(); }
+
+			// render Calling card
+			try {
+				CallingCard.render();
+			}
+			catch (...) { printException(); }
+
+			auto const coordsToHudPosition = [](ivec2 coords) -> vec3
 			{
+				return vec3(
+					vec2(coords) * 70.0f + vec2(-430, -200),
+					0);
+			};
 
-				// render help tab
-				DO_ANYALL(TabHelp.render());
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-				// render help tab
-				DO_ANYALL(TabExit.render());
-
-				// render board
-				DO_ANYALL(boardSprite.render());
-
-				// render Calling card
-				DO_ANYALL(CallingCard.render());
-
-				auto const coordsToHudPosition = [](ivec2 coords) -> vec3
+			// render chess board array
+			for (int y = 0; y < boardSize; y++)
+			{
+				for (int x = 0; x < boardSize; x++)
 				{
-					return vec3(
-						vec2(coords) * 70.0f + vec2(-430, -200),
-						0);
-				};
-
-				glEnable(GL_BLEND);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-				// render chess board array
-				for (int y = 0; y < boardSize; y++)
-				{
-					for (int x = 0; x < boardSize; x++)
+					auto& piece = boardPieces[getLinearIndex({ x, y })];
+					if (piece.type != ChessPiece::None)
 					{
-						auto& piece = boardPieces[getLinearIndex({ x, y })];
-						if (piece.type != ChessPiece::None)
-						{
-							auto& sprite = chessSprites[GetPieceType(x, y)];
-							sprite.transform.localPosition = coordsToHudPosition({ x, y });
-							DO_ANYALL(sprite.render());
+						auto& sprite = chessSprites[GetPieceType(x, y)];
+						sprite.transform.localPosition = coordsToHudPosition({ x, y });
+						try {
+							sprite.render();
 						}
+						catch (...) { printException(); }
 					}
 				}
-
-				
-				// render selection outline
-				if (selectedCoords)
-				{
-					selectionSprite.transform.localPosition = coordsToHudPosition(*selectedCoords);
-					DO_ANYALL(selectionSprite.render());
-					
-				}
-
-				// render available actions
-				for (auto const& pair : availableActions)
-				{
-					ChessAction const& action = pair.second;
-
-					// TODO use different sprite with texture for action type.
-					actionSprite.transform.localPosition = coordsToHudPosition(action.coords);
-					DO_ANYALL(actionSprite.render());
-				}
-
-				glDisable(GL_BLEND);
-
-
-
-				// Needs To Be Set To A Button Similar To The Quit Button
-				// Also Needs To Have A Defined State Of Play Where Players Can
-				// Take Turns Moving Their Pieces In Accordance To The Rules Of Chess
-				// Call UI Section for the Players move US & USSR
-				auto& PlayerType = isCurrentPlayerTwo;
-				if (isCurrentPlayerTwo == true) // Needs Switching
-				{
-					currentPlayerLabel.textRenderer.text = "US's Move";
-					currentPlayerLabel.material.tint = vec3(0.2, 0.1, 0.85);//(0.65, 0.2, 0.85);
-				}
-				else //if (isCurrentPlayerTwo == false) // Default:
-				{
-					currentPlayerLabel.textRenderer.text = "USSR's Move";
-					currentPlayerLabel.material.tint = vec3(0.65, 1, 0.65);
-				}
-				DO_ANYALL(currentPlayerLabel.render());
-
-				// render currency
-				SovietCurrency.textRenderer.text = "Soviet Rubles $ " + toString(Rubles);
-				UnitedStatesCurrency.textRenderer.text = "US Dollars $ " + toString(Dollars);
-				DO_ANYALL(SovietCurrency.render());
-				DO_ANYALL(UnitedStatesCurrency.render());
 			}
 
-			// render missile purchase buttons
+
+			// render selection outline
+			if (selectedCoords)
 			{
-				this->navigation->visit(overload{
-					[&](FocusedPanel::MainMenu const& panelData) {},
-					[&](FocusedPanel::RocketPurchase const& panelData)
-				{
-					missilePurchaseButtons.highlight(static_cast<size_t>(panelData.focusedButton));
-					DO_ANYALL(missilePurchaseButtons.render());
-				},
-					[&](FocusedPanel::PawnPromotion const& panelData)
-				{
-					// TODO
-					pawnPromotionButtons.highlight(static_cast<size_t>(panelData.focusedButton));
-					DO_ANYALL(pawnPromotionButtons.render());
-				},
-				[&](auto const& other) {},
-				/*{
-					missilePurchaseButtons.highlight(std::nullopt);
-					DO_ANYALL(missilePurchaseButtons.render());
-				},*/
-					});
+				selectionSprite.transform.localPosition = coordsToHudPosition(*selectedCoords);
+				try {
+					selectionSprite.render();
+				}
+				catch (...) { printException(); }
 			}
 
-
-
-			// render main menu buttons
+			// render available actions
+			for (auto const& pair : availableActions)
 			{
-				this->navigation->visit(overload{
-					[&](FocusedPanel::MainMenu const& panelData)
-				{
-					mainMenuButtons.highlight(static_cast<size_t>(panelData.focusedButton));
-					DO_ANYALL(mainMenuButtons.render());
-				},
-				[&](auto const& other)
-				{
-				},
-					});
+				ChessAction const& action = pair.second;
+
+				// TODO use different sprite with texture for action type.
+				actionSprite.transform.localPosition = coordsToHudPosition(action.coords);
+				try {
+					actionSprite.render();
+				}
+				catch (...) { printException(); }
 			}
 
+			glDisable(GL_BLEND);
 
 
-			// render other screens
+
+			// Needs To Be Set To A Button Similar To The Quit Button
+			// Also Needs To Have A Defined State Of Play Where Players Can
+			// Take Turns Moving Their Pieces In Accordance To The Rules Of Chess
+			// Call UI Section for the Players move US & USSR
+			auto& PlayerType = isCurrentPlayerTwo;
+			if (isCurrentPlayerTwo == true) // Needs Switching
 			{
-				this->navigation->visit(overload{
-					[&](FocusedPanel::InstructionsMenu const& panelData)
-				{
-					DO_ANYALL(instructions.render());
-				},
-					[&](FocusedPanel::CreditsMenu const& panelData)
-				{
-					DO_ANYALL(credits.render());
-				},
-					[&](FocusedPanel::OutcomeScreen const& panelData)
-				{
-					DO_ANYALL(outcomeScreen.render());
-				},
-					[&](auto const& other) {}
-				});
+				currentPlayerLabel.textRenderer.text = "US's Move";
+				currentPlayerLabel.material.tint = vec3(0.2, 0.1, 0.85);//(0.65, 0.2, 0.85);
 			}
-
-
-			// render pause menu
-			if (navigation->pauseMenu)
+			else //if (isCurrentPlayerTwo == false) // Default:
 			{
-				pauseMenuButtons.highlight(static_cast<size_t>(navigation->pauseMenu->focusedButton));
-				DO_ANYALL(pauseMenuButtons.render());
+				currentPlayerLabel.textRenderer.text = "USSR's Move";
+				currentPlayerLabel.material.tint = vec3(0.65, 1, 0.65);
 			}
+			try {
+				currentPlayerLabel.render();
+			}
+			catch (...) { printException(); }
 
+			// render currency
+			SovietCurrency.textRenderer.text = "Soviet Rubles $ " + toString(Rubles);
+			UnitedStatesCurrency.textRenderer.text = "US Dollars $ " + toString(Dollars);
 
+			try {
+				SovietCurrency.render();
+			}
+			catch (...) { printException(); }
 
-			try { navigation->render(); } CATCH_PRINT();
+			try {
+				UnitedStatesCurrency.render();
+			}
+			catch (...) { printException(); }
 		}
-		return END_ANYALL();
+
+		// render missile purchase buttons
+		{
+			this->navigation->visit(overload{
+				[&](FocusedPanel::MainMenu const& panelData) {},
+				[&](FocusedPanel::RocketPurchase const& panelData)
+			{
+				try {
+					missilePurchaseButtons.highlight(static_cast<size_t>(panelData.focusedButton));
+					missilePurchaseButtons.render();
+				}
+				catch (...) { printException(); }
+			},
+				[&](FocusedPanel::PawnPromotion const& panelData)
+			{
+				try {
+					pawnPromotionButtons.highlight(static_cast<size_t>(panelData.focusedButton));
+					pawnPromotionButtons.render();
+				}
+				catch (...) { printException(); }
+			},
+				[&](auto const& other) {},
+				});
+		}
+
+
+
+		// render main menu buttons
+		{
+			this->navigation->visit(overload{
+				[&](FocusedPanel::MainMenu const& panelData)
+			{
+				try {
+					mainMenuButtons.highlight(static_cast<size_t>(panelData.focusedButton));
+					mainMenuButtons.render();
+				}
+				catch (...) { printException(); }
+			},
+				[&](auto const& other)
+			{
+			},
+				});
+		}
+
+
+
+		// render other screens
+		{
+			this->navigation->visit(overload{
+				[&](FocusedPanel::InstructionsMenu const& panelData)
+			{
+				try {
+					instructions.render();
+				}
+				catch (...) { printException(); }
+			},
+				[&](FocusedPanel::CreditsMenu const& panelData)
+			{
+				try {
+					credits.render();
+				}
+				catch (...) { printException(); }
+			},
+				[&](FocusedPanel::OutcomeScreen const& panelData)
+			{
+				try {
+					outcomeScreen.render();
+				}
+				catch (...) { printException(); }
+			},
+				[&](auto const& other) {}
+				});
+		}
+
+
+		// render pause menu
+		if (navigation->pauseMenu)
+		{
+			try {
+				pauseMenuButtons.highlight(static_cast<size_t>(navigation->pauseMenu->focusedButton));
+				pauseMenuButtons.render();
+			}
+			catch (...) { printException(); }
+		}
+
+
+
+		try { navigation->render(); }
+		catch (...) { printException(); }
 	}
 
-	ReturnCode Scene::initBehaviour()
+	void Scene::initBehaviour()
 	{
 		// place chess pieces on board
 		auto const initPlayer = [this](bool isPlayer2) {
@@ -1002,8 +1029,6 @@ ivec2 globalPosition;
 		};
 		initPlayer(false);
 		initPlayer(true);
-
-		return RC_SUCCESS;
 	}
 
 	int Scene::GetPieceType(int x, int y)
@@ -1088,14 +1113,10 @@ ivec2 globalPosition;
 
 
 	//chose where to launch the missile
-	ReturnCode Scene::MissilePosition() {
+	void Scene::MissilePosition() {
 
-		BEGIN_ANYALL();
-		{
-			//moves cursor back to the chessboard
-			navigation->gamePanel = FocusedPanel::ChessBoard();
-		}
-		return END_ANYALL();
+		//moves cursor back to the chessboard
+		navigation->gamePanel = FocusedPanel::ChessBoard();
 
 		/*TODO
 		player choses where to launch the missile
@@ -1107,19 +1128,12 @@ ivec2 globalPosition;
 
 
 	//returns user to the chessboard after launching the missile
-	ReturnCode Scene::LaunchedMissile() {
+	void Scene::LaunchedMissile() {
+		//resets the cursor back to the chessBoard
+		navigation->gamePanel = FocusedPanel::ChessBoard();
 
-		
-		BEGIN_ANYALL();
-		{
-			//resets the cursor back to the chessBoard
-			navigation->gamePanel = FocusedPanel::ChessBoard();
-
-			try { navigation->render(); } CATCH_PRINT();
-		}
-
-		return END_ANYALL();
-
+		try { navigation->render(); }
+		catch (...) { printException(); }
 	}
 
 

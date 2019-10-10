@@ -18,18 +18,20 @@
 
 #include "mesh.hpp"
 
-ReturnCode Mesh::draw()
+void Mesh::draw()
 {
-	ASSERT1(vao);
-	ASSERT1(vbo);
-	ASSERT1(ebo);
-	ASSERT1(indicesCount);
+	assert(vao);
+	if (!vao) { throw std::runtime_error("vao is null"); }
+	assert(vbo);
+	if (!vbo) { throw std::runtime_error("vbo is null"); }
+	assert(ebo);
+	if (!ebo) { throw std::runtime_error("ebo is null"); }
+	assert(indicesCount);
+	if (!indicesCount) { throw std::runtime_error("indicesCount is zero"); }
 
 	glBindVertexArray(vao);
 	glDrawElements(drawMode, indicesCount, GL_UNSIGNED_INT, nullptr);
 	glBindVertexArray(0);
-
-	return RC_SUCCESS;
 }
 
 void Mesh::destroy() noexcept

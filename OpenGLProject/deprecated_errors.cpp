@@ -16,6 +16,7 @@
 **	Date Edited	:	10/06/2019
 */
 
+#if 0
 #include <cassert>
 #include <iostream>
 #include <sstream>
@@ -23,7 +24,7 @@
 #include "console.hpp"
 #include "to_string.hpp"
 
-#include "errors.hpp"
+#include "deprecated_errors.hpp"
 
 
 
@@ -58,3 +59,4 @@ void printException()
 }
 
 
+#endif

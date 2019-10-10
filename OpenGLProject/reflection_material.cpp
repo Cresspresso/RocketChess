@@ -22,18 +22,16 @@
 
 #include "reflection_material.hpp"
 
-ReturnCode ReflectionMaterial::prepare()
+void ReflectionMaterial::prepare()
 {
-	ReturnCode const r = Super::prepare();
+	Super::prepare();
 
 	eye = g_cameraEye;
-
-	return r;
 }
 
-ReturnCode ReflectionMaterial::apply(GLuint program)
+void ReflectionMaterial::apply(GLuint program)
 {
-	ReturnCode const r = Super::apply(program);
+	Super::apply(program);
 
 	glUniform3f(glGetUniformLocation(program, "eye"), eye.x, eye.y, eye.z);
 
@@ -42,18 +40,14 @@ ReturnCode ReflectionMaterial::apply(GLuint program)
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, skybox);
 	glUniform1i(glGetUniformLocation(program, "skybox"), 1);
-
-	return r;
 }
 
-ReturnCode ReflectionMaterial::unapply(GLuint program)
+void ReflectionMaterial::unapply(GLuint program)
 {
-	ReturnCode const r = Super::unapply(program);
+	Super::unapply(program);
 
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
 	glDisable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
-
-	return r;
 }

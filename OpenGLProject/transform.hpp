@@ -25,9 +25,9 @@
 //{
 //	virtual ~Entity() = default;
 //
-//	virtual ReturnCode update() = 0;
-//	virtual ReturnCode prepare() = 0;
-//	virtual ReturnCode render() = 0;
+//	virtual void update() = 0;
+//	virtual void prepare() = 0;
+//	virtual void render() = 0;
 //};
 
 struct Transform

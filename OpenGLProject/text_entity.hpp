@@ -15,5 +15,5 @@ struct TextEntity
 	TextEntity();
 
 	void recalculate() { transform.recalculate(); }
-	ReturnCode render();
+	void render();
 };

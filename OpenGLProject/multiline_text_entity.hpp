@@ -11,5 +11,5 @@ struct MultilineTextEntity
 	std::string text;
 
 	void recalculate() { textEntity.recalculate(); }
-	ReturnCode render();
+	void render();
 };

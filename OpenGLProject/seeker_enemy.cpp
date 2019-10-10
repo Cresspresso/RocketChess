@@ -16,21 +16,23 @@
 **	Date Edited	:	10/06/2019
 */
 
+#include <cress/moo/final_act.hpp>
+
 #include "math_utils.hpp"
 #include "seeker_enemy.hpp"
 
-ReturnCode SeekerEnemy::update()
+void SeekerEnemy::update()
 {
-	ReturnCode const r = seeker.update();
-
+	CRESS_MOO_FINAL_ACT_BEGIN(fa);
 	// clamp position
 	vec3& pos = seeker.simple.transform.localPosition;
 	pos = positionLimits.clamp(pos);
+	CRESS_MOO_FINAL_ACT_END(fa);
 
-	return r;
+	seeker.update();
 }
 
-ReturnCode SeekerEnemy::render()
+void SeekerEnemy::render()
 {
 	return seeker.render();
 }

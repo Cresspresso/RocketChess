@@ -22,6 +22,12 @@
 
 #include <array>
 
+#include "to_string.hpp"
+
+#include "exceptions.hpp"
+
+
+
 template<class T, size_t N, class Indexer_ = size_t>
 struct ResourceManager /* abstract, with non-virtual destructor */
 {
@@ -62,9 +68,9 @@ struct ResourceManager /* abstract, with non-virtual destructor */
 		}
 	}
 
-	virtual ReturnCode load(Resource& out, size_t i) = 0;
+	virtual void load(Resource& out, size_t i) = 0;
 
-	ReturnCode init()
+	void init()
 	{
 		// for each indexer, load the corresponding resource, in order.
 		size_t numLoaded = 0;
@@ -73,21 +79,18 @@ struct ResourceManager /* abstract, with non-virtual destructor */
 			// try to load the resource and increase loaded count
 			try
 			{
-				ReturnCode r = load(items[i], i);
-				if (r)
-				{
-					printError(r);
-				}
-				else
-				{
-					++numLoaded;
-				}
+				load(items[i], i);
+				++numLoaded;
 			}
-			CATCH_PRINT();
+			catch (...)
+			{
+				printException();
+			}
 		}
 
-		if (numLoaded == N) { return RC_SUCCESS; }
-		else if (numLoaded == 0) { return RC_ERROR; }
-		else { return RC_PARTIAL; }
+		if (numLoaded != N)
+		{
+			throw std::runtime_error(stringLink("Failed to load ", numLoaded == 0 ? "all" : "some", " resources"));
+		}
 	}
 };

@@ -276,15 +276,17 @@ void Navigation::render()
 	if (doRender)
 	{
 		glEnable(GL_BLEND);
+		CRESS_MOO_FINAL_ACT_SINGLE(fa, glDisable(GL_BLEND));
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		if (RC_SUCCESS != spriteEntity.render())
-		{
-			glDisable(GL_BLEND);
-			throw std::runtime_error("Failed to render Navigation");
+		try {
+			spriteEntity.render();
 		}
-
-		glDisable(GL_BLEND);
+		catch (...)
+		{
+			throw;
+			//throw std::runtime_error("Failed to render Navigation");
+		}
 	}
 }
 
@@ -410,15 +412,12 @@ void Navigation::invokeAction()
 
 		case ButtonID::ExitToMainMenu:
 		{
-			stopMusicG();
-			playMusic();
-			gamePanel = MainMenu();
-			pauseMenu = std::nullopt;
-
 			singleton::postRestartMessage();
+
+			//stopMusicG();
+			//playMusic();
 			//gamePanel = MainMenu();
 			//pauseMenu = std::nullopt;
-
 		}
 		break;
 
@@ -473,11 +472,6 @@ void Navigation::invokeAction()
 
 			case ButtonID::Credits:
 			{
-
-				// TODO
-				playSoundEffect(g_soundSelect);
-				console::error("Options button not implemented.");
-
 				playSoundEffect(g_soundSelect);
 				gamePanel = CreditsMenu();
 

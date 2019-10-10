@@ -18,6 +18,8 @@
 
 #include <sstream>
 
+#include "exceptions.hpp"
+
 #include "audio.hpp"
 
 
@@ -41,99 +43,106 @@ FMOD::Sound* g_musicGameBackground = nullptr;
 
 namespace
 {
-	ReturnCode loadSoundEffects()
+	void loadSoundEffects()
 	{
-		HANDLE_ALL(loadSoundEffect(&g_soundThump, "Thump.wav"));
-		HANDLE_ALL(loadSoundEffect(&g_soundZap, "420365__bolkmar__sfx-laser-shot-s.wav"));
-		HANDLE_ALL(loadSoundEffect(&g_soundDing, "366104__original-sound__confirmation-downward.wav"));
-		// R
-		HANDLE_ALL(loadSoundEffect(&g_soundSelect, "Select_SFX.wav"));
-		HANDLE_ALL(loadSoundEffect(&g_soundMovePiece, "Solid.wav"));
-		HANDLE_ALL(loadSoundEffect(&g_soundNavigate, "bleep.wav"));
-		HANDLE_ALL(loadSoundEffect(&g_soundCapture, "sfx_death.ogg"));
+		try { g_soundThump = loadSoundEffect("Thump.wav"); }
+		catch (...) { printException(); }
 
-		return RC_SUCCESS;
+		try { g_soundZap=loadSoundEffect("420365__bolkmar__sfx-laser-shot-s.wav"); }
+		catch (...) { printException(); }
+
+		try { g_soundDing=loadSoundEffect( "366104__original-sound__confirmation-downward.wav"); }
+		catch (...) { printException(); }
+		// R
+		try { g_soundSelect=loadSoundEffect( "Select_SFX.wav"); }
+		catch (...) { printException(); }
+
+		try { g_soundMovePiece=loadSoundEffect( "Solid.wav"); }
+		catch (...) { printException(); }
+
+		try { g_soundNavigate=loadSoundEffect( "bleep.wav"); }
+		catch (...) { printException(); }
+
+		try { g_soundCapture= loadSoundEffect( "sfx_death.ogg"); }
+		catch (...) { printException(); }
 	}
 
-	ReturnCode loadMusicTracks()
+	void loadMusicTracks()
 	{
-		HANDLE_ALL(loadMusicTrack(&g_musicBackground, "Cresspresso - Beyond Afar - 03 Slight Design.wav"));
+		try { g_musicBackground = loadMusicTrack("Cresspresso - Beyond Afar - 03 Slight Design.wav"); }
+		catch (...) { printException(); }
 		// R
-		HANDLE_ALL(loadMusicTrack(&g_musicMenuBackground, "COAG - Taboo.mp3"));
-		HANDLE_ALL(loadMusicTrack(&g_musicGameBackground, "COAG - The Lost.wav"));
+		try { g_musicMenuBackground=loadMusicTrack( "COAG - Taboo.mp3"); }
+		catch (...) { printException(); }
 
-		return RC_SUCCESS;
+		try { g_musicGameBackground=loadMusicTrack( "COAG - The Lost.wav"); }
+		catch (...) { printException(); }
 	}
 }
 
 
 
-void setReasonFmod(FMOD_RESULT r, std::string const& message)
+void initAudio()
 {
-	std::stringstream s;
-	s << message << " (FMOD_RESULT " << r << ")";
-	*g_reason = s.str();
-}
-
-
-
-ReturnCode initAudio()
-{
-	FMOD_RESULT e = FMOD::System_Create(&g_audio);
+	FMOD::System* audio;
+	FMOD_RESULT e = FMOD::System_Create(&audio);
 	if (e)
 	{
-		g_audio = nullptr;
-
-		setReasonFmod(e, "FMOD::System_Create failed");
-		return RC_ERROR;
+		audio = nullptr;
+		throw std::runtime_error("FMOD::System_Create failed.  FMOD_RESULT: " + std::to_string(e));
 	}
 
-	e = g_audio->init(numAudioChannels, FMOD_INIT_3D_RIGHTHANDED, nullptr);
+	e = audio->init(numAudioChannels, FMOD_INIT_3D_RIGHTHANDED, nullptr);
 	if (e)
 	{
-		destroyFmodPointer(&g_audio);
-
-		setReasonFmod(e, "FMOD::System::init failed");
-		return RC_ERROR;
+		destroyFmodPointer(audio);
+		throw std::runtime_error("FMOD::System::init failed.  FMOD_RESULT: " + std::to_string(e));
 	}
+
+	g_audio = audio;
 
 	bool failed = false;
 
-	if (loadSoundEffects()) { failed = true; }
-	if (loadMusicTracks()) { failed = true; }
+	try { loadSoundEffects(); }
+	catch (...) { printException(); }
 
-	return failed ? RC_PARTIAL : RC_SUCCESS;
+	try { loadMusicTracks(); }
+	catch (...) { printException(); }
+
+	if (failed) { throw std::runtime_error("Some audio files failed to load."); }
 }
 
 
 
 void destroyAudio()
 {
-	destroyFmodPointer(&g_musicBackground);
-	destroyFmodPointer(&g_soundThump);
+	destroyFmodPointer(g_musicBackground);
+	destroyFmodPointer(g_soundThump);
 
-	destroyFmodPointer(&g_audio);
+	destroyFmodPointer(g_audio);
 }
 
 
 
-ReturnCode updateAudio()
+void updateAudio()
 {
-	ASSERT1(g_audio);
+	assert(g_audio);
+	if (!g_audio) { throw std::runtime_error("audio is null"); }
+
 	FMOD_RESULT const e = g_audio->update();
 	if (e)
 	{
-		setReasonFmod(e, "FMOD::System::update failed");
-		return RC_ERROR;
+		throw std::runtime_error("FMOD::System::update failed. FMOD_RESULT: " + std::to_string(e));
 	}
-	return RC_SUCCESS;
 }
 
 
 
-ReturnCode loadSoundEffect(FMOD::Sound** out, std::string const& fileName)
+FMOD::Sound* loadSoundEffect(std::string const& fileName)
 {
-	ASSERT1(g_audio);
+	assert(g_audio);
+	if (!g_audio) { throw std::runtime_error("audio is null"); }
+
 	static constexpr char const* const dir = "Resources/Audio/";
 	std::string const filePath = dir + fileName;
 
@@ -141,17 +150,17 @@ ReturnCode loadSoundEffect(FMOD::Sound** out, std::string const& fileName)
 	FMOD_RESULT const e = g_audio->createSound(filePath.c_str(), FMOD_DEFAULT, nullptr, &p);
 	if (e)
 	{
-		setReasonFmod(e, "FMOD::System::createSound: failed to load sound effect at " + filePath);
-		return RC_ERROR;
+		throw std::runtime_error("FMOD::System::createSound: failed to load sound effect at " + filePath + "\nFMOD_RESULT: " + std::to_string(e));
 	}
 
-	*out = p;
-	return RC_SUCCESS;
+	return p;
 }
 
-ReturnCode loadMusicTrack(FMOD::Sound** out, std::string const& fileName)
+FMOD::Sound* loadMusicTrack(std::string const& fileName)
 {
-	ASSERT1(g_audio);
+	assert(g_audio);
+	if (!g_audio) { throw std::runtime_error("audio is null"); }
+
 	static constexpr char const* const dir = "Resources/Audio/";
 	std::string const filePath = dir + fileName;
 
@@ -159,10 +168,8 @@ ReturnCode loadMusicTrack(FMOD::Sound** out, std::string const& fileName)
 	FMOD_RESULT const e = g_audio->createSound(filePath.c_str(), FMOD_LOOP_NORMAL | FMOD_2D, nullptr, &p);
 	if (e)
 	{
-		setReasonFmod(e, "FMOD::System::createSound: failed to load music track at " + filePath);
-		return RC_ERROR;
+		throw std::runtime_error("FMOD::System::createSound: failed to load music track at " + filePath + "\nFMOD_RESULT: " + std::to_string(e));
 	}
 
-	*out = p;
-	return RC_SUCCESS;
+	return p;
 }

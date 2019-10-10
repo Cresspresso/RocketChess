@@ -20,7 +20,7 @@ TextEntity::TextEntity()
 
 
 
-ReturnCode TextEntity::render()
+void TextEntity::render()
 {
 	recalculate();
 	textRenderer.renderer.modelMatrix = transform.modelMatrix;

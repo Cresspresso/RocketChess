@@ -58,12 +58,10 @@ void onMouseDrag(int mouseX, int mouseY) noexcept;
 ivec2 const& getMousePos() noexcept; // gets mouse position in screen space (origin top-left)
 ivec2 const& getMouseDeltaPos() noexcept;
 vec2 const& getMouseViewPos() noexcept;
-ReturnCode getKeyboardState(InputState* out, unsigned char key) noexcept;
-ReturnCode getSpecialState(InputState* out, int key) noexcept;
-ReturnCode getMouseButtonState(InputState* out, int button) noexcept;
-InputState getKeyboardState(unsigned char key) noexcept;
-InputState getSpecialState(int key) noexcept;
-InputState getMouseButtonState(int button) noexcept;
+
+InputState getKeyboardState(unsigned char key);
+InputState getSpecialState(int key);
+InputState getMouseButtonState(int button);
 
 bool isKeyboardKeyDown(unsigned char key);
 bool isSpecialKeyDown(int key);

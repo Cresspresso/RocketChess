@@ -12,5 +12,5 @@ struct MainMenuButtonEntity
 	MainMenuButtonEntity();
 
 	void recalculate() { buttonEntity.recalculate(); }
-	ReturnCode render();
+	void render();
 };

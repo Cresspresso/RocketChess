@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <cassert>
 
 #include <Kia/include/cress_kia__print_exception.hpp>
 

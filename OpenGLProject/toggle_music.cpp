@@ -27,159 +27,187 @@ namespace
 	FMOD::Channel* g_musicChannel = nullptr;
 	FMOD::Channel* g_musicChannelG = nullptr;
 	bool g_isMusicPlaying = false;
+	bool g_isMusicPlayingG = false;
 }
 
 
 
 bool isMusicPaused()
 {
+	assert(g_musicChannel);
+	if (!g_musicChannel) { throw std::runtime_error("music channel is null"); }
+
 	bool b;
 	FMOD_RESULT const r = g_musicChannel->getPaused(&b);
+	assert(!r);
 	if (r)
 	{
-		setReasonFmod(r, "FMOD::Channel::getPaused failed");
-		return true;
+		throw std::runtime_error("FMOD::Channel::getPaused failed. FMOD_RESULT: " + std::to_string(r));
 	}
 	return b;
 }
 
-ReturnCode setMusicPaused(bool paused)
+void setMusicPaused(bool paused)
 {
+	assert(g_musicChannel);
+	if (!g_musicChannel) { throw std::runtime_error("music channel is null"); }
+
 	FMOD_RESULT const r = g_musicChannel->setPaused(paused);
+	assert(!r);
 	if (r)
 	{
-		setReasonFmod(r, "FMOD::Channel::setPaused failed");
-		return RC_ERROR;
+		throw std::runtime_error("FMOD::Channel::setPaused failed. FMOD_RESULT: " + std::to_string(r));
 	}
-	return RC_SUCCESS;
+}
+
+void setMusicPausedG(bool paused)
+{
+	assert(g_musicChannelG);
+	if (!g_musicChannelG) { throw std::runtime_error("game music channel is null"); }
+
+	FMOD_RESULT const r = g_musicChannelG->setPaused(paused);
+	assert(!r);
+	if (r)
+	{
+		throw std::runtime_error("FMOD::Channel::setPaused failed. FMOD_RESULT: " + std::to_string(r));
+	}
 }
 
 // starts the background music
-ReturnCode playMusic()//FMOD_RESULT r)//= g_audio->playSound(FMOD::Sound **,nullptr, true,FMOD::Channel**))
+void playMusic()//FMOD_RESULT r)//= g_audio->playSound(FMOD::Sound **,nullptr, true,FMOD::Channel**))
 {
-	ASSERT0(g_isMusicPlaying);
+	assert(!g_isMusicPlaying);
+	if (g_isMusicPlaying) { throw std::runtime_error("music is already playing"); }
 
-	ASSERT1(g_audio);
-	ASSERT1(g_musicMenuBackground);
-	ASSERT1(g_musicGameBackground);
+	assert(g_audio);
+	if (!g_audio) { throw std::runtime_error("audio is null"); }
+
+	assert(g_musicMenuBackground);
+	if (!g_musicMenuBackground) { throw std::runtime_error("background music is null"); }
+
 	// Changed from g_musicBackground to g_musicGameBackground...
 	// Currently Need a way to change the music based on if your at the main menu or in game...
 	FMOD_RESULT r = g_audio->playSound(g_musicMenuBackground, nullptr, true, &g_musicChannel);
-	
+	assert(!r);
 	if (r)
 	{
-		setReasonFmod(r, "FMOD::System::playSound failed");
-		return RC_ERROR;
+		throw std::runtime_error("FMOD::System::playSound failed. FMOD_RESULT: " + std::to_string(r));
 	}
 
 	g_isMusicPlaying = true;
 
-	ASSERT1(g_musicChannel);
+	assert(g_musicChannel);
+	if (!g_musicChannel) { throw std::runtime_error("music channel is null"); }
 
 	r = g_musicChannel->setVolume(0.5f);
+	assert(!r);
 	if (r)
 	{
-		setReasonFmod(r, "FMOD::Channel::setVolume failed");
-		return RC_ERROR;
+		throw std::runtime_error("FMOD::Channel::setVolume failed. FMOD_RESULT: " + std::to_string(r));
 	}
 
-	ASSERT0(setMusicPaused(false));
-
-	return RC_SUCCESS;
+	setMusicPaused(false);
 }
+
 
 
 // starts the background music
-ReturnCode playMusicG()//FMOD_RESULT r)//= g_audio->playSound(FMOD::Sound **,nullptr, true,FMOD::Channel**))
+void playMusicG()//FMOD_RESULT r)//= g_audio->playSound(FMOD::Sound **,nullptr, true,FMOD::Channel**))
 {
-	ASSERT0(g_isMusicPlaying);
+	assert(!g_isMusicPlayingG);
+	if (g_isMusicPlayingG) { throw std::runtime_error("music is already playing"); }
 
-	ASSERT1(g_audio);
-	ASSERT1(g_musicMenuBackground);
-	ASSERT1(g_musicGameBackground);
+	assert(g_audio);
+	if (!g_audio) { throw std::runtime_error("audio is null"); }
+
+	assert(g_musicGameBackground);
+	if (!g_musicGameBackground) { throw std::runtime_error("game music is null"); }
+
 	// Changed from g_musicBackground to g_musicGameBackground...
 	// Currently Need a way to change the music based on if your at the main menu or in game...
 	FMOD_RESULT r = g_audio->playSound(g_musicGameBackground, nullptr, true, &g_musicChannelG);
-
+	assert(!r);
 	if (r)
 	{
-		setReasonFmod(r, "FMOD::System::playSound failed");
-		return RC_ERROR;
+		throw std::runtime_error("FMOD::System::playSound failed. FMOD_RESULT: " + std::to_string(r));
 	}
 
-	g_isMusicPlaying = true;
+	g_isMusicPlayingG = true;
 
-	ASSERT1(g_musicChannelG);
+	assert(g_musicChannelG);
+	if (!g_musicChannelG) { throw std::runtime_error("game music channel is null"); }
 
-	r = g_musicChannel->setVolume(0.5f);
+	r = g_musicChannelG->setVolume(0.5f);
+	assert(!r);
 	if (r)
 	{
-		setReasonFmod(r, "FMOD::Channel::setVolume failed");
-		return RC_ERROR;
+		throw std::runtime_error("FMOD::Channel::setVolume failed. FMOD_RESULT: " + std::to_string(r));
 	}
 
-	ASSERT0(setMusicPaused(false));
-
-	return RC_SUCCESS;
+	setMusicPausedG(false);
 }
 
 // stops the background music
-ReturnCode stopMusic()
+void stopMusic()
 {
-	ASSERT1(g_isMusicPlaying);
-	ASSERT1(g_musicChannel);
+	if (!g_isMusicPlaying) { return; }
+	//assert(g_isMusicPlaying);
+	//if (!g_isMusicPlaying) { throw std::runtime_error("music is not currently playing"); }
+
+	assert(g_musicChannel);
+	if (!g_musicChannel) { throw std::runtime_error("music channel is null"); }
 
 	FMOD_RESULT const r = g_musicChannel->stop();
+	assert(!r);
 	if (r)
 	{
-		setReasonFmod(r, "FMOD::Channel::stop failed");
-		return RC_ERROR;
+		throw std::runtime_error("FMOD::Channel::stop failed. FMOD_RESULT: " + std::to_string(r));
 	}
 
+	g_musicChannel = nullptr;
 	g_isMusicPlaying = false;
-
-	return RC_SUCCESS;
 }
 
 // stops the background music
-ReturnCode stopMusicG()
+void stopMusicG()
 {
-	ASSERT1(g_isMusicPlaying);
-	ASSERT1(g_musicChannelG);
+	if (!g_isMusicPlayingG) { return; }
+	//assert(g_isMusicPlayingG);
+	//if (!g_isMusicPlayingG) { throw std::runtime_error("music is not currently playing"); }
+
+	assert(g_musicChannelG);
+	if (!g_musicChannelG) { throw std::runtime_error("game music channel is null"); }
 
 	FMOD_RESULT const r = g_musicChannelG->stop();
+	assert(!r);
 	if (r)
 	{
-		setReasonFmod(r, "FMOD::Channel::stop failed");
-		return RC_ERROR;
+		throw std::runtime_error("FMOD::Channel::stop failed. FMOD_RESULT: " + std::to_string(r));
 	}
 
-	g_isMusicPlaying = false;
-
-	return RC_SUCCESS;
+	g_musicChannelG = nullptr;
+	g_isMusicPlayingG = false;
 }
 
-
-ReturnCode toggleMusicPaused()
+void toggleMusicPaused()
 {
-	ASSERT1(g_musicChannel);
+	assert(g_musicChannel);
+	if (!g_musicChannel) { throw std::runtime_error("music channel is null"); }
 
 	bool isPaused;
 	FMOD_RESULT r = g_musicChannel->getPaused(&isPaused);
+	assert(!r);
 	if (r)
 	{
-		setReasonFmod(r, "FMOD::Channel::getPaused failed");
-		return RC_ERROR;
+		throw std::runtime_error("FMOD::Channel::getPaused failed. FMOD_RESULT: " + std::to_string(r));
 	}
 
 	r = g_musicChannel->setPaused(!isPaused);
+	assert(!r);
 	if (r)
 	{
-		setReasonFmod(r, "FMOD::Channel::setPaused failed");
-		return RC_ERROR;
+		throw std::runtime_error("FMOD::Channel::setPaused failed. FMOD_RESULT: " + std::to_string(r));
 	}
-
-	return RC_SUCCESS;
 }
 
 bool isMusicPlaying()
@@ -189,19 +217,20 @@ bool isMusicPlaying()
 
 
 
-ReturnCode playSoundEffect(FMOD::Sound* sound)
+void playSoundEffect(FMOD::Sound* sound)
 {
-	if (!g_audio || !sound)
-	{
-		return RC_ERROR;
-	}
+	assert(g_audio);
+	if (!g_audio) { throw std::runtime_error("audio is null"); }
+
+	assert(sound);
+	if (!sound) { throw std::runtime_error("sound is null"); }
+
 	FMOD_RESULT const r = g_audio->playSound(sound, nullptr, false, nullptr);
+	assert(!r);
 	if (r)
 	{
-		setReasonFmod(r, "failed to play sound effect");
-		return RC_ERROR;
+		throw std::runtime_error("FMOD::System::playSound failed. FMOD_RESULT: " + std::to_string(r));
 	}
-	return RC_SUCCESS;
 }
 
 

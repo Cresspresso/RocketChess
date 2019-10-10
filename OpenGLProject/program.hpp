@@ -31,7 +31,7 @@ struct Program
 	void destroy() noexcept;
 };
 
-ReturnCode loadProgram(Program& p, std::string const& name);
-//ReturnCode loadProgram(std::unique_ptr<Program>& p, std::string const& name);
+void loadProgram(Program& p, std::string const& name);
+//void loadProgram(std::unique_ptr<Program>& p, std::string const& name);
 
 //inline GLuint programOf(std::unique_ptr<Program>& p) noexcept { return p ? p->program : 0; }

@@ -23,7 +23,7 @@
 
 #include "mouse_mover.hpp"
 
-ReturnCode MouseMover::update()
+void MouseMover::update()
 {
 	if (InputState::DownFirst == getMouseButtonState(MOUSE_LEFT))
 	{
@@ -33,7 +33,7 @@ ReturnCode MouseMover::update()
 	return simple.update();
 }
 
-ReturnCode MouseMover::render()
+void MouseMover::render()
 {
 	return simple.render();
 }

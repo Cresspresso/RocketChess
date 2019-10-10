@@ -25,9 +25,9 @@ struct MvpMaterial : public IMaterial
 {
 	virtual ~MvpMaterial() = default;
 
-	ReturnCode prepare() override;
-	ReturnCode apply(GLuint program) override;
-	ReturnCode unapply(GLuint program) override;
+	void prepare() override;
+	void apply(GLuint program) override;
+	void unapply(GLuint program) override;
 
 
 

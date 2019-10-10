@@ -34,7 +34,7 @@ struct CubeMapManager : public ResourceManager<GLuint, CubeMapIndexerEND, CubeMa
 	using typename Super::Resource;
 	using typename Super::Indexer;
 
-	ReturnCode load(Resource& out, size_t i) override;
+	void load(Resource& out, size_t i) override;
 	void destroyResource(Resource& resource) noexcept override;
 
 	static constexpr std::array<char const* const, CubeMapIndexerEND> names =

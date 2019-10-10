@@ -63,14 +63,13 @@ namespace
 	}
 }
 
-ReturnCode loadFont(
-	Font* font,
+Font loadFont(
 	std::string const& fileName,
 	unsigned int glyphWidth,
 	unsigned int glyphHeight
 )
 {
-	assert(font);
+	Font font;
 
 	static constexpr char const* const dir = "Resources/Fonts/";
 	std::string const filePath = dir + fileName + ".ttf";
@@ -79,23 +78,20 @@ ReturnCode loadFont(
 	FT_Error e = FT_Init_FreeType(&ft);
 	if (e)
 	{
-		*g_reason = "FREETYPE: Failed to init FreeType library.";
-		return (ReturnCode)e;
+		throw std::runtime_error("FREETYPE: Failed to init FreeType library. FT_Error: " + std::to_string(e));
 	}
 
 	FT_Face face;
 	e = FT_New_Face(ft, filePath.c_str(), 0, &face);
 	if (e)
 	{
-		*g_reason = "FREETYPE: Failed to load font at: " + filePath;
-		return (ReturnCode)e;
+		throw std::runtime_error("FREETYPE: Failed to load font at: " + filePath + "   FT_Error: " + std::to_string(e));
 	}
 
 	e = FT_Set_Pixel_Sizes(face, glyphWidth, glyphHeight);
 	if (e)
 	{
-		*g_reason = "FREETYPE: Failed set pixel sizes.";
-		return (ReturnCode)e;
+		throw std::runtime_error("FREETYPE: Failed set pixel sizes. FT_Error: " + std::to_string(e));
 	}
 
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -132,46 +128,22 @@ ReturnCode loadFont(
 
 
 	// apply to out parameter
-	font->characters = std::move(characters);
+	font.characters = std::move(characters);
 
 	// return
-	if (notLoaded.empty())
-	{
-		return RC_SUCCESS;
-	}
-	else
+	if (!notLoaded.empty())
 	{
 		std::stringstream s;
-		s << "Failed to Load Glyphs for characters: ";
+		s << "Failed to Load some Glyphs for characters: ";
 		for (auto const c : notLoaded)
 		{
 			s << c << ", ";
 		}
-		*g_reason = s.str();
-		return RC_PARTIAL;
+		throw std::runtime_error(s.str());
 	}
+
+	return font;
 }
-//
-//ReturnCode loadFont(
-//	std::unique_ptr<Font>& font,
-//	std::string const& fileName,
-//	unsigned int glyphWidth,
-//	unsigned int glyphHeight
-//)
-//{
-//	auto f = std::make_unique<Font>();
-//	ReturnCode const r = loadFont(f.get(), fileName, glyphWidth, glyphHeight);
-//	if (r)
-//	{
-//		f.reset();
-//		return r;
-//	}
-//	else
-//	{
-//		font = std::move(f);
-//		return RC_SUCCESS;
-//	}
-//}
 
 
 
@@ -216,9 +188,9 @@ Mesh makeFontMesh()
 
 
 
-ReturnCode TextMaterial::apply(GLuint program)
+void TextMaterial::apply(GLuint program)
 {
-	ReturnCode r = Super::apply(program);
+	Super::apply(program);
 
 	glUniform3f(glGetUniformLocation(program, "tint"), tint.r, tint.g, tint.b);
 
@@ -227,18 +199,14 @@ ReturnCode TextMaterial::apply(GLuint program)
 	glUniform1i(glGetUniformLocation(program, "tex"), 0);
 
 	glDisable(GL_CULL_FACE);
-
-	return r;
 }
 
-ReturnCode TextMaterial::unapply(GLuint program)
+void TextMaterial::unapply(GLuint program)
 {
-	ReturnCode r = Super::unapply(program);
+	Super::unapply(program);
 
 	glEnable(GL_CULL_FACE);
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, 0);
-
-	return r;
 }

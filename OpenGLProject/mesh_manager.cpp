@@ -24,7 +24,7 @@
 
 #include "mesh_manager.hpp"
 
-ReturnCode MeshManager::load(Resource& out, size_t i)
+void MeshManager::load(Resource& out, size_t i)
 {
 	switch (static_cast<MeshIndexer>(i))
 	{
@@ -35,10 +35,8 @@ ReturnCode MeshManager::load(Resource& out, size_t i)
 	case MeshIndexer::Text:		out = makeFontMesh();		break;
 
 	default:
-		FAIL_RE("invalid MeshIndexer enum value");
+		throw std::runtime_error("invalid MeshIndexer enum value");
 	}
-
-	return RC_SUCCESS;
 }
 
 void MeshManager::destroyResource(Resource& resource) noexcept

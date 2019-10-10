@@ -18,10 +18,10 @@
 #pragma once
 #include <glew/glew.h>
 #include <freeglut/freeglut.h>
-#include "errors.hpp"
 #include "read_entire_file.hpp"
-ReturnCode makeShader(GLuint* out, GLenum type, char const* const sourceCode);
-ReturnCode makeProgram(GLuint* out, GLuint v, GLuint f);
+
+GLuint makeShader(GLenum type, char const* const sourceCode);
+GLuint makeProgram(GLuint v, GLuint f);
 
 // takes file name without directory or file extension
-ReturnCode loadProgram(GLuint* p, GLuint* v, GLuint* f, std::string const& name);
+GLuint loadProgram(GLuint* v, GLuint* f, std::string const& name);

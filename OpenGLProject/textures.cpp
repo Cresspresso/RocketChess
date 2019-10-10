@@ -16,18 +16,20 @@
 **	Date Edited	:	10/06/2019
 */
 
+#include <cassert>
 #include <soil/SOIL.h>
 
 #include "textures.hpp"
 
-ReturnCode loadTexture(GLuint* p, std::string const& fileName)
+GLuint loadTexture(std::string const& fileName)
 {
 	static char const* const dir = "Resources/Textures/";
 	std::string const filePath = dir + fileName;
 
 	int width, height;
 	unsigned char* const image = SOIL_load_image(filePath.c_str(), &width, &height, nullptr, SOIL_LOAD_RGBA);
-	ASSERT1(image);
+	assert(image);
+	if (!image) { throw std::runtime_error(std::string("SOIL_load_image failed: ") + SOIL_last_result()); }
 
 	GLuint t;
 	glGenTextures(1, &t);
@@ -45,30 +47,27 @@ ReturnCode loadTexture(GLuint* p, std::string const& fileName)
 	glGenerateMipmap(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	*p = t;
-	return RC_SUCCESS;
+	return t;
 }
 
 
 
 namespace
 {
-	ReturnCode loadCubeMapFace(int index, char const* filePath)
+	void loadCubeMapFace(int index, char const* filePath)
 	{
 		int width, height;
 		unsigned char* const image = SOIL_load_image(filePath, &width, &height, nullptr, SOIL_LOAD_RGBA);
-		ASSERT1(image);
+		assert(image);
+		if (!image) { throw std::runtime_error(std::string("SOIL_load_image failed: ") + SOIL_last_result()); }
 
 		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + index, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 
 		SOIL_free_image_data(image);
-
-		return RC_SUCCESS;
 	}
 }
 
-ReturnCode loadCubeMap(
-	GLuint* p,
+GLuint loadCubeMap(
 	std::string const& folderName,
 	std::string const& extension,
 	bool continueOnError
@@ -89,14 +88,15 @@ ReturnCode loadCubeMap(
 	for (int i = 0; i < numFaces; ++i)
 	{
 		std::string const filePath = folderPath + fileNames[i] + extension;
-		if (RC_SUCCESS == loadCubeMapFace(i, filePath.c_str()))
-		{
+		try {
+			loadCubeMapFace(i, filePath.c_str());
 			++numLoaded;
 		}
-		else if (!continueOnError)
-		{
-			glDeleteTextures(1, &cubemap);
-			return RC_ERROR;
+		catch (...) {
+			if (!continueOnError) {
+				glDeleteTextures(1, &cubemap);
+				throw;
+			}
 		}
 	}
 
@@ -109,12 +109,12 @@ ReturnCode loadCubeMap(
 	glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
-	*p = cubemap;
-	if (continueOnError && numLoaded != numFaces)
+	return cubemap;
+	/*if (continueOnError && numLoaded != numFaces)
 	{
 		return RC_PARTIAL;
 	}
-	return RC_SUCCESS;
+	return RC_SUCCESS;*/
 }
 
 

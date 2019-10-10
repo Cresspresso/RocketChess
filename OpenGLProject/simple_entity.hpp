@@ -25,8 +25,8 @@
 struct SimpleEntity
 {
 	SimpleEntity();
-	ReturnCode update();
-	ReturnCode render();
+	void update();
+	void render();
 
 	Transform transform;
 	Rigidbody rigidbody;

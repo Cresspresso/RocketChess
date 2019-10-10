@@ -23,7 +23,7 @@
 
 #include "skybox_entity.hpp"
 
-ReturnCode SkyboxEntity::render()
+void SkyboxEntity::render()
 {
 	renderer.modelMatrix = makeTransformMatrix(g_cameraEye, {}, vec3(scale));
 	return renderer.render();
@@ -35,10 +35,10 @@ ReturnCode SkyboxEntity::render()
 //	renderer.material = &material;
 //}
 //
-//ReturnCode SkyboxEntity::init()
+//void SkyboxEntity::init()
 //{
 //	mesh = makeCubeMapMesh();
-//	ReturnCode const r = loadCubeMap(&material.cubemap, "skybox", ".jpg", true);
+//	void const r = loadCubeMap(&material.cubemap, "skybox", ".jpg", true);
 //	return r;
 //}
 //

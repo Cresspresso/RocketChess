@@ -23,11 +23,20 @@ COAG Music
 )__";
 }
 
-ReturnCode Credits::render()
+void Credits::render()
 {
-	BEGIN_ANYALL();
-	DO_ANYALL(m_buttons.render());
-	DO_ANYALL(m_title.render());
-	DO_ANYALL(m_credits.render());
-	return END_ANYALL();
+	try {
+		m_buttons.render();
+	}
+	catch (...) { printException(); }
+
+	try {
+		m_title.render();
+	}
+	catch (...) { printException(); }
+
+	try {
+		m_credits.render();
+	}
+	catch (...) { printException(); }
 }

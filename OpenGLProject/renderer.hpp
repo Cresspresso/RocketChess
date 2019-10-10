@@ -23,7 +23,7 @@
 
 struct Renderer
 {
-	ReturnCode render();
+	void render();
 
 
 	GLuint program = 0;

@@ -26,7 +26,7 @@
 
 
 
-ReturnCode Wanderer::update()
+void Wanderer::update()
 {
 	/*timer -= Time::getDeltaTime();
 	if (timer <= 0)
@@ -67,7 +67,7 @@ ReturnCode Wanderer::update()
 	return seeker.update();
 }
 
-ReturnCode Wanderer::render()
+void Wanderer::render()
 {
 	return seeker.render();
 }

@@ -9,7 +9,7 @@ MainMenuButtonEntity::MainMenuButtonEntity()
 
 
 
-ReturnCode MainMenuButtonEntity::render()
+void MainMenuButtonEntity::render()
 {
 	return buttonEntity.render();
 }

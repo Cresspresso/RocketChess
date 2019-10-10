@@ -21,12 +21,12 @@
 #include "common.hpp"
 
 bool isMusicPaused();
-ReturnCode setMusicPaused(bool paused);
-ReturnCode playMusic();
-ReturnCode playMusicG();
-ReturnCode stopMusic();
-ReturnCode stopMusicG();
-ReturnCode toggleMusicPaused();
+void setMusicPaused(bool paused);
+void playMusic();
+void playMusicG();
+void stopMusic();
+void stopMusicG();
+void toggleMusicPaused();
 bool isMusicPlaying();
 
-ReturnCode playSoundEffect(FMOD::Sound* sound);
+void playSoundEffect(FMOD::Sound* sound);

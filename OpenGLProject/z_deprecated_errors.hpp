@@ -17,6 +17,7 @@
 */
 
 #pragma once
+#ifdef 0
 
 #include <cassert>
 #include <memory>
@@ -25,7 +26,7 @@
 
 
 
-enum ReturnCode
+enum ReturnCodde
 {
 	RC_SUCCESS = 0,
 	RC_ERROR = 1,
@@ -35,7 +36,7 @@ enum ReturnCode
 
 
 template<class T>
-ReturnCode innerAssert0(T const& c)
+ReturnCodde innerAssert0(T const& c)
 {
 	if (c)
 	{
@@ -92,3 +93,4 @@ void printException();
 #define BEGIN_ANYALL()	bool any__ = false; bool all__ = true; do{} while(0)
 #define DO_ANYALL(...)	do { if (__VA_ARGS__) { all__ = false; } else { any__ = true; } } while(0)
 #define END_ANYALL()	(any__ ? (all__ ? RC_SUCCESS : RC_PARTIAL) : RC_ERROR)
+#endif

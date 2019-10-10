@@ -23,12 +23,12 @@ SimpleEntity::SimpleEntity()
 	rigidbody.transform = &transform;
 }
 
-ReturnCode SimpleEntity::update()
+void SimpleEntity::update()
 {
 	return rigidbody.update();
 }
 
-ReturnCode SimpleEntity::render()
+void SimpleEntity::render()
 {
 	transform.recalculate();
 	renderer.modelMatrix = transform.modelMatrix;

@@ -17,21 +17,26 @@
 */
 
 #include <vector>
+#include <cress/moo/final_act.hpp>
 
 #include "mesh.hpp"
 #include "text_renderer.hpp"
 
-ReturnCode TextRenderer::render()
+void TextRenderer::render()
 {
-	ASSERT1(renderer.program);
+	assert(renderer.program);
+	if (!renderer.program) { throw std::runtime_error("program is null"); }
 
 	Mesh*const mesh = dynamic_cast<Mesh*>(renderer.mesh);
-	ASSERT1(mesh);
+	assert(mesh);
+	if (!renderer.program) { throw std::runtime_error("text renderer drawable mesh is null or not a mesh"); }
 
 	auto*const material = dynamic_cast<TextMaterial*>(this->renderer.material);
-	ASSERT1(material);
+	assert(material);
+	if (!material){ throw std::runtime_error("text renderer material is null or not a text material"); }
 
 	glEnable(GL_BLEND);
+	CRESS_MOO_FINAL_ACT_SINGLE(fa, glDisable(GL_BLEND));
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	// iterate through the characters of the text
@@ -71,7 +76,10 @@ ReturnCode TextRenderer::render()
 		// render the glyph over the mesh
 		material->tex = glyph.texture;
 
-		if (renderer.render()) // if failed to render, continue to next character
+		try {
+			renderer.render();
+		}
+		catch (...) // if failed to render, continue to next character
 		{
 			unwrittenIndices.push_back(i);
 			pos.x += glyph.advance * scale.x;
@@ -81,16 +89,9 @@ ReturnCode TextRenderer::render()
 		pos.x += glyph.advance * scale.x;
 	}
 
-	glDisable(GL_BLEND);
-
 	// return
-	if (unwrittenIndices.empty())
+	if (!unwrittenIndices.empty())
 	{
-		return RC_SUCCESS;
-	}
-	else
-	{
-		*g_reason = "Failed to render all characters of text: " + text;
-		return RC_PARTIAL;
+		throw std::runtime_error("Failed to render all characters of text: " + text);
 	}
 }

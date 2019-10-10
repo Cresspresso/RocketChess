@@ -22,7 +22,7 @@
 
 
 
-ReturnCode Mover::update()
+void Mover::update()
 {
 	transform.recalculate();
 	vec3 const& targetPosition = getTargetPosition();
@@ -37,13 +37,11 @@ ReturnCode Mover::update()
 		// move to next target position
 		currentIndex = cycle<size_t>(currentIndex + 1, points.size());
 	}
-
-	return RC_SUCCESS;
 }
 
 
 
-ReturnCode Mover::render()
+void Mover::render()
 {
 	transform.recalculate();
 	renderer.modelMatrix = transform.modelMatrix;

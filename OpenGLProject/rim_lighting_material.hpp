@@ -28,7 +28,7 @@ struct RimLightingMaterial : public PhongMaterial
 	using Super = PhongMaterial;
 	~RimLightingMaterial() = default;
 
-	ReturnCode apply(GLuint program) override;
+	void apply(GLuint program) override;
 
 
 
