@@ -22,31 +22,19 @@
 #include <map>
 #include <optional>
 
-#include "phong_material.hpp"
-#include "quad4_material.hpp"
-#include "reflection_material.hpp"
-#include "rim_lighting_material.hpp"
-#include "fog_material.hpp"
+#include <cress/moo/once_timer.hpp>
 
-#include "camera_orbit_entity.hpp"
-#include "skybox_entity.hpp"
-#include "simple_entity.hpp"
-#include "text_renderer.hpp"
-#include "menu_button.hpp"
-
-#include "Model.h"
-
-#include "ChessPiece.hpp"
-#include "ChessAction.hpp"
+#include "camera.hpp"
 #include "main_menu_buttons.hpp"
-#include "multiline_text_entity.hpp"
 
-#include "navigation.hpp"
 #include "instructions.hpp"
 #include "credits.hpp"
 #include "outcome_screen.hpp"
 
-#include <cress/moo/once_timer.hpp>
+#include "navigation.hpp"
+
+#include "ChessPiece.hpp"
+#include "ChessAction.hpp"
 
 
 

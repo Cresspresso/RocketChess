@@ -21,7 +21,6 @@
 #include "program_manager.hpp"
 #include "font_manager.hpp"
 #include "texture_manager.hpp"
-#include "cubemap_manager.hpp"
 #include "mesh_manager.hpp"
 
 struct ResourceWarehouse
@@ -29,7 +28,6 @@ struct ResourceWarehouse
 	ProgramManager programs;
 	FontManager fonts;
 	TextureManager textures;
-	CubeMapManager cubemaps;
 	MeshManager meshes;
 
 	void init();

@@ -24,9 +24,6 @@
 enum class MeshIndexer : size_t
 {
 	Quad,
-	Pyramid,
-	Sphere,
-	Skybox,
 	Text,
 	END
 };

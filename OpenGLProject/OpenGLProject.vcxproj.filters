@@ -12,9 +12,6 @@
     <Filter Include="Resources">
       <UniqueIdentifier>{825049fe-9b41-4b6e-9dd0-a40c12ba93dd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources\Shaders">
-      <UniqueIdentifier>{755c73e7-7ea5-4658-9b1a-d3bdcdce71de}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\materials">
       <UniqueIdentifier>{d98dd547-92b6-4e13-8492-69ebbc0d4efe}</UniqueIdentifier>
     </Filter>
@@ -51,15 +48,6 @@
     <Filter Include="Source Files\resource_managers">
       <UniqueIdentifier>{ad3fdd93-1b8c-4704-b4f2-cdc2f9ce281f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\entities\buttons">
-      <UniqueIdentifier>{4b860516-c70b-4f34-9fcc-0affcbc499ca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\entities\agents">
-      <UniqueIdentifier>{c69552b2-efd1-4025-bebd-a2d38fc5f019}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\entities\robotron">
-      <UniqueIdentifier>{21f99b02-c770-4b7d-9814-f8352bf14783}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\utilities\container">
       <UniqueIdentifier>{bf0ee46e-65c5-4122-b51e-077b251873b4}</UniqueIdentifier>
     </Filter>
@@ -84,134 +72,18 @@
     <Filter Include="Source Files\utilities\math">
       <UniqueIdentifier>{096e5c72-ce01-42a7-857d-b61dedb5b6c3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\misc">
-      <UniqueIdentifier>{1d660f0e-c8cc-476f-8673-20e49022fe48}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\rocket_chess">
       <UniqueIdentifier>{faa47e77-77e1-484d-ba2a-54052d4b5420}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\Shaders">
+      <UniqueIdentifier>{35bc6057-9b6d-4831-9947-68a8663646f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Shaders\phong.frags">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\phong.verts">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\unlit_color.frags">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\unlit_color.verts">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\tri.frags">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\tri.verts">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\tri2.frags">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\tri2.verts">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\tri3.frags">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\tri3.verts">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\quad2.frags">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\quad2.verts">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\quad3.frags">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\quad3.verts">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\quad4.frags">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\quad4.verts">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\blinn_phong.frags">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\blinn_phong.verts">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\rim_lighting.frags">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\rim_lighting.verts">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\gouraud.frags">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\gouraud.verts">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\skybox.frags">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\skybox.verts">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\reflection.frags">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\reflection.verts">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\model.frags">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\model.verts">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\text.frags">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\text.verts">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\linear_fog.frags">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\linear_fog.verts">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="cubemap_material.cpp">
-      <Filter>Source Files\materials</Filter>
-    </ClCompile>
-    <ClCompile Include="phong_material.cpp">
-      <Filter>Source Files\materials</Filter>
-    </ClCompile>
     <ClCompile Include="quad4_material.cpp">
       <Filter>Source Files\materials</Filter>
     </ClCompile>
-    <ClCompile Include="rim_lighting_material.cpp">
-      <Filter>Source Files\materials</Filter>
-    </ClCompile>
-    <ClCompile Include="skybox_entity.cpp">
-      <Filter>Source Files\entities</Filter>
-    </ClCompile>
-    <ClCompile Include="pyramid.cpp">
-      <Filter>Source Files\meshes</Filter>
-    </ClCompile>
     <ClCompile Include="mesh.cpp">
-      <Filter>Source Files\meshes</Filter>
-    </ClCompile>
-    <ClCompile Include="sphere.cpp">
       <Filter>Source Files\meshes</Filter>
     </ClCompile>
     <ClCompile Include="quad.cpp">
@@ -226,16 +98,10 @@
     <ClCompile Include="world_math.cpp">
       <Filter>Source Files\common</Filter>
     </ClCompile>
-    <ClCompile Include="cubemap_mesh.cpp">
-      <Filter>Source Files\meshes</Filter>
-    </ClCompile>
     <ClCompile Include="globals.cpp">
       <Filter>Source Files\common</Filter>
     </ClCompile>
     <ClCompile Include="fix_normals_material.cpp">
-      <Filter>Source Files\materials</Filter>
-    </ClCompile>
-    <ClCompile Include="reflection_material.cpp">
       <Filter>Source Files\materials</Filter>
     </ClCompile>
     <ClCompile Include="mvp_material.cpp">
@@ -250,23 +116,14 @@
     <ClCompile Include="input.cpp">
       <Filter>Source Files\modules</Filter>
     </ClCompile>
-    <ClCompile Include="simple_entity.cpp">
-      <Filter>Source Files\entities</Filter>
-    </ClCompile>
     <ClCompile Include="transform.cpp">
       <Filter>Source Files\entities\components</Filter>
     </ClCompile>
     <ClCompile Include="renderer.cpp">
       <Filter>Source Files\entities\components</Filter>
     </ClCompile>
-    <ClCompile Include="rigidbody.cpp">
-      <Filter>Source Files\entities\components</Filter>
-    </ClCompile>
     <ClCompile Include="audio.cpp">
       <Filter>Source Files\modules</Filter>
-    </ClCompile>
-    <ClCompile Include="camera_orbit_entity.cpp">
-      <Filter>Source Files\entities\cameras</Filter>
     </ClCompile>
     <ClCompile Include="camera.cpp">
       <Filter>Source Files\entities\cameras</Filter>
@@ -295,47 +152,14 @@
     <ClCompile Include="texture_manager.cpp">
       <Filter>Source Files\resource_managers</Filter>
     </ClCompile>
-    <ClCompile Include="cubemap_manager.cpp">
-      <Filter>Source Files\resource_managers</Filter>
-    </ClCompile>
     <ClCompile Include="mesh_manager.cpp">
       <Filter>Source Files\resource_managers</Filter>
     </ClCompile>
     <ClCompile Include="resource_warehouse.cpp">
       <Filter>Source Files\application</Filter>
     </ClCompile>
-    <ClCompile Include="button.cpp">
-      <Filter>Source Files\entities\buttons</Filter>
-    </ClCompile>
-    <ClCompile Include="menu_button.cpp">
-      <Filter>Source Files\entities\buttons</Filter>
-    </ClCompile>
-    <ClCompile Include="pursuer.cpp">
-      <Filter>Source Files\entities\agents</Filter>
-    </ClCompile>
-    <ClCompile Include="seeker.cpp">
-      <Filter>Source Files\entities\agents</Filter>
-    </ClCompile>
-    <ClCompile Include="mover.cpp">
-      <Filter>Source Files\entities\agents</Filter>
-    </ClCompile>
-    <ClCompile Include="player.cpp">
-      <Filter>Source Files\entities\robotron</Filter>
-    </ClCompile>
-    <ClCompile Include="seeker_enemy.cpp">
-      <Filter>Source Files\entities\robotron</Filter>
-    </ClCompile>
-    <ClCompile Include="box_range.cpp">
-      <Filter>Source Files\common</Filter>
-    </ClCompile>
     <ClCompile Include="menu_scene.cpp">
       <Filter>Source Files\scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="wanderer.cpp">
-      <Filter>Source Files\entities\agents</Filter>
-    </ClCompile>
-    <ClCompile Include="mouse_mover.cpp">
-      <Filter>Source Files\entities\agents</Filter>
     </ClCompile>
     <ClCompile Include="common.cpp">
       <Filter>Source Files\common</Filter>
@@ -355,17 +179,11 @@
     <ClCompile Include="read_entire_file.cpp">
       <Filter>Source Files\utilities</Filter>
     </ClCompile>
-    <ClCompile Include="config.cpp">
-      <Filter>Source Files\application</Filter>
-    </ClCompile>
     <ClCompile Include="console_color.cpp">
       <Filter>Source Files\utilities\console</Filter>
     </ClCompile>
     <ClCompile Include="random.cpp">
       <Filter>Source Files\utilities\math</Filter>
-    </ClCompile>
-    <ClCompile Include="fog_material.cpp">
-      <Filter>Source Files\materials</Filter>
     </ClCompile>
     <ClCompile Include="toggle_music.cpp">
       <Filter>Source Files\scenes</Filter>
@@ -420,31 +238,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cubemap_material.hpp">
-      <Filter>Source Files\materials</Filter>
-    </ClInclude>
     <ClInclude Include="material.hpp">
-      <Filter>Source Files\materials</Filter>
-    </ClInclude>
-    <ClInclude Include="phong_material.hpp">
       <Filter>Source Files\materials</Filter>
     </ClInclude>
     <ClInclude Include="quad4_material.hpp">
       <Filter>Source Files\materials</Filter>
     </ClInclude>
-    <ClInclude Include="rim_lighting_material.hpp">
-      <Filter>Source Files\materials</Filter>
-    </ClInclude>
-    <ClInclude Include="skybox_entity.hpp">
-      <Filter>Source Files\entities</Filter>
-    </ClInclude>
-    <ClInclude Include="pyramid.hpp">
-      <Filter>Source Files\meshes</Filter>
-    </ClInclude>
     <ClInclude Include="mesh.hpp">
-      <Filter>Source Files\meshes</Filter>
-    </ClInclude>
-    <ClInclude Include="sphere.hpp">
       <Filter>Source Files\meshes</Filter>
     </ClInclude>
     <ClInclude Include="quad.hpp">
@@ -462,16 +262,10 @@
     <ClInclude Include="world_math.hpp">
       <Filter>Source Files\common</Filter>
     </ClInclude>
-    <ClInclude Include="cubemap_mesh.hpp">
-      <Filter>Source Files\meshes</Filter>
-    </ClInclude>
     <ClInclude Include="globals.hpp">
       <Filter>Source Files\common</Filter>
     </ClInclude>
     <ClInclude Include="fix_normals_material.hpp">
-      <Filter>Source Files\materials</Filter>
-    </ClInclude>
-    <ClInclude Include="reflection_material.hpp">
       <Filter>Source Files\materials</Filter>
     </ClInclude>
     <ClInclude Include="drawable.hpp">
@@ -489,23 +283,14 @@
     <ClInclude Include="input.hpp">
       <Filter>Source Files\modules</Filter>
     </ClInclude>
-    <ClInclude Include="simple_entity.hpp">
-      <Filter>Source Files\entities</Filter>
-    </ClInclude>
     <ClInclude Include="transform.hpp">
       <Filter>Source Files\entities\components</Filter>
     </ClInclude>
     <ClInclude Include="renderer.hpp">
       <Filter>Source Files\entities\components</Filter>
     </ClInclude>
-    <ClInclude Include="rigidbody.hpp">
-      <Filter>Source Files\entities\components</Filter>
-    </ClInclude>
     <ClInclude Include="audio.hpp">
       <Filter>Source Files\modules</Filter>
-    </ClInclude>
-    <ClInclude Include="camera_orbit_entity.hpp">
-      <Filter>Source Files\entities\cameras</Filter>
     </ClInclude>
     <ClInclude Include="camera.hpp">
       <Filter>Source Files\entities\cameras</Filter>
@@ -515,9 +300,6 @@
     </ClInclude>
     <ClInclude Include="text_renderer.hpp">
       <Filter>Source Files\entities\components</Filter>
-    </ClInclude>
-    <ClInclude Include="entity_utils.hpp">
-      <Filter>Source Files\entities</Filter>
     </ClInclude>
     <ClInclude Include="shader.hpp">
       <Filter>Source Files\resources</Filter>
@@ -540,9 +322,6 @@
     <ClInclude Include="texture_manager.hpp">
       <Filter>Source Files\resource_managers</Filter>
     </ClInclude>
-    <ClInclude Include="cubemap_manager.hpp">
-      <Filter>Source Files\resource_managers</Filter>
-    </ClInclude>
     <ClInclude Include="mesh_manager.hpp">
       <Filter>Source Files\resource_managers</Filter>
     </ClInclude>
@@ -552,38 +331,8 @@
     <ClInclude Include="unique_init_ptr.hpp">
       <Filter>Source Files\application</Filter>
     </ClInclude>
-    <ClInclude Include="button.hpp">
-      <Filter>Source Files\entities\buttons</Filter>
-    </ClInclude>
-    <ClInclude Include="menu_button.hpp">
-      <Filter>Source Files\entities\buttons</Filter>
-    </ClInclude>
-    <ClInclude Include="pursuer.hpp">
-      <Filter>Source Files\entities\agents</Filter>
-    </ClInclude>
-    <ClInclude Include="seeker.hpp">
-      <Filter>Source Files\entities\agents</Filter>
-    </ClInclude>
-    <ClInclude Include="mover.hpp">
-      <Filter>Source Files\entities\agents</Filter>
-    </ClInclude>
-    <ClInclude Include="player.hpp">
-      <Filter>Source Files\entities\robotron</Filter>
-    </ClInclude>
-    <ClInclude Include="seeker_enemy.hpp">
-      <Filter>Source Files\entities\robotron</Filter>
-    </ClInclude>
-    <ClInclude Include="box_range.hpp">
-      <Filter>Source Files\common</Filter>
-    </ClInclude>
     <ClInclude Include="menu_scene.hpp">
       <Filter>Source Files\scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="wanderer.hpp">
-      <Filter>Source Files\entities\agents</Filter>
-    </ClInclude>
-    <ClInclude Include="mouse_mover.hpp">
-      <Filter>Source Files\entities\agents</Filter>
     </ClInclude>
     <ClInclude Include="console.hpp">
       <Filter>Source Files\console</Filter>
@@ -627,9 +376,6 @@
     <ClInclude Include="read_entire_file.hpp">
       <Filter>Source Files\utilities</Filter>
     </ClInclude>
-    <ClInclude Include="config.hpp">
-      <Filter>Source Files\application</Filter>
-    </ClInclude>
     <ClInclude Include="console_color.hpp">
       <Filter>Source Files\utilities\console</Filter>
     </ClInclude>
@@ -642,12 +388,6 @@
     <ClInclude Include="random.hpp">
       <Filter>Source Files\utilities\math</Filter>
     </ClInclude>
-    <ClInclude Include="ModelMesh.h">
-      <Filter>Source Files\misc</Filter>
-    </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>Source Files\misc</Filter>
-    </ClInclude>
     <ClInclude Include="compatibility_threading.hpp">
       <Filter>Source Files\utilities</Filter>
     </ClInclude>
@@ -656,9 +396,6 @@
     </ClInclude>
     <ClInclude Include="debug_log.hpp">
       <Filter>Source Files\console</Filter>
-    </ClInclude>
-    <ClInclude Include="fog_material.hpp">
-      <Filter>Source Files\materials</Filter>
     </ClInclude>
     <ClInclude Include="toggle_music.hpp">
       <Filter>Source Files\scenes</Filter>

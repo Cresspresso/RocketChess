@@ -24,15 +24,7 @@
 enum class ProgramIndexer : size_t
 {
 	Quad4,
-	Phong,
-	BlinnPhong,
-	RimLighting,
-	Gouraud,
-	Skybox,
-	Reflection,
-	Model,
 	Text,
-	LinearFog,
 	END
 };
 constexpr size_t ProgramIndexerEND = static_cast<size_t>(ProgramIndexer::END);
@@ -49,15 +41,7 @@ struct ProgramManager : public ResourceManager<Program, ProgramIndexerEND, Progr
 	static constexpr std::array<char const* const, ProgramIndexerEND> names =
 	{
 		"quad4",
-		"phong",
-		"blinn_phong",
-		"rim_lighting",
-		"gouraud",
-		"skybox",
-		"reflection",
-		"model",
 		"text",
-		"linear_fog",
 	};
 
 	GLuint getProgram(Indexer index) const { return operator[](index).program; }

@@ -36,11 +36,6 @@ void ResourceWarehouse::init()
 	catch (...) { printException(); }
 
 	try {
-		cubemaps.init();
-	}
-	catch (...) { printException(); }
-
-	try {
 		meshes.init();
 	}
 	catch (...) { printException(); }
@@ -49,7 +44,6 @@ void ResourceWarehouse::init()
 void ResourceWarehouse::destroy() noexcept
 {
 	meshes.destroy();
-	cubemaps.destroy();
 	textures.destroy();
 	fonts.destroy();
 	programs.destroy();

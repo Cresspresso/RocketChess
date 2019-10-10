@@ -16,9 +16,7 @@
 **	Date Edited	:	10/06/2019
 */
 
-#include "final_act.hpp"
-
-#include "entity_utils.hpp"
+#include <cress/moo/final_act.hpp>
 
 #include "singleton.hpp"
 #include "screen.hpp"
@@ -211,18 +209,20 @@ ivec2 globalPosition;
 			}
 			else // if available action there
 			{
-				FINAL_ACT(fa, [&]()noexcept
+				CRESS_MOO_FINAL_ACT_BEGIN(fa);
 				{
 					// finish move
 					deselect();
 
 					// next players's turn
 					if (isCurrentPlayerTwo = !isCurrentPlayerTwo)
-					{ CallingCard.setTexture(TextureIndexer::USFLAG); }
+					{
+						CallingCard.setTexture(TextureIndexer::USFLAG);
+					}
 					else { CallingCard.setTexture(TextureIndexer::USSRFLAG); }
 					DEBUG_LOG("Next player's turn");
-					
-				});
+				}
+				CRESS_MOO_FINAL_ACT_END(fa);
 
 				auto const regularMove = [&] {
 					assert(selectedCoords);

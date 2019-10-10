@@ -23,9 +23,6 @@
 
 enum class TextureIndexer : size_t
 {
-	Rayman,
-	AwesomeFace,
-	CapguyWalk,
 	Button,
 	White,
 	BishopUS,
@@ -63,9 +60,6 @@ struct TextureManager : public ResourceManager<GLuint, TextureIndexerEND, Textur
 
 	static constexpr std::array<char const* const, TextureIndexerEND> names =
 	{
-		"Rayman.jpg",
-		"AwesomeFace.png",
-		"Capguy_Walk.png",
 		"button.png",
 		"white.png",
 		"BishopUS.png",

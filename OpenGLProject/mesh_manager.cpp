@@ -17,9 +17,6 @@
 */
 
 #include "quad.hpp"
-#include "pyramid.hpp"
-#include "sphere.hpp"
-#include "cubemap_mesh.hpp"
 #include "font.hpp"
 
 #include "mesh_manager.hpp"
@@ -28,14 +25,9 @@ void MeshManager::load(Resource& out, size_t i)
 {
 	switch (static_cast<MeshIndexer>(i))
 	{
-	case MeshIndexer::Quad:		out = makeQuadMesh();		break;
-	case MeshIndexer::Pyramid:	out = makePyramidMesh();	break;
-	case MeshIndexer::Sphere:	out = makeSphereMesh();		break;
-	case MeshIndexer::Skybox:	out = makeCubeMapMesh();	break;
-	case MeshIndexer::Text:		out = makeFontMesh();		break;
-
-	default:
-		throw std::runtime_error("invalid MeshIndexer enum value");
+	case MeshIndexer::Quad: out = makeQuadMesh(); break;
+	case MeshIndexer::Text: out = makeFontMesh(); break;
+	default: throw std::runtime_error("invalid MeshIndexer enum value");
 	}
 }
 
