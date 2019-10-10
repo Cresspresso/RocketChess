@@ -25,9 +25,9 @@ void Transform::recalculateLocalMatrix()
 
 void Transform::recalculateModelMatrix()
 {
-	if (parentModelMatrix)
+	if (auto parent = this->parent.lock())
 	{
-		modelMatrix = *parentModelMatrix * localMatrix;
+		modelMatrix = parent->modelMatrix * localMatrix;
 	}
 	else
 	{

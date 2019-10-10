@@ -23,15 +23,12 @@
 
 
 
-ButtonEntity::ButtonEntity()
+ButtonEntity::ButtonEntity() : transform(std::make_shared<Transform>())
 {
-	auto* parent = &transform.modelMatrix;
-
-	backgroundEntity.transform.parentModelMatrix = parent;
-	textEntity.transform.parentModelMatrix = parent;
-
-
+	backgroundEntity.transform.parent = transform;
 	backgroundEntity.transform.localScale = vec3(275, 80, 1);
+
+	textEntity.transform.parent = transform;
 	textEntity.transform.localPosition = vec3(-backgroundEntity.transform.localScale.x / 2 + 10, 0, 0);
 
 	backgroundEntity.setTexture(TextureIndexer::Button);
@@ -41,7 +38,7 @@ ButtonEntity::ButtonEntity()
 
 void ButtonEntity::recalculate()
 {
-	transform.recalculate();
+	transform->recalculate();
 	backgroundEntity.recalculate();
 	textEntity.recalculate();
 }

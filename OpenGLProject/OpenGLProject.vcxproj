@@ -257,6 +257,7 @@
     <ClInclude Include="statistic_container.hpp" />
     <ClInclude Include="text_entity.hpp" />
     <ClInclude Include="to_string.hpp" />
+    <ClInclude Include="uncopyable.hpp" />
     <ClInclude Include="unique_init_ptr.hpp" />
     <ClInclude Include="texture_manager.hpp" />
     <ClInclude Include="text_renderer.hpp" />

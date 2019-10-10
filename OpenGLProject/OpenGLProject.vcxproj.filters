@@ -30,12 +30,6 @@
     <Filter Include="Source Files\modules">
       <UniqueIdentifier>{d5eb2305-79e3-481a-9e00-813bac847e32}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\entities\components">
-      <UniqueIdentifier>{5a09a677-cfc5-4009-b7f8-a9537bff9e83}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\entities\cameras">
-      <UniqueIdentifier>{6d2847a2-ed00-412d-8586-0eaede3617e4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\resources">
       <UniqueIdentifier>{970cb559-68d3-4e36-8d02-1f83f3c1fd7f}</UniqueIdentifier>
     </Filter>
@@ -78,6 +72,18 @@
     <Filter Include="Resources\Shaders">
       <UniqueIdentifier>{35bc6057-9b6d-4831-9947-68a8663646f7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\entities\components">
+      <UniqueIdentifier>{8a2f8122-827a-4ff2-9933-f83e30821c06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\rocket_chess\screens">
+      <UniqueIdentifier>{ea785aa9-4ca0-4fba-9d89-772f734e18ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\rocket_chess\entities">
+      <UniqueIdentifier>{bb59c3ae-1cad-48a8-a916-9847262064fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\audio">
+      <UniqueIdentifier>{1c82ede7-273b-4c03-9bb9-1c380599da0a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="quad4_material.cpp">
@@ -116,23 +122,8 @@
     <ClCompile Include="input.cpp">
       <Filter>Source Files\modules</Filter>
     </ClCompile>
-    <ClCompile Include="transform.cpp">
-      <Filter>Source Files\entities\components</Filter>
-    </ClCompile>
-    <ClCompile Include="renderer.cpp">
-      <Filter>Source Files\entities\components</Filter>
-    </ClCompile>
-    <ClCompile Include="audio.cpp">
-      <Filter>Source Files\modules</Filter>
-    </ClCompile>
-    <ClCompile Include="camera.cpp">
-      <Filter>Source Files\entities\cameras</Filter>
-    </ClCompile>
     <ClCompile Include="font.cpp">
       <Filter>Source Files\resources</Filter>
-    </ClCompile>
-    <ClCompile Include="text_renderer.cpp">
-      <Filter>Source Files\entities\components</Filter>
     </ClCompile>
     <ClCompile Include="shader.cpp">
       <Filter>Source Files\resources</Filter>
@@ -158,9 +149,6 @@
     <ClCompile Include="resource_warehouse.cpp">
       <Filter>Source Files\application</Filter>
     </ClCompile>
-    <ClCompile Include="menu_scene.cpp">
-      <Filter>Source Files\scenes</Filter>
-    </ClCompile>
     <ClCompile Include="common.cpp">
       <Filter>Source Files\common</Filter>
     </ClCompile>
@@ -185,28 +173,10 @@
     <ClCompile Include="random.cpp">
       <Filter>Source Files\utilities\math</Filter>
     </ClCompile>
-    <ClCompile Include="toggle_music.cpp">
-      <Filter>Source Files\scenes</Filter>
-    </ClCompile>
     <ClCompile Include="navigation.cpp">
       <Filter>Source Files\rocket_chess</Filter>
     </ClCompile>
     <ClCompile Include="focused_panel.cpp">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClCompile>
-    <ClCompile Include="button_entity.cpp">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClCompile>
-    <ClCompile Include="main_menu_button_entity.cpp">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClCompile>
-    <ClCompile Include="text_entity.cpp">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClCompile>
-    <ClCompile Include="sprite_entity.cpp">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClCompile>
-    <ClCompile Include="main_menu_buttons.cpp">
       <Filter>Source Files\rocket_chess</Filter>
     </ClCompile>
     <ClCompile Include="HistoryEventLog.cpp">
@@ -221,20 +191,56 @@
     <ClCompile Include="Money.cpp">
       <Filter>Source Files\rocket_chess</Filter>
     </ClCompile>
-    <ClCompile Include="multiline_text_entity.cpp">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClCompile>
-    <ClCompile Include="instructions.cpp">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClCompile>
-    <ClCompile Include="credits.cpp">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClCompile>
-    <ClCompile Include="outcome_screen.cpp">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClCompile>
     <ClCompile Include="exceptions.cpp">
       <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer.cpp">
+      <Filter>Source Files\entities\components</Filter>
+    </ClCompile>
+    <ClCompile Include="text_renderer.cpp">
+      <Filter>Source Files\entities\components</Filter>
+    </ClCompile>
+    <ClCompile Include="transform.cpp">
+      <Filter>Source Files\entities\components</Filter>
+    </ClCompile>
+    <ClCompile Include="text_entity.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="sprite_entity.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="multiline_text_entity.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="outcome_screen.cpp">
+      <Filter>Source Files\rocket_chess\screens</Filter>
+    </ClCompile>
+    <ClCompile Include="instructions.cpp">
+      <Filter>Source Files\rocket_chess\screens</Filter>
+    </ClCompile>
+    <ClCompile Include="credits.cpp">
+      <Filter>Source Files\rocket_chess\screens</Filter>
+    </ClCompile>
+    <ClCompile Include="main_menu_buttons.cpp">
+      <Filter>Source Files\rocket_chess\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="main_menu_button_entity.cpp">
+      <Filter>Source Files\rocket_chess\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="button_entity.cpp">
+      <Filter>Source Files\rocket_chess\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="menu_scene.cpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="audio.cpp">
+      <Filter>Source Files\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="toggle_music.cpp">
+      <Filter>Source Files\audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -283,23 +289,8 @@
     <ClInclude Include="input.hpp">
       <Filter>Source Files\modules</Filter>
     </ClInclude>
-    <ClInclude Include="transform.hpp">
-      <Filter>Source Files\entities\components</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer.hpp">
-      <Filter>Source Files\entities\components</Filter>
-    </ClInclude>
-    <ClInclude Include="audio.hpp">
-      <Filter>Source Files\modules</Filter>
-    </ClInclude>
-    <ClInclude Include="camera.hpp">
-      <Filter>Source Files\entities\cameras</Filter>
-    </ClInclude>
     <ClInclude Include="font.hpp">
       <Filter>Source Files\resources</Filter>
-    </ClInclude>
-    <ClInclude Include="text_renderer.hpp">
-      <Filter>Source Files\entities\components</Filter>
     </ClInclude>
     <ClInclude Include="shader.hpp">
       <Filter>Source Files\resources</Filter>
@@ -330,9 +321,6 @@
     </ClInclude>
     <ClInclude Include="unique_init_ptr.hpp">
       <Filter>Source Files\application</Filter>
-    </ClInclude>
-    <ClInclude Include="menu_scene.hpp">
-      <Filter>Source Files\scenes</Filter>
     </ClInclude>
     <ClInclude Include="console.hpp">
       <Filter>Source Files\console</Filter>
@@ -397,28 +385,10 @@
     <ClInclude Include="debug_log.hpp">
       <Filter>Source Files\console</Filter>
     </ClInclude>
-    <ClInclude Include="toggle_music.hpp">
-      <Filter>Source Files\scenes</Filter>
-    </ClInclude>
     <ClInclude Include="focused_panel.hpp">
       <Filter>Source Files\rocket_chess</Filter>
     </ClInclude>
     <ClInclude Include="navigation.hpp">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClInclude>
-    <ClInclude Include="text_entity.hpp">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClInclude>
-    <ClInclude Include="button_entity.hpp">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClInclude>
-    <ClInclude Include="main_menu_button_entity.hpp">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClInclude>
-    <ClInclude Include="sprite_entity.hpp">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClInclude>
-    <ClInclude Include="main_menu_buttons.hpp">
       <Filter>Source Files\rocket_chess</Filter>
     </ClInclude>
     <ClInclude Include="Money.h">
@@ -439,20 +409,59 @@
     <ClInclude Include="MissileManager.h">
       <Filter>Source Files\rocket_chess</Filter>
     </ClInclude>
-    <ClInclude Include="instructions.hpp">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClInclude>
-    <ClInclude Include="multiline_text_entity.hpp">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClInclude>
-    <ClInclude Include="credits.hpp">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClInclude>
-    <ClInclude Include="outcome_screen.hpp">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClInclude>
     <ClInclude Include="exceptions.hpp">
       <Filter>Source Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="uncopyable.hpp">
+      <Filter>Source Files\utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.hpp">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer.hpp">
+      <Filter>Source Files\entities\components</Filter>
+    </ClInclude>
+    <ClInclude Include="text_renderer.hpp">
+      <Filter>Source Files\entities\components</Filter>
+    </ClInclude>
+    <ClInclude Include="transform.hpp">
+      <Filter>Source Files\entities\components</Filter>
+    </ClInclude>
+    <ClInclude Include="text_entity.hpp">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="sprite_entity.hpp">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="multiline_text_entity.hpp">
+      <Filter>Source Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="outcome_screen.hpp">
+      <Filter>Source Files\rocket_chess\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="instructions.hpp">
+      <Filter>Source Files\rocket_chess\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="credits.hpp">
+      <Filter>Source Files\rocket_chess\screens</Filter>
+    </ClInclude>
+    <ClInclude Include="main_menu_buttons.hpp">
+      <Filter>Source Files\rocket_chess\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="main_menu_button_entity.hpp">
+      <Filter>Source Files\rocket_chess\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="button_entity.hpp">
+      <Filter>Source Files\rocket_chess\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="menu_scene.hpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="audio.hpp">
+      <Filter>Source Files\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="toggle_music.hpp">
+      <Filter>Source Files\audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

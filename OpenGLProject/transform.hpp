@@ -21,26 +21,17 @@
 #include "common.hpp"
 #include "world_math.hpp"
 
-//struct Entity
-//{
-//	virtual ~Entity() = default;
-//
-//	virtual void update() = 0;
-//	virtual void prepare() = 0;
-//	virtual void render() = 0;
-//};
-
 struct Transform
 {
 	vec3 localPosition = vec3();
 	quat localRotation = quat();
 	vec3 localScale = vec3(1);
 
-	mat4* parentModelMatrix = nullptr;
-
 	mat4 localMatrix = mat4();
 	mat4 modelMatrix = mat4();
 	mat4 viewMatrix = mat4();
+
+	std::weak_ptr<Transform> parent{};
 
 	// transforms from local space to parent space
 	mat4 makeLocalMatrix() const { return makeTransformMatrix(localPosition, localRotation, localScale); }

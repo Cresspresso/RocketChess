@@ -21,14 +21,16 @@
 #include <functional>
 #include <vector>
 
+#include "uncopyable.hpp"
+
 #include "text_entity.hpp"
 #include "sprite_entity.hpp"
 
 
 
-struct ButtonEntity
+struct ButtonEntity : public Uncopyable
 {
-	Transform transform;
+	std::shared_ptr<Transform> transform;
 	SpriteEntity backgroundEntity;
 	TextEntity textEntity;
 
