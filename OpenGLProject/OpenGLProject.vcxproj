@@ -209,7 +209,6 @@
     <ClCompile Include="world_math.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="accumulate_container.hpp" />
     <ClInclude Include="audio.hpp" />
     <ClInclude Include="button_entity.hpp" />
     <ClInclude Include="camera.hpp" />
@@ -234,19 +233,12 @@
     <ClInclude Include="console_message_queue.hpp" />
     <ClInclude Include="console_color.hpp" />
     <ClInclude Include="console.hpp" />
-    <ClInclude Include="container.hpp" />
-    <ClInclude Include="error_code_exception.hpp" />
-    <ClInclude Include="find_container.hpp" />
     <ClInclude Include="debug_log.hpp" />
     <ClInclude Include="drawable.hpp" />
-    <ClInclude Include="map_container.hpp" />
     <ClInclude Include="outcome_screen.hpp" />
     <ClInclude Include="random.hpp" />
-    <ClInclude Include="final_act.hpp" />
     <ClInclude Include="font_manager.hpp" />
-    <ClInclude Include="lambda.hpp" />
     <ClInclude Include="mesh_manager.hpp" />
-    <ClInclude Include="print_container.hpp" />
     <ClInclude Include="program_manager.hpp" />
     <ClInclude Include="resource_warehouse.hpp" />
     <ClInclude Include="resource_manager.hpp" />
@@ -254,7 +246,6 @@
     <ClInclude Include="application.hpp" />
     <ClInclude Include="singleton.hpp" />
     <ClInclude Include="sprite_entity.hpp" />
-    <ClInclude Include="statistic_container.hpp" />
     <ClInclude Include="text_entity.hpp" />
     <ClInclude Include="to_string.hpp" />
     <ClInclude Include="uncopyable.hpp" />

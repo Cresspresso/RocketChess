@@ -42,12 +42,6 @@
     <Filter Include="Source Files\resource_managers">
       <UniqueIdentifier>{ad3fdd93-1b8c-4704-b4f2-cdc2f9ce281f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\utilities\container">
-      <UniqueIdentifier>{bf0ee46e-65c5-4122-b51e-077b251873b4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\utilities\raii">
-      <UniqueIdentifier>{3090c132-a85d-4b2f-bb6f-6241c0c45ee1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\console">
       <UniqueIdentifier>{fee3107b-dd96-4e29-9f3f-d6129fedf352}</UniqueIdentifier>
     </Filter>
@@ -59,9 +53,6 @@
     </Filter>
     <Filter Include="Source Files\utilities\console">
       <UniqueIdentifier>{7315ef9f-af10-4c97-8924-ed6079be2bb1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\utilities\exceptions">
-      <UniqueIdentifier>{4929912b-6286-433f-a63c-7d8f81624878}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\utilities\math">
       <UniqueIdentifier>{096e5c72-ce01-42a7-857d-b61dedb5b6c3}</UniqueIdentifier>
@@ -167,9 +158,6 @@
     <ClCompile Include="read_entire_file.cpp">
       <Filter>Source Files\utilities</Filter>
     </ClCompile>
-    <ClCompile Include="console_color.cpp">
-      <Filter>Source Files\utilities\console</Filter>
-    </ClCompile>
     <ClCompile Include="random.cpp">
       <Filter>Source Files\utilities\math</Filter>
     </ClCompile>
@@ -241,6 +229,9 @@
     </ClCompile>
     <ClCompile Include="toggle_music.cpp">
       <Filter>Source Files\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="console_color.cpp">
+      <Filter>Source Files\utilities\console</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -328,29 +319,8 @@
     <ClInclude Include="console_message_queue.hpp">
       <Filter>Source Files\console</Filter>
     </ClInclude>
-    <ClInclude Include="accumulate_container.hpp">
-      <Filter>Source Files\utilities\container</Filter>
-    </ClInclude>
-    <ClInclude Include="container.hpp">
-      <Filter>Source Files\utilities\container</Filter>
-    </ClInclude>
-    <ClInclude Include="map_container.hpp">
-      <Filter>Source Files\utilities\container</Filter>
-    </ClInclude>
-    <ClInclude Include="print_container.hpp">
-      <Filter>Source Files\utilities\container</Filter>
-    </ClInclude>
     <ClInclude Include="closing_state.hpp">
       <Filter>Source Files\main</Filter>
-    </ClInclude>
-    <ClInclude Include="statistic_container.hpp">
-      <Filter>Source Files\utilities\container</Filter>
-    </ClInclude>
-    <ClInclude Include="final_act.hpp">
-      <Filter>Source Files\utilities\raii</Filter>
-    </ClInclude>
-    <ClInclude Include="find_container.hpp">
-      <Filter>Source Files\utilities\container</Filter>
     </ClInclude>
     <ClInclude Include="work_queue.hpp">
       <Filter>Source Files\utilities\threading</Filter>
@@ -358,17 +328,8 @@
     <ClInclude Include="to_string.hpp">
       <Filter>Source Files\utilities</Filter>
     </ClInclude>
-    <ClInclude Include="lambda.hpp">
-      <Filter>Source Files\utilities</Filter>
-    </ClInclude>
     <ClInclude Include="read_entire_file.hpp">
       <Filter>Source Files\utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="console_color.hpp">
-      <Filter>Source Files\utilities\console</Filter>
-    </ClInclude>
-    <ClInclude Include="error_code_exception.hpp">
-      <Filter>Source Files\utilities\exceptions</Filter>
     </ClInclude>
     <ClInclude Include="math_utils.hpp">
       <Filter>Source Files\utilities\math</Filter>
@@ -462,6 +423,9 @@
     </ClInclude>
     <ClInclude Include="toggle_music.hpp">
       <Filter>Source Files\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="console_color.hpp">
+      <Filter>Source Files\utilities\console</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -20,9 +20,6 @@
 
 #include <string>
 #include <sstream>
-#include <string_view>
-#include <array>
-//#include <vector>
 
 #include "compatibility.hpp"
 
@@ -65,65 +62,3 @@ std::string stringLink(Args&& ...args)
 }
 
 
-
-#ifdef COMMENT
-
-template<size_t N>
-std::string_view toStringView(std::array<char, N> const& buffer)
-{
-	return std::string_view{ buffer.data(), buffer.size() };
-}
-
-template<size_t N>
-std::string to_string(std::array<char, N> const& buffer)
-{
-	return std::string{ buffer.data(), buffer.size() };
-}
-
-
-
-namespace string_utils
-{
-	template<class C>
-	struct HasContiguousMemory : std::false_type {};
-
-	template<class T>
-	struct HasContiguousMemory<T[]> : std::true_type {};
-
-	template<class T, size_t N>
-	struct HasContiguousMemory<T[N]> : std::true_type {};
-
-	template<class T, size_t N>
-	struct HasContiguousMemory<std::array<T, N>> : std::true_type {};
-
-	template<class T>
-	struct HasContiguousMemory<std::vector<T>> : std::true_type {};
-
-
-
-	template<class T>
-	std::string to_string(T const& container)
-	{
-		using std::to_string;
-		using string_utils::to_string;
-
-		using std::begin;
-		using std::end;
-
-		std::ostringstream s;
-		s << '{';
-		auto const e = end(container);
-		auto it = begin(container);
-		if (it != e)
-		{
-			s << to_string(*it);
-			for (++it; it != e; ++it)
-			{
-				s << ", " << to_string(*it);
-			}
-		}
-		s << '}' << std::ends;
-		return s.str();
-	}
-}
-#endif //~ COMMENT

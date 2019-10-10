@@ -1,14 +1,9 @@
 
 #include "MissileManager.h"
 #include "ChessPiece.hpp"
-#include "Money.h"
 #include "menu_scene.hpp"
 
 #include "console.hpp"
-
-
-//reference to Money.h
-Money money;
 
 //checks to see which missile the player has tried to purchase
 //missileChoice is which missile they want to buy 
