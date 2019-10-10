@@ -73,7 +73,7 @@ ivec2 globalPosition;
 			{
 			"New Game",
 			"Instructions",
-			"Options",
+			"Credits",
 			"   Exit",
 			},
 		};
