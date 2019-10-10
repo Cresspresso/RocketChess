@@ -1,7 +1,6 @@
 
-Project: Robotron Summative
-Author: Elijah Shadbolt
-Date: 08/06/2019
+Project: Rocket Chess
+Date: 11/10/2019
 
 Title: SFX Laser Shot (S)
 Author: bolkmar

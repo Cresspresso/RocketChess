@@ -305,21 +305,21 @@ namespace
 				|| state == InputState::DownAgain;
 		};
 
-		if (isPressed(getKeyboardState('w'))) { dir.y++; }
-		if (isPressed(getKeyboardState('W'))) { dir.y++; }
-		if (isPressed(getSpecialState(GLUT_KEY_UP))) { dir.y++; }
+		if (isPressed(Input::getKeyboardState('w'))) { dir.y++; }
+		if (isPressed(Input::getKeyboardState('W'))) { dir.y++; }
+		if (isPressed(Input::getSpecialState(GLUT_KEY_UP))) { dir.y++; }
 
-		if (isPressed(getKeyboardState('s'))) { dir.y--; }
-		if (isPressed(getKeyboardState('S'))) { dir.y--; }
-		if (isPressed(getSpecialState(GLUT_KEY_DOWN))) { dir.y--; }
+		if (isPressed(Input::getKeyboardState('s'))) { dir.y--; }
+		if (isPressed(Input::getKeyboardState('S'))) { dir.y--; }
+		if (isPressed(Input::getSpecialState(GLUT_KEY_DOWN))) { dir.y--; }
 
-		if (isPressed(getKeyboardState('d'))) { dir.x++; }
-		if (isPressed(getKeyboardState('D'))) { dir.x++; }
-		if (isPressed(getSpecialState(GLUT_KEY_RIGHT))) { dir.x++; }
+		if (isPressed(Input::getKeyboardState('d'))) { dir.x++; }
+		if (isPressed(Input::getKeyboardState('D'))) { dir.x++; }
+		if (isPressed(Input::getSpecialState(GLUT_KEY_RIGHT))) { dir.x++; }
 
-		if (isPressed(getKeyboardState('a'))) { dir.x--; }
-		if (isPressed(getKeyboardState('A'))) { dir.x--; }
-		if (isPressed(getSpecialState(GLUT_KEY_LEFT))) { dir.x--; }
+		if (isPressed(Input::getKeyboardState('a'))) { dir.x--; }
+		if (isPressed(Input::getKeyboardState('A'))) { dir.x--; }
+		if (isPressed(Input::getSpecialState(GLUT_KEY_LEFT))) { dir.x--; }
 
 		return dir;
 	}
@@ -346,7 +346,7 @@ namespace
 
 void Navigation::update()
 {
-	if (getKeyboardState(KEY_ESCAPE) == InputState::DownFirst)
+	if (Input::getKeyboardState(Input::KEY_ESCAPE) == InputState::DownFirst)
 	{
 		if (pauseMenu)
 		{
@@ -357,7 +357,7 @@ void Navigation::update()
 			pauseMenu = FocusedPanel::PauseMenu();
 		}
 	}
-	else if (getKeyboardState(KEY_TAB) == InputState::DownFirst)
+	else if (Input::getKeyboardState(Input::KEY_TAB) == InputState::DownFirst)
 	{
 		if (!pauseMenu)
 		{
@@ -376,7 +376,7 @@ void Navigation::update()
 			});
 		}
 	}
-	else if (getKeyboardState(KEY_SPACE) == InputState::DownFirst)
+	else if (Input::getKeyboardState(Input::KEY_SPACE) == InputState::DownFirst)
 	{
 #ifdef _DEBUG
 		console::log("SPACE pressed.");

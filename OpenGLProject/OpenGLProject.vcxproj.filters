@@ -75,6 +75,9 @@
     <Filter Include="Source Files\audio">
       <UniqueIdentifier>{1c82ede7-273b-4c03-9bb9-1c380599da0a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\rocket_chess\navigation">
+      <UniqueIdentifier>{dd0370d2-c5da-45e6-b796-880a08a1f046}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="quad4_material.cpp">
@@ -161,22 +164,7 @@
     <ClCompile Include="random.cpp">
       <Filter>Source Files\utilities\math</Filter>
     </ClCompile>
-    <ClCompile Include="navigation.cpp">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClCompile>
-    <ClCompile Include="focused_panel.cpp">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClCompile>
     <ClCompile Include="HistoryEventLog.cpp">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClCompile>
-    <ClCompile Include="menuSwap.cpp">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClCompile>
-    <ClCompile Include="MissileManager.cpp">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClCompile>
-    <ClCompile Include="Money.cpp">
       <Filter>Source Files\rocket_chess</Filter>
     </ClCompile>
     <ClCompile Include="exceptions.cpp">
@@ -232,6 +220,15 @@
     </ClCompile>
     <ClCompile Include="console_color.cpp">
       <Filter>Source Files\utilities\console</Filter>
+    </ClCompile>
+    <ClCompile Include="navigation.cpp">
+      <Filter>Source Files\rocket_chess\navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="focused_panel.cpp">
+      <Filter>Source Files\rocket_chess\navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="MissileManager.cpp">
+      <Filter>Source Files\rocket_chess</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -346,15 +343,6 @@
     <ClInclude Include="debug_log.hpp">
       <Filter>Source Files\console</Filter>
     </ClInclude>
-    <ClInclude Include="focused_panel.hpp">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClInclude>
-    <ClInclude Include="navigation.hpp">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClInclude>
-    <ClInclude Include="Money.h">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClInclude>
     <ClInclude Include="ChessAction.hpp">
       <Filter>Source Files\rocket_chess</Filter>
     </ClInclude>
@@ -362,12 +350,6 @@
       <Filter>Source Files\rocket_chess</Filter>
     </ClInclude>
     <ClInclude Include="HistoryEventLog.h">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClInclude>
-    <ClInclude Include="menuSwap.h">
-      <Filter>Source Files\rocket_chess</Filter>
-    </ClInclude>
-    <ClInclude Include="MissileManager.h">
       <Filter>Source Files\rocket_chess</Filter>
     </ClInclude>
     <ClInclude Include="exceptions.hpp">
@@ -427,10 +409,17 @@
     <ClInclude Include="console_color.hpp">
       <Filter>Source Files\utilities\console</Filter>
     </ClInclude>
+    <ClInclude Include="navigation.hpp">
+      <Filter>Source Files\rocket_chess\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="focused_panel.hpp">
+      <Filter>Source Files\rocket_chess\navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="MissileManager.h">
+      <Filter>Source Files\rocket_chess</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="config.txt" />
     <Text Include="credits.txt" />
-    <Text Include="README.txt" />
   </ItemGroup>
 </Project>

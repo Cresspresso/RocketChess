@@ -30,41 +30,44 @@ enum class InputState
 	DownAgain,
 };
 
-bool isInputStateDown(InputState state) noexcept;
-
-enum InputMouseButton : int
+namespace Input
 {
-	MOUSE_LEFT = GLUT_LEFT_BUTTON,
-	MOUSE_MIDDLE = GLUT_MIDDLE_BUTTON,
-	MOUSE_RIGHT = GLUT_RIGHT_BUTTON,
-};
+	bool isInputStateDown(InputState state) noexcept;
 
-enum InputKeyboardKey : unsigned char
-{
-	KEY_SPACE = ' ',
-	KEY_ESCAPE = 27,
-	KEY_ENTER = 13,
-	KEY_TAB = 9,
-};
+	enum InputMouseButton : int
+	{
+		MOUSE_LEFT = GLUT_LEFT_BUTTON,
+		MOUSE_MIDDLE = GLUT_MIDDLE_BUTTON,
+		MOUSE_RIGHT = GLUT_RIGHT_BUTTON,
+	};
 
-void onKeyboardDown(unsigned char key, int mouseX, int mouseY) noexcept;
-void onKeyboardUp(unsigned char key, int mouseX, int mouseY) noexcept;
-void onKeyboardSpecialDown(int key, int mouseX, int mouseY) noexcept;
-void onKeyboardSpecialUp(int key, int mouseX, int mouseY) noexcept;
-void onMouse(int button, int state, int mouseX, int mouseY) noexcept;
-void onMouseMove(int mouseX, int mouseY) noexcept;
-void onMouseDrag(int mouseX, int mouseY) noexcept;
+	enum InputKeyboardKey : unsigned char
+	{
+		KEY_SPACE = ' ',
+		KEY_ESCAPE = 27,
+		KEY_ENTER = 13,
+		KEY_TAB = 9,
+	};
 
-ivec2 const& getMousePos() noexcept; // gets mouse position in screen space (origin top-left)
-ivec2 const& getMouseDeltaPos() noexcept;
-vec2 const& getMouseViewPos() noexcept;
+	void onKeyboardDown(unsigned char key, int mouseX, int mouseY) noexcept;
+	void onKeyboardUp(unsigned char key, int mouseX, int mouseY) noexcept;
+	void onKeyboardSpecialDown(int key, int mouseX, int mouseY) noexcept;
+	void onKeyboardSpecialUp(int key, int mouseX, int mouseY) noexcept;
+	void onMouse(int button, int state, int mouseX, int mouseY) noexcept;
+	void onMouseMove(int mouseX, int mouseY) noexcept;
+	void onMouseDrag(int mouseX, int mouseY) noexcept;
 
-InputState getKeyboardState(unsigned char key);
-InputState getSpecialState(int key);
-InputState getMouseButtonState(int button);
+	ivec2 const& getMousePos() noexcept; // gets mouse position in screen space (origin top-left)
+	ivec2 const& getMouseDeltaPos() noexcept;
+	vec2 const& getMouseViewPos() noexcept;
 
-bool isKeyboardKeyDown(unsigned char key);
-bool isSpecialKeyDown(int key);
-bool isMouseButtonDown(int button);
+	InputState getKeyboardState(unsigned char key);
+	InputState getSpecialState(int key);
+	InputState getMouseButtonState(int button);
 
-void updateInput();
+	bool isKeyboardKeyDown(unsigned char key);
+	bool isSpecialKeyDown(int key);
+	bool isMouseButtonDown(int button);
+
+	void update();
+}

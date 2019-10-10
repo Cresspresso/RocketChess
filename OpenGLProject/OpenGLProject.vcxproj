@@ -167,9 +167,7 @@
     <ClCompile Include="multiline_text_entity.cpp" />
     <ClCompile Include="navigation.cpp" />
     <ClCompile Include="HistoryEventLog.cpp" />
-    <ClCompile Include="menuSwap.cpp" />
     <ClCompile Include="MissileManager.cpp" />
-    <ClCompile Include="Money.cpp" />
     <ClCompile Include="closing_state.cpp" />
     <ClCompile Include="common.cpp" />
     <ClCompile Include="console_message_queue.cpp" />
@@ -225,9 +223,7 @@
     <ClInclude Include="multiline_text_entity.hpp" />
     <ClInclude Include="navigation.hpp" />
     <ClInclude Include="HistoryEventLog.h" />
-    <ClInclude Include="menuSwap.h" />
     <ClInclude Include="MissileManager.h" />
-    <ClInclude Include="Money.h" />
     <ClInclude Include="closing_state.hpp" />
     <ClInclude Include="common.hpp" />
     <ClInclude Include="console_message_queue.hpp" />
@@ -275,9 +271,7 @@
     <ClInclude Include="world_math.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="config.txt" />
     <Text Include="credits.txt" />
-    <Text Include="README.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

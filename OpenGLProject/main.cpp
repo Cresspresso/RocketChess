@@ -55,7 +55,7 @@ void innerUpdate()
 	}
 	catch (...) { printException(); }
 
-	updateInput();
+	Input::update();
 }
 void update() noexcept
 {
@@ -219,13 +219,13 @@ void innerMain(int argc, char** argv)
 	glutDisplayFunc(render);
 	glutCloseFunc(close);
 
-	glutKeyboardFunc(onKeyboardDown);
-	glutKeyboardUpFunc(onKeyboardUp);
-	glutSpecialFunc(onKeyboardSpecialDown);
-	glutSpecialUpFunc(onKeyboardSpecialUp);
-	glutMouseFunc(onMouse);
-	glutPassiveMotionFunc(onMouseMove);
-	glutMotionFunc(onMouseDrag);
+	glutKeyboardFunc(Input::onKeyboardDown);
+	glutKeyboardUpFunc(Input::onKeyboardUp);
+	glutSpecialFunc(Input::onKeyboardSpecialDown);
+	glutSpecialUpFunc(Input::onKeyboardSpecialUp);
+	glutMouseFunc(Input::onMouse);
+	glutPassiveMotionFunc(Input::onMouseMove);
+	glutMotionFunc(Input::onMouseDrag);
 	
 	glutMainLoop();
 	close();

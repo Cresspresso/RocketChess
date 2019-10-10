@@ -69,8 +69,6 @@ namespace
 
 	void loadMusicTracks()
 	{
-		try { g_musicBackground = loadMusicTrack("Cresspresso - Beyond Afar - 03 Slight Design.wav"); }
-		catch (...) { printException(); }
 		// R
 		try { g_musicMenuBackground=loadMusicTrack( "COAG - Taboo.mp3"); }
 		catch (...) { printException(); }
@@ -116,9 +114,6 @@ void initAudio()
 
 void destroyAudio()
 {
-	destroyFmodPointer(g_musicBackground);
-	destroyFmodPointer(g_soundThump);
-
 	destroyFmodPointer(g_audio);
 }
 
