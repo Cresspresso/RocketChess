@@ -21,8 +21,6 @@
 #include <variant>
 #include <optional>
 
-#include "scene_indexer.hpp"
-
 #include "resource_warehouse.hpp"
 #include "menu_scene.hpp"
 

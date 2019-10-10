@@ -415,9 +415,6 @@
     <ClCompile Include="outcome_screen.cpp">
       <Filter>Source Files\rocket_chess</Filter>
     </ClCompile>
-    <ClCompile Include="deprecated_errors.cpp">
-      <Filter>Source Files\common</Filter>
-    </ClCompile>
     <ClCompile Include="exceptions.cpp">
       <Filter>Source Files\common</Filter>
     </ClCompile>
@@ -657,9 +654,6 @@
     <ClInclude Include="compatibility.hpp">
       <Filter>Source Files\utilities</Filter>
     </ClInclude>
-    <ClInclude Include="scene_indexer.hpp">
-      <Filter>Source Files\application</Filter>
-    </ClInclude>
     <ClInclude Include="debug_log.hpp">
       <Filter>Source Files\console</Filter>
     </ClInclude>
@@ -719,9 +713,6 @@
     </ClInclude>
     <ClInclude Include="outcome_screen.hpp">
       <Filter>Source Files\rocket_chess</Filter>
-    </ClInclude>
-    <ClInclude Include="z_deprecated_errors.hpp">
-      <Filter>Source Files\common</Filter>
     </ClInclude>
     <ClInclude Include="exceptions.hpp">
       <Filter>Source Files\common</Filter>

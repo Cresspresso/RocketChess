@@ -25,9 +25,6 @@
 #include <Windows.h>
 
 // Local Includes
-#include "globals.hpp"
-#include "world_math.hpp"
-
 #include "application.hpp"
 #include "singleton.hpp"
 
@@ -35,12 +32,9 @@
 #include "screen.hpp"
 #include "input.hpp"
 #include "audio.hpp"
-#include "toggle_music.hpp"
 
 #include "closing_state.hpp"
 #include "console.hpp"
-
-#include "debug_log.hpp"
 
 
 

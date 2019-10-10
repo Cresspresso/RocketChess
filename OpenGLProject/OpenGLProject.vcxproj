@@ -241,7 +241,6 @@
     <ClCompile Include="text_renderer.cpp" />
     <ClCompile Include="toggle_music.cpp" />
     <ClCompile Include="transform.cpp" />
-    <ClCompile Include="deprecated_errors.cpp" />
     <ClCompile Include="fix_normals_material.cpp" />
     <ClCompile Include="font.cpp" />
     <ClCompile Include="globals.cpp" />
@@ -310,7 +309,6 @@
     <ClInclude Include="mouse_mover.hpp" />
     <ClInclude Include="outcome_screen.hpp" />
     <ClInclude Include="random.hpp" />
-    <ClInclude Include="scene_indexer.hpp" />
     <ClInclude Include="seeker_enemy.hpp" />
     <ClInclude Include="entity_utils.hpp" />
     <ClInclude Include="final_act.hpp" />
@@ -340,7 +338,6 @@
     <ClInclude Include="text_renderer.hpp" />
     <ClInclude Include="toggle_music.hpp" />
     <ClInclude Include="transform.hpp" />
-    <ClInclude Include="z_deprecated_errors.hpp" />
     <ClInclude Include="fix_normals_material.hpp" />
     <ClInclude Include="font.hpp" />
     <ClInclude Include="globals.hpp" />
