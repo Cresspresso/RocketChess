@@ -143,7 +143,7 @@ ivec2 globalPosition;
 
 		// Textures Init Here
 		Title.setTexture(TextureIndexer::Title);
-		Title.transform.localScale = vec3(768, 128, 1);
+		Title.transform.localScale = vec3(768, 256, 1);
 		Title.transform.localPosition = vec3(0, 335.5, 0);
 
 		selectionSprite.setTexture(TextureIndexer::Selection);
