@@ -32,10 +32,11 @@
 #include "MissileManager.h"
 #include "menu_scene.hpp"
 
+#include <iostream>
+
 
 
 ivec2 globalPosition;
-
 
 #pragma region Scene::Builder
 
@@ -248,6 +249,8 @@ ivec2 globalPosition;
 								return 3;
 							case ChessPiece::Pawn:
 								return 1;
+							case ChessPiece::PawnDouble:
+								return 1;
 							case ChessPiece::Queen:
 								return 4;
 							case ChessPiece::Rook:
@@ -306,7 +309,12 @@ ivec2 globalPosition;
 					
 				}
 				break;
-
+				case ChessActionType::PawnDoubleMove:{
+					
+					regularMove();
+					thatPiece.type = ChessPiece::Pawn;
+				}
+				break;
 				default:
 					throw std::runtime_error("ChessActionType functionality not implemented");
 					break;
@@ -344,10 +352,10 @@ ivec2 globalPosition;
 							if (destPiece.type == ChessPiece::None
 								|| destPiece.isPlayer2 != isCurrentPlayerTwo)
 							{
-								availableActions.insert(std::make_pair(
-									actionLinearIndex,
-									ChessAction{ ChessActionType::RegularMove, actionCoords }
-								));
+									availableActions.insert(std::make_pair(
+										actionLinearIndex,
+										ChessAction{ ChessActionType::RegularMove, actionCoords }
+									));
 							}
 							return destPiece.type == ChessPiece::None;
 						}
@@ -364,7 +372,6 @@ ivec2 globalPosition;
 						std::array<ivec2, 3> const relativeCoords{
 							ivec2(-1, yForward), ivec2(0, yForward), ivec2(1, yForward)
 						};
-
 						for (ivec2 const& relativeCoord : relativeCoords)
 						{
 							ivec2 const actionCoords = cellCoords + relativeCoord;
@@ -407,6 +414,60 @@ ivec2 globalPosition;
 							}
 						}
 					}
+						break;
+
+					case ChessPiece::PawnDouble: {
+
+						// action: move up to 2 spaces forward (up for white, down for black)
+						std::array<ivec2, 5> const move2Coords{
+							ivec2(-1, yForward), ivec2(0, yForward), ivec2(1, yForward), ivec2(0, yForward + 1), ivec2(0, yForward - 1)
+						};
+						for (ivec2 const& relativeCoord : move2Coords)
+						{
+							ivec2 const actionCoords = cellCoords + relativeCoord;  
+							ivec2 const pieceCoords = cellCoords;
+							if (isValidCoords(actionCoords))
+							{
+								size_t const actionLinearIndex = getLinearIndex(actionCoords);
+								auto const& destPiece = boardPieces[actionLinearIndex];
+								ChessActionType const type = (actionCoords.y == 0 || actionCoords.y == boardSize - 1)
+									? ChessActionType::PawnDoubleMove
+									: ChessActionType::PawnDoubleMove;
+
+								auto const add = [&] {
+									availableActions.insert(std::make_pair(
+										actionLinearIndex,
+										ChessAction{ type, actionCoords }
+									));
+								};
+
+								// if moving straight forward
+								if (relativeCoord.x == 0)
+								{
+									if (destPiece.type != ChessPiece::None && destPiece.isPlayer2 != thatPiece.isPlayer2) {
+										return;
+									}
+									// if the destination space is empty
+									if (destPiece.type == ChessPiece::None)
+									{											// the action can be performed
+											add();
+										}
+									}
+								else // if moving diagonally forward
+								{
+									// if enemy on destination
+									if (destPiece.type != ChessPiece::None
+										&& destPiece.isPlayer2 != thatPiece.isPlayer2)
+									{
+										// the action can be performed
+										add();
+									}
+								}
+							}
+						}
+
+					}
+
 					break;
 
 					case ChessPiece::King:
@@ -1035,7 +1096,7 @@ ivec2 globalPosition;
 			y = isPlayer2 ? 6 : 1;
 			for (int x = 0; x < 8; ++x)
 			{
-				board[x + y * 8] = { ChessPiece::Pawn, isPlayer2 };
+				board[x + y * 8] = { ChessPiece::PawnDouble, isPlayer2 };
 			}
 		};
 		initPlayer(false);
@@ -1068,11 +1129,13 @@ ivec2 globalPosition;
 					: 5;
 			}
 			case ChessPiece::Pawn:
+			case ChessPiece::PawnDouble:
 			{
 				return this->boardPieces[x + y * 8].isPlayer2
 					? 6
 					: 7;
 			}
+
 			case ChessPiece::Queen:
 			{
 				return this->boardPieces[x + y * 8].isPlayer2

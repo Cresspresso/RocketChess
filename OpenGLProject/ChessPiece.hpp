@@ -12,6 +12,7 @@ enum class ChessPiece
 	Pawn,
 	Queen,
 	Rook,
+	PawnDouble,
 };
 
 inline char const* to_str(ChessPiece value)
