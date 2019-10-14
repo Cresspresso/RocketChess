@@ -45,6 +45,7 @@ enum class TextureIndexer : size_t
 	USFLAG,
 	MainMenu,
 	CruiseMissile,
+	Title,
 	END
 };
 constexpr size_t TextureIndexerEND = static_cast<size_t>(TextureIndexer::END);
@@ -81,6 +82,7 @@ struct TextureManager : public ResourceManager<GLuint, TextureIndexerEND, Textur
 		"UssrFlag.png",
 		"UnitedStatesFlag.png",
 		"black-world-map.jpg",
-		"cruise-missile.png"
+		"cruise-missile.png",
+		"RocketChessTitle.png" 
 	};
 };
