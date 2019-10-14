@@ -193,9 +193,9 @@ ivec2 globalPosition;
 	};
 
 
+
 	void Scene::onCellClicked(ivec2 cellCoords)
 	{
-
 		globalPosition = cellCoords;
 		size_t const thatLinearIndex = getLinearIndex(cellCoords);
 		auto& thatPiece = boardPieces[thatLinearIndex];
