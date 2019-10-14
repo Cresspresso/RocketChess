@@ -64,15 +64,17 @@ ivec2 globalPosition;
 			cameraHud.recalculate();
 		}
 
+		//Title.render();
+
 		// main menu buttons
 		mainMenuButtons = MainMenuButtons{
 			vec3(0, 200, 0),
 			vec3(0, -100, 0),
 			{
-			"New Game",
-			"Instructions",
-			"Credits",
-			"   Exit",
+			"      New Game",
+			"    Instructions",
+			"        Credits",
+			"           Exit",
 			},
 		};
 
@@ -139,6 +141,10 @@ ivec2 globalPosition;
 		pawnPromotionButtons.buttons[3].buttonEntity.textEntity.material.tint = glm::vec3(0.85f, 0.0f, 0.0f);
 
 		// Textures Init Here
+		Title.setTexture(TextureIndexer::Title);
+		Title.transform.localScale = vec3(768, 128, 1);
+		Title.transform.localPosition = vec3(0, 335.5, 0);
+
 		selectionSprite.setTexture(TextureIndexer::Selection);
 		selectionSprite.transform.localScale = vec3(64, 64, 1);
 
@@ -800,6 +806,7 @@ ivec2 globalPosition;
 
 		// render Background
 		try { Background.render(); }
+		
 		catch (...) { printException(); }
 
 		if (navigation->isGameSceneVisible())
@@ -952,6 +959,10 @@ ivec2 globalPosition;
 				[&](FocusedPanel::MainMenu const& panelData)
 			{
 				try {
+					glEnable(GL_BLEND);
+					glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+					Title.render();// HERE...
+					glDisable(GL_BLEND);
 					mainMenuButtons.highlight(static_cast<size_t>(panelData.focusedButton));
 					mainMenuButtons.render();
 				}

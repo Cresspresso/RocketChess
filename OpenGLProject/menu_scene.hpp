@@ -56,6 +56,7 @@ struct Scene
 	SpriteEntity RPG;
 	SpriteEntity CruiseMissile;
 	SpriteEntity ICBM;
+	SpriteEntity Title;
 
 	TextEntity currentPlayerLabel;
 	TextEntity SovietCurrency;
