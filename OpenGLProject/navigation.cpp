@@ -154,31 +154,31 @@ void Navigation::render()
 			{
 			case ButtonID::BackToBoard:
 			{
-				spriteEntity.transform.localPosition = vec3(200, 200, 0);
+				spriteEntity.transform.localPosition = vec3(200, 100, 0);
 			}
 			break;
 
 			case ButtonID::RPG:
 			{
-				spriteEntity.transform.localPosition = vec3(200, 100, 0);
+				spriteEntity.transform.localPosition = vec3(200, 000, 0);
 			}
 			break;
 
 			case ButtonID::ConventionalMissile:
 			{
-				spriteEntity.transform.localPosition = vec3(200, 000, 0);
+				spriteEntity.transform.localPosition = vec3(200, -100, 0);
 			}
 			break;
 
 			case ButtonID::ICBM:
 			{
-				spriteEntity.transform.localPosition = vec3(200, -100, 0);
+				spriteEntity.transform.localPosition = vec3(200, -200, 0);
 			}
 			break;
 
 			case ButtonID::Voyager1:
 			{
-				spriteEntity.transform.localPosition = vec3(200, -200, 0);
+				spriteEntity.transform.localPosition = vec3(200, -300, 0);
 			}
 			break;
 
@@ -197,25 +197,25 @@ void Navigation::render()
 		{
 		case ButtonID::Rook:
 		{
-			spriteEntity.transform.localPosition = vec3(200, 200, 0);
+			spriteEntity.transform.localPosition = vec3(200, 100, 0);
 		}
 		break;
 
 		case ButtonID::Knight:
 		{
-			spriteEntity.transform.localPosition = vec3(200, 100, 0);
+			spriteEntity.transform.localPosition = vec3(200, 000, 0);
 		}
 		break;
 
 		case ButtonID::Bishop:
 		{
-			spriteEntity.transform.localPosition = vec3(200, 000, 0);
+			spriteEntity.transform.localPosition = vec3(200, -100, 0);
 		}
 		break;
 
 		case ButtonID::Queen:
 		{
-			spriteEntity.transform.localPosition = vec3(200, -100, 0);
+			spriteEntity.transform.localPosition = vec3(200, -200, 0);
 		}
 		break;
 
