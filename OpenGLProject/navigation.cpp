@@ -453,9 +453,9 @@ void Navigation::invokeAction()
 				stopMusic();
 
 				playMusicG();
-				playSoundEffect(g_musicGameBackground);
 				//playSoundEffect(g_musicGameBackground);
-				FMOD::Channel* g_musicChannel = nullptr;
+				//playSoundEffect(g_musicGameBackground);
+				//FMOD::Channel* g_musicChannel = nullptr;
 				
 				//FMOD_RESULT nr = g_audio->playSound(g_musicGameBackground, nullptr, true, &g_musicChannel);
 				playSoundEffect(g_soundCapture);
@@ -472,7 +472,7 @@ void Navigation::invokeAction()
 
 			case ButtonID::Credits:
 			{
-				playSoundEffect(g_soundSelect);
+				playSoundEffect(g_soundNavigate);
 				gamePanel = CreditsMenu();
 
 			}

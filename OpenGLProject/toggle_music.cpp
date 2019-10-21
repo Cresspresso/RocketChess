@@ -109,8 +109,6 @@ void playMusic()//FMOD_RESULT r)//= g_audio->playSound(FMOD::Sound **,nullptr, t
 	setMusicPaused(false);
 }
 
-
-
 // starts the background music
 void playMusicG()//FMOD_RESULT r)//= g_audio->playSound(FMOD::Sound **,nullptr, true,FMOD::Channel**))
 {
