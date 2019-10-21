@@ -158,7 +158,6 @@ void Navigation::render()
 			{
 			case ButtonID::BackToBoard:
 			{
-				playSoundEffect(g_soundNavigate);
 				spriteEntity.transform.localPosition = vec3(200, 100, 0);
 			}
 			break;
