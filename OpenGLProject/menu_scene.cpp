@@ -415,7 +415,7 @@ ivec2 globalPosition;
 						}
 					}
 						break;
-
+					//used for when the pawn has yet to move
 					case ChessPiece::PawnDouble: {
 
 						// action: move up to 2 spaces forward (up for white, down for black)
@@ -444,6 +444,7 @@ ivec2 globalPosition;
 								// if moving straight forward
 								if (relativeCoord.x == 0)
 								{
+									//checks to see if there is a piece infront of it
 									if (destPiece.type != ChessPiece::None && destPiece.isPlayer2 != thatPiece.isPlayer2) {
 										return;
 									}
@@ -683,7 +684,7 @@ ivec2 globalPosition;
 						if (piece.type != ChessPiece::None
 							&& piece.isPlayer2 != this->isCurrentPlayerTwo)
 						{//checking to see what pieces can be taken
-							if (piece.type == ChessPiece::Pawn) {
+							if (piece.type == ChessPiece::Pawn || piece.type == ChessPiece::PawnDouble) {
 								availableActions.insert(std::make_pair(
 									getLinearIndex(coords),
 									ChessAction{ ChessActionType::RocketAttack, coords, cost }
@@ -711,7 +712,10 @@ ivec2 globalPosition;
 						if (piece.type != ChessPiece::None
 							&& piece.isPlayer2 != this->isCurrentPlayerTwo)
 						{//checking to see what pieces can be taken
-							if (piece.type == ChessPiece::Pawn || piece.type == ChessPiece::Rook || piece.type == ChessPiece::Bishop) {
+							if (piece.type == ChessPiece::Pawn 
+								|| piece.type == ChessPiece::Rook 
+								|| piece.type == ChessPiece::Bishop 
+								|| piece.type == ChessPiece::PawnDouble) {
 								availableActions.insert(std::make_pair(
 									getLinearIndex(coords),
 									ChessAction{ ChessActionType::RocketAttack, coords, cost }
@@ -739,7 +743,12 @@ ivec2 globalPosition;
 						if (piece.type != ChessPiece::None
 							&& piece.isPlayer2 != this->isCurrentPlayerTwo)
 						{//checking to see what pieces can be taken
-							if (piece.type == ChessPiece::Pawn || piece.type == ChessPiece::Rook || piece.type == ChessPiece::Bishop || piece.type == ChessPiece::Queen || piece.type == ChessPiece::Knight) {
+							if (piece.type == ChessPiece::Pawn 
+								|| piece.type == ChessPiece::Rook 
+								|| piece.type == ChessPiece::Bishop 
+								|| piece.type == ChessPiece::Queen 
+								|| piece.type == ChessPiece::Knight 
+								|| piece.type == ChessPiece::PawnDouble) {
 								availableActions.insert(std::make_pair(
 									getLinearIndex(coords),
 									ChessAction{ ChessActionType::RocketAttack, coords, cost }
@@ -788,12 +797,7 @@ ivec2 globalPosition;
 				break;
 		
 		}
-
-
-
 	}
-
-
 
 	bool Scene::isValidCoords(ivec2 cellCoords)
 	{
