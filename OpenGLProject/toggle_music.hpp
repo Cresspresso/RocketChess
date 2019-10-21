@@ -24,8 +24,10 @@ bool isMusicPaused();
 void setMusicPaused(bool paused);
 void playMusic();
 void playMusicG();
+void playMusicW();
 void stopMusic();
 void stopMusicG();
+void stopMusicW();
 void toggleMusicPaused();
 bool isMusicPlaying();
 

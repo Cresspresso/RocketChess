@@ -109,24 +109,28 @@ void Navigation::render()
 			{
 			case ButtonID::NewGame:
 			{
+				
 				spriteEntity.transform.localPosition = vec3(-200, 200, 0);
 			}
 			break;
 
 			case ButtonID::Instructions:
 			{
+				
 				spriteEntity.transform.localPosition = vec3(-200, 100, 0);
 			}
 			break;
 
 			case ButtonID::Credits:
 			{
+				
 				spriteEntity.transform.localPosition = vec3(-200, 0, 0);
 			}
 			break;
 
 			case ButtonID::ExitToDesktop:
 			{
+				
 				spriteEntity.transform.localPosition = vec3(-200, -100, 0);
 			}
 			break;
@@ -154,6 +158,7 @@ void Navigation::render()
 			{
 			case ButtonID::BackToBoard:
 			{
+				playSoundEffect(g_soundNavigate);
 				spriteEntity.transform.localPosition = vec3(200, 100, 0);
 			}
 			break;
@@ -178,6 +183,7 @@ void Navigation::render()
 
 			case ButtonID::Voyager1:
 			{
+				//SFX Not music
 				spriteEntity.transform.localPosition = vec3(200, -300, 0);
 			}
 			break;
@@ -405,13 +411,14 @@ void Navigation::invokeAction()
 		{
 		case ButtonID::Continue:
 		{
-
+			playSoundEffect(g_soundNavigate);
 			pauseMenu = std::nullopt;
 		}
 		break;
 
 		case ButtonID::ExitToMainMenu:
 		{
+			playSoundEffect(g_soundNavigate);
 			singleton::postRestartMessage();
 
 			//stopMusicG();
@@ -423,6 +430,7 @@ void Navigation::invokeAction()
 
 		case ButtonID::ExitToDesktop:
 		{
+			playSoundEffect(g_soundNavigate);
 			glutLeaveMainLoop();
 		}
 		break;
@@ -480,7 +488,7 @@ void Navigation::invokeAction()
 
 			case ButtonID::ExitToDesktop:
 			{
-				playSoundEffect(g_soundMovePiece);
+				playSoundEffect(g_soundNavigate);
 				glutLeaveMainLoop();
 			}
 			break;
@@ -627,6 +635,7 @@ void Navigation::invokeAction()
 			// else if
 			[&](OutcomeScreen& focusedPanelData)
 		{
+			stopMusicW();
 			singleton::postRestartMessage();
 			//gamePanel = MainMenu();
 		},
@@ -814,10 +823,12 @@ void Navigation::handleMoveInput()
 
 			if (moveUp)
 			{
+	
 				cycleFocusedButton(-1);
 			}
 			if (moveDown)
 			{
+		
 				cycleFocusedButton(1);
 			}
 		}		

@@ -40,6 +40,7 @@ FMOD::Sound* g_musicBackground = nullptr;
 // R
 FMOD::Sound* g_musicMenuBackground = nullptr;
 FMOD::Sound* g_musicGameBackground = nullptr;
+FMOD::Sound* g_musicWinBackground = nullptr;
 
 namespace
 {
@@ -74,6 +75,9 @@ namespace
 		catch (...) { printException(); }
 
 		try { g_musicGameBackground=loadMusicTrack( "COAG - The Lost.wav"); }
+		catch (...) { printException(); }
+
+		try { g_musicWinBackground = loadMusicTrack("Background Music - If I Don't Return CO.AG.mp3"); }
 		catch (...) { printException(); }
 	}
 }

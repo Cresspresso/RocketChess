@@ -194,6 +194,7 @@ ivec2 globalPosition;
 #pragma region Scene
 
 	void Scene::deselect() {
+		
 		selectedCoords = std::nullopt;
 		isChoosingRocketTarget = false;
 		availableActions.clear();
@@ -767,6 +768,7 @@ ivec2 globalPosition;
 				deselect();
 				money -= cost;
 				winGame(true);
+
 			}
 		}
 		break;
@@ -907,7 +909,7 @@ ivec2 globalPosition;
 					vec2(coords) * 70.0f + vec2(-430, -200),
 					0);
 			};
-
+			
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -1165,6 +1167,8 @@ ivec2 globalPosition;
 	{
 		outcomeScreen.UpdateWinner(isCurrentPlayerTwo, winByVoyager);
 		doGameOverEvent = true;
+		playMusicW();
+		stopMusicG();
 		//postRestartGameMessage(2.0f);
 	}
 

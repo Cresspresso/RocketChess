@@ -37,6 +37,7 @@ extern FMOD::Sound* g_soundDing;
 // R
 extern FMOD::Sound* g_musicMenuBackground;
 extern FMOD::Sound* g_musicGameBackground;
+extern FMOD::Sound* g_musicWinBackground;
 extern FMOD::Sound* g_soundNavigate;
 extern FMOD::Sound* g_soundSelect;
 extern FMOD::Sound* g_soundMovePiece;
