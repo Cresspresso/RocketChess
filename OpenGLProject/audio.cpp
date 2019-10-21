@@ -77,7 +77,7 @@ namespace
 		try { g_musicGameBackground=loadMusicTrack( "COAG - The Lost.wav"); }
 		catch (...) { printException(); }
 
-		try { g_musicWinBackground = loadMusicTrack("Background Music - If I Don't Return CO.AG.mp3"); }
+		try { g_musicWinBackground = loadMusicTrack("If I Don't Return - CO.AG.wav"); }
 		catch (...) { printException(); }
 	}
 }
