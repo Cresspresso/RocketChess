@@ -358,7 +358,7 @@ void Navigation::update()
 		{
 			pauseMenu = std::nullopt;
 		}
-		else
+		else if (gamePanel.index() != 0) // if not in MainMenu
 		{
 			pauseMenu = FocusedPanel::PauseMenu();
 		}
@@ -373,9 +373,6 @@ void Navigation::update()
 					gamePanel = RocketPurchase();
 				},
 				[&](RocketPurchase const&) {
-					gamePanel = ChessBoard();
-				},
-				[&](PawnPromotion const&) {
 					gamePanel = ChessBoard();
 				},
 				[&](auto const&) {}
