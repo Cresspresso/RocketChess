@@ -102,7 +102,7 @@ ivec2 globalPosition;
 		TabHelp.textRenderer.text = "<- TAB ->";
 		TabHelp.transform.localPosition = vec3(335, 185, 0);
 
-		TabExit.textRenderer.text = "<- EXIT ->";
+		TabExit.textRenderer.text = "<- ESC ->";
 		TabExit.transform.localPosition = vec3(-485, 365, 0);
 
 		missilePurchaseButtons = MainMenuButtons{
