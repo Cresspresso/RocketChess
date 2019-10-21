@@ -421,7 +421,7 @@ ivec2 globalPosition;
 
 						// action: move up to 2 spaces forward (up for white, down for black)
 						std::array<ivec2, 5> const move2Coords{
-							ivec2(-1, yForward), ivec2(0, yForward), ivec2(1, yForward), ivec2(0, yForward + 1), ivec2(0, yForward - 1)
+ 							ivec2(-1, yForward), ivec2(0, yForward), ivec2(1, yForward), ivec2(0, yForward * 2)
 						};
 						for (ivec2 const& relativeCoord : move2Coords)
 						{
@@ -446,9 +446,10 @@ ivec2 globalPosition;
 								if (relativeCoord.x == 0)
 								{
 									//checks to see if there is a piece infront of it
-									if (destPiece.type != ChessPiece::None && destPiece.isPlayer2 != thatPiece.isPlayer2) {
+									if (destPiece.type != ChessPiece::None) {
 										return;
 									}
+		
 									// if the destination space is empty
 									if (destPiece.type == ChessPiece::None)
 									{											// the action can be performed
